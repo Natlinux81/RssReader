@@ -9,9 +9,8 @@ public class RssFeedItem
     public string Link { get; set; }
     public string Description { get; set; }
     public DateTime PublishDate { get; set; }
-    public Blob? Image { get; set; }
     public string ImageUrl { get; set; }
 
-    // public int RssFeedId { get; set; }
-    // public RssFeed RssFeed { get; set; }
+    public int RssFeedId { get; set; }
+    public RssFeed RssFeed { get; set; }
 }

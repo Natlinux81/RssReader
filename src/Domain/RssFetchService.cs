@@ -27,8 +27,8 @@ public class RssFetchService
         var rssItems = new RssFeed()
         {
             Url = rssFeedUri.ToString(),
-            Title = feed.Title.Text,
-            Items = feed.Items.Select(item => new RssFeedItem()
+            ChannelTitle = feed.Title.Text,
+            FeedItems = feed.Items.Select(item => new RssFeedItem()
             {
                 Title = item.Title.Text,
                 Description = item.Summary?.Text,
