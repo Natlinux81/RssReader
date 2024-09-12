@@ -14,6 +14,7 @@ namespace Infrastructure.Context
             var configuration = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
             .AddJsonFile("/home/natlinux/Projekte/RssReader/src/API/appsettings.json")
+            .AddUserSecrets<RssReaderDbContextFactory>()
             .Build();
 
             // Read MariaDbSettings from configuration
