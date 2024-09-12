@@ -12,8 +12,8 @@ namespace Infrastructure.Context
         {
             // Build the configuration manually
             var configuration = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("/home/natlinux/Projekte/RssReader/src/API/appsettings.json")
+            .SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "../API"))
+            .AddJsonFile("appsettings.json")
             .AddUserSecrets<RssReaderDbContextFactory>()
             .Build();
 
