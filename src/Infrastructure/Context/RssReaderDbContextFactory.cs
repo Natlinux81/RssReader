@@ -1,5 +1,7 @@
+using Infrastructure.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.Extensions.Configuration;
 
 namespace Infrastructure.Context
 {
@@ -8,9 +10,18 @@ namespace Infrastructure.Context
         public RssReaderDbContext CreateDbContext(string[] args)
 
         {
-            var connectionString = "";
+            // Build the configuration manually
+            var configuration = new ConfigurationBuilder()
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("/home/natlinux/Projekte/RssReader/src/API/appsettings.json")
+            .Build();
+
+            // Read MariaDbSettings from configuration
+            var mariaDbSettings = configuration.GetRequiredSection("MariaDbSettings").Get<MariaDbSettings>();
+            var connectionString = mariaDbSettings?.ConnectionString;
             var optionBuilder = new DbContextOptionsBuilder<RssReaderDbContext>();
             optionBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+
             return new RssReaderDbContext(optionBuilder.Options);
         }
     }

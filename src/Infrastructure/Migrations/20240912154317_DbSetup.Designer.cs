@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(RssReaderDbContext))]
-    [Migration("20240910210008_DbSetup")]
+    [Migration("20240912154317_DbSetup")]
     partial class DbSetup
     {
         /// <inheritdoc />
