@@ -6,16 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-    public class RssFeedController : BaseApiController
-    {
-        public readonly RssFetchService RssFetchService;
-        
-        public RssFeedController(RssFetchService fetchService)
-        {
-            this.RssFetchService = fetchService;
-        }
-
-         [HttpGet]
+    public class RssFeedController(RssFetchService fetchService) : BaseApiController
+    {        
+        [HttpGet]
         public async Task<IActionResult> GetRssFeed([FromQuery] string feedUrl = "https://www.tagesschau.de/wirtschaft/technologie/index~rss2.xml")
         {
             if (string.IsNullOrEmpty(feedUrl))
@@ -23,7 +16,7 @@ namespace API.Controllers
 
             try
             {
-                return Ok(await this.RssFetchService.Fetch(this.HttpContext.RequestAborted, new Uri(feedUrl)));
+                return Ok(await fetchService.Fetch(this.HttpContext.RequestAborted, new Uri(feedUrl)));
             }
             catch (Exception ex)
             {

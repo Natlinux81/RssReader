@@ -4,19 +4,13 @@ using Domain.Entities;
 
 namespace Domain;
 
-public class RssFetchService
-{
-    private readonly HttpClient _httpClient;
-    
-    public RssFetchService(HttpClient httpClient)
-    {
-        this._httpClient = httpClient;
-    }
+public class RssFetchService(HttpClient httpClient)
+{   
 
     public virtual async Task<RssFeed> Fetch(CancellationToken cancellationToken, Uri rssFeedUri)
     {
         // RSS-Feed call
-        var response = await _httpClient.GetAsync(rssFeedUri);
+        var response = await httpClient.GetAsync(rssFeedUri, cancellationToken);
         response.EnsureSuccessStatusCode();
 
         using var stream = await response.Content.ReadAsStreamAsync(cancellationToken);
