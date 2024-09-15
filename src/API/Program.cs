@@ -1,4 +1,7 @@
 using Domain;
+using Infrastructure;
+using Infrastructure.Configuration;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,7 +11,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 builder.Services.AddHttpClient();
-builder.Services.AddSingleton<RssFetchService>();
+builder.Services.Configure<MariaDbSettings>(builder.Configuration.GetSection("MariaDbSettings"));
+builder.Services.AddInfrastructure(builder.Configuration);
 
 var app = builder.Build();
 
