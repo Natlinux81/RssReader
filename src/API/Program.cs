@@ -1,6 +1,8 @@
 using Domain;
 using Infrastructure;
 using Infrastructure.Configuration;
+using Infrastructure.Context;
+using Microsoft.EntityFrameworkCore;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,8 +13,20 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 builder.Services.AddHttpClient();
-builder.Services.Configure<MariaDbSettings>(builder.Configuration.GetSection("MariaDbSettings"));
 builder.Services.AddInfrastructure(builder.Configuration);
+
+builder.Services.Configure<MariaDbSettings>(builder.Configuration.GetSection("MariaDbSettings"));
+// builder.Services.AddSingleton<MariaDbSettings>((s) => 
+//     s.GetService<IConfiguration>().GetRequiredSection("MariaDbSettings").Get<MariaDbSettings>());
+
+// See: https://learn.microsoft.com/en-us/ef/core/dbcontext-configuration/
+builder.Services.AddDbContext<RssReaderDbContext>(
+    options =>
+    {
+        var mariaDbSettings = builder.Configuration.GetRequiredSection("MariaDbSettings").Get<MariaDbSettings>();  
+        var connectionString = mariaDbSettings?.ConnectionString;
+        options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+    });
 
 var app = builder.Build();
 
@@ -25,5 +39,11 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.MapControllers();
+
 app.Run();
+
+
+
+
+
 
