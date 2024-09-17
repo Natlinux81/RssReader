@@ -1,4 +1,4 @@
-using Domain;
+using Application;
 using Infrastructure;
 using Infrastructure.Configuration;
 using Infrastructure.Context;
@@ -14,6 +14,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 builder.Services.AddHttpClient();
 builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddApplication();
 
 builder.Services.Configure<MariaDbSettings>(builder.Configuration.GetSection("MariaDbSettings"));
 // builder.Services.AddSingleton<MariaDbSettings>((s) => 

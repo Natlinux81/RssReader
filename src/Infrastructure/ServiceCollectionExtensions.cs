@@ -18,9 +18,9 @@ namespace Infrastructure
 
             services.AddDbContext<RssReaderDbContext>(options =>
             options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
-            services.AddSingleton<RssFetchService>();
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IRssFeedRepository, RssFeedRepository>();
 
             return services;        
         }
