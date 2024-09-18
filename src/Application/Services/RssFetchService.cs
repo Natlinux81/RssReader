@@ -16,7 +16,7 @@ public class RssFetchService (HttpClient httpClient, IUnitOfWork unitOfWork, IRs
             throw new ArgumentNullException(nameof(rssFeedRequest));
         }
 
-        var rssFeedExists = await rssFeedRepository.GetByUrl(rssFeedRequest.Url);
+        var rssFeedExists = await rssFeedRepository.GetByUrlAsync(rssFeedRequest.Url);
 
         if (rssFeedExists is not null)
         {

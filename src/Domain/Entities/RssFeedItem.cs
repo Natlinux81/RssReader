@@ -1,5 +1,3 @@
-using System.Reflection.Metadata;
-
 namespace Domain.Entities;
 
 public class RssFeedItem

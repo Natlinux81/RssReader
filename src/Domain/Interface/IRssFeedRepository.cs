@@ -5,6 +5,6 @@ namespace Domain.Interface
     public interface IRssFeedRepository : IGenericRepository<RssFeed>
     {
          // extra implementations
-         Task<RssFeed> GetByUrl(string url);
+         Task<RssFeed?> GetByUrlAsync(string url);
     }
 }

@@ -5,11 +5,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories
 {
-    public class RssFeedRepository(RssReaderDbContext rssReaderDbContext) : GenericRepository<RssFeed>(rssReaderDbContext), IRssFeedRepository
+    public class RssFeedRepository(RssReaderDbContext rssReaderDbContext) :  GenericRepository<RssFeed>(rssReaderDbContext), IRssFeedRepository
     {
-        public async Task<RssFeed> GetByUrl(string url)
+        private readonly RssReaderDbContext _rssReaderDbContext = rssReaderDbContext;
+
+        public async Task<RssFeed?> GetByUrlAsync(string url)
         {
-            return await rssReaderDbContext.RssFeeds.FirstOrDefaultAsync(x => x.Url == url);
+            return await _rssReaderDbContext.RssFeeds.FirstOrDefaultAsync(x => x.Url == url);
         }
     }
 }

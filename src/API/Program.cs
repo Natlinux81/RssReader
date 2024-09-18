@@ -16,11 +16,7 @@ builder.Services.AddHttpClient();
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplication();
 
-builder.Services.Configure<MariaDbSettings>(builder.Configuration.GetSection("MariaDbSettings"));
-// builder.Services.AddSingleton<MariaDbSettings>((s) => 
-//     s.GetService<IConfiguration>().GetRequiredSection("MariaDbSettings").Get<MariaDbSettings>());
-
-// See: https://learn.microsoft.com/en-us/ef/core/dbcontext-configuration/
+// get MariaDbSettings from configuration
 builder.Services.AddDbContext<RssReaderDbContext>(
     options =>
     {
@@ -42,9 +38,3 @@ app.UseHttpsRedirection();
 app.MapControllers();
 
 app.Run();
-
-
-
-
-
-
