@@ -17,6 +17,10 @@ namespace API.Controllers
         public async Task<IResult> AddRssFeed(RssFeedRequest rssFedRequest)  
         {
             var response = await rssFetchService.RssFeedAdd(rssFedRequest);
+            if (response.IsFailure)
+            {
+                return Results.BadRequest(response);
+            }
             return Results.Ok(response);
         }
     }

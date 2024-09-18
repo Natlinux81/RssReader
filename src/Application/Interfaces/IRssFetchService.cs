@@ -1,3 +1,4 @@
+using Application.Common.Results;
 using Application.Models;
 using Domain.Entities;
 
@@ -5,7 +6,7 @@ namespace Application.Interfaces
 {
     public interface IRssFetchService
     {
-         Task<string?> RssFeedAdd(RssFeedRequest rssFeedRequest);
-         Task<RssFeed> RssFeedGet(CancellationToken cancellationToken, Uri rssFeedUri);
+         Task<Result> RssFeedAdd(RssFeedRequest rssFeedRequest);
+         Task<Result<RssFeed>> RssFeedGet(CancellationToken cancellationToken, Uri rssFeedUri);
     }
 }

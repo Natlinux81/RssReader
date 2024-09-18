@@ -1,5 +1,7 @@
 ﻿using System.ServiceModel.Syndication;
 using System.Xml;
+using Application;
+using Application.Common.Results; 
 using Application.Interfaces;
 using Application.Models;
 using Domain.Entities;
@@ -9,40 +11,7 @@ namespace Domain;
 
 public class RssFetchService (HttpClient httpClient, IUnitOfWork unitOfWork, IRssFeedRepository rssFeedRepository) : IRssFetchService 
 {
-    public async Task<string?> RssFeedAdd(RssFeedRequest rssFeedRequest)
-    {
-        if (rssFeedRequest == null)
-        {
-            throw new ArgumentNullException(nameof(rssFeedRequest));
-        }
-
-        var rssFeedExists = await rssFeedRepository.GetByUrlAsync(rssFeedRequest.Url);
-
-        if (rssFeedExists is not null)
-        {
-            throw new Exception("RSS-Feed already exists");
-        }
-        
-        var rssFeed = new RssFeed()
-        {
-            Url = rssFeedRequest.Url,
-            ChannelTitle = rssFeedRequest.ChannelTitle,
-            FeedItems = rssFeedRequest.FeedItems.Select(item => new RssFeedItem()
-            {
-                Title = item.Title,
-                Description = item.Description,
-                Link = item.Link,
-                PublishDate = item.PublishDate,
-                ImageUrl = item.ImageUrl
-            }).ToList()
-        };
-
-        await rssFeedRepository.AddAsync(rssFeed);
-        await unitOfWork.CommitAsync();
-        return "RSS-Feed added";
-    }
-
-    public virtual async Task<RssFeed> RssFeedGet(CancellationToken cancellationToken, Uri rssFeedUri)
+        public virtual async Task<Result<RssFeed>> RssFeedGet(CancellationToken cancellationToken, Uri rssFeedUri)
     {
         if (rssFeedUri == null)
         {
@@ -72,8 +41,42 @@ public class RssFetchService (HttpClient httpClient, IUnitOfWork unitOfWork, IRs
             }).ToList()
         };
 
-        return rssItems;
+        return Result.Success(rssItems);
     }
+    public async Task<Result> RssFeedAdd(RssFeedRequest rssFeedRequest)
+    {
+        if (rssFeedRequest == null)
+        {
+            return Result.Failure(RssFeedError.InvalidRssFeedRequest);
+        }
+
+        var rssFeedExists = await rssFeedRepository.GetByUrlAsync(rssFeedRequest.Url);
+
+        if (rssFeedExists is not null)
+        {
+            return Result.Failure(RssFeedError.RssFeedAlreadyExists);
+        }
+        
+        var rssFeed = new RssFeed()
+        {
+            Url = rssFeedRequest.Url,
+            ChannelTitle = rssFeedRequest.ChannelTitle,
+            FeedItems = rssFeedRequest.FeedItems.Select(item => new RssFeedItem()
+            {
+                Title = item.Title,
+                Description = item.Description,
+                Link = item.Link,
+                PublishDate = item.PublishDate,
+                ImageUrl = item.ImageUrl
+            }).ToList()
+        };
+
+        await rssFeedRepository.AddAsync(rssFeed);
+        await unitOfWork.CommitAsync();
+        return Result.Success("RSS-Feed added successfully");
+    }
+
+
 
 
 }
