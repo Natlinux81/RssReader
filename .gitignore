@@ -472,3 +472,4 @@ riderModule.iml
 
 *.drawio
 *.drawio.bkp
+src/ClientApp/.angular/
