@@ -1,5 +1,5 @@
-import { RssFeed } from "../models/rssFeed";
-import { RssFeedItem } from "../models/rssFeedItem";
+import { RssFeed } from "../domain/entities/rssFeed";
+import { RssFeedItem } from "../domain/entities/rssFeedItem";
 
 // Mockdaten für RssFeedItems
 const rssFeedItems: RssFeedItem[] = [

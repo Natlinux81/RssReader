@@ -1,5 +1,3 @@
-import { RssFeed } from "./rssFeed";
-
 export interface RssFeedItem {
   id : number;
   title: string;
@@ -9,5 +7,5 @@ export interface RssFeedItem {
   imageUrl: string;
 
   rssFeedId: number;
-  
+
 }
