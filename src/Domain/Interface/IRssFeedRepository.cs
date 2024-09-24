@@ -6,5 +6,7 @@ namespace Domain.Interface
     {
          // extra implementations
          Task<RssFeed?> GetByUrlAsync(string url);
+         Task<RssFeed> ReadRssFeed(Uri rssFeedUri, CancellationToken cancellationToken);
+
     }
 }

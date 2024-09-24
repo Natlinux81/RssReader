@@ -6,7 +6,6 @@ namespace Application.Interfaces
 {
     public interface IRssFetchService
     {
-         Task<Result> RssFeedAdd(RssFeedRequest rssFeedRequest);
-         Task<Result<RssFeed>> RssFeedGet(CancellationToken cancellationToken, Uri rssFeedUri);
+         Task<Result> AddRssFeed(RssFeedRequest rssFeedRequest, string feedUrl, CancellationToken cancellationToken);
     }
 }
