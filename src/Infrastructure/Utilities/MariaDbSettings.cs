@@ -1,4 +1,4 @@
-namespace Infrastructure.Configuration
+namespace Infrastructure.Utilities
 {
     public class MariaDbSettings
     {
