@@ -1,10 +1,10 @@
-import { IGenericRepository } from "../../domain/entities/interfaces/IGenericRepository";
+import { IGenericRepository } from "../../domain/interfaces/IGenericRepository";
 
 export class GenericRepository<TEntity> implements IGenericRepository<TEntity> {
-  private entities: TEntity[] = []; 
+  private entities: TEntity[] = [];
 
   async getByIdAsync(id: number): Promise<TEntity | null> {
-    const entity = this.entities.find(e => (e as any).id === id) || null;  // Annahme: TEntity hat eine `id`-Eigenschaft
+    const entity = this.entities.find(e => (e as any).id === id) || null;
     return await Promise.resolve(entity);
   }
 
@@ -26,7 +26,7 @@ export class GenericRepository<TEntity> implements IGenericRepository<TEntity> {
   }
 
   delete(entity: TEntity): void {
-    this.entities = this.entities.filter(e => (e as any).id !== (entity as any).id);  // Lösche das Entity
+    this.entities = this.entities.filter(e => (e as any).id !== (entity as any).id);
   }
 }
 

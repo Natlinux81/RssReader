@@ -1,6 +1,5 @@
 using Application.Common.Results;
 using Application.Models;
-using Domain.Entities;
 
 namespace Application.Interfaces
 {
