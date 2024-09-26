@@ -7,7 +7,7 @@ using Domain.Interface;
 
 namespace Domain;
 
-public class RssFetchService(IUnitOfWork unitOfWork, IRssFeedRepository rssFeedRepository) : IRssFetchService
+public class RssFetchService(IUnitOfWork unitOfWork, IRssFeedRepository iRssFeedRepository) : IRssFetchService
 {
     public async Task<Result> AddRssFeed(RssFeedRequest rssFeedRequest , string feedUrl, CancellationToken cancellationToken)
     {
@@ -17,7 +17,7 @@ public class RssFetchService(IUnitOfWork unitOfWork, IRssFeedRepository rssFeedR
             return Result.Failure(RssFeedError.InvalidRssFeedRequest);
         }
         // Check if RssFeed already exists
-        var rssFeedExists = await rssFeedRepository.GetByUrlAsync(feedUrl);
+        var rssFeedExists = await iRssFeedRepository.GetByUrlAsync(feedUrl);
 
         if (rssFeedExists is not null)
         {
@@ -25,9 +25,9 @@ public class RssFetchService(IUnitOfWork unitOfWork, IRssFeedRepository rssFeedR
         }
 
         // Add RssFeed to database
-        var rssFeed = await rssFeedRepository.ReadRssFeed( new Uri(feedUrl),cancellationToken);
+        var rssFeed = await iRssFeedRepository.ReadRssFeed( new Uri(feedUrl),cancellationToken);
         
-        await rssFeedRepository.AddAsync(rssFeed);
+        await iRssFeedRepository.AddAsync(rssFeed);
         await unitOfWork.CommitAsync();
         return Result.Success("RSS-Feed added successfully");
     }
