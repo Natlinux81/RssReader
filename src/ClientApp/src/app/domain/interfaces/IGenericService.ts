@@ -1,4 +1,4 @@
-export interface IGenericRepository<TEntity> {
+export interface IGenericService<TEntity> {
   getByIdAsync(id: number): Promise<TEntity | null>;
   getAllAsync(): Promise<TEntity[]>;
   addAsync(entity: TEntity): Promise<TEntity>;

@@ -1,6 +1,6 @@
-import { IGenericRepository } from "../../domain/interfaces/IGenericRepository";
+import { IGenericService } from "../../domain/interfaces/IGenericService";
 
-export class GenericRepository<TEntity> implements IGenericRepository<TEntity> {
+export class GenericRepository<TEntity> implements IGenericService<TEntity> {
   private entities: TEntity[] = [];
 
   async getByIdAsync(id: number): Promise<TEntity | null> {

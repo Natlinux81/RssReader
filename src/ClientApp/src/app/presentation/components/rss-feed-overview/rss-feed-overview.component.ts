@@ -1,6 +1,5 @@
 import { RssFeedItem } from '../../../domain/entities/rssFeedItem';
 import { Component } from '@angular/core';
-import { rssFeeds } from '../../../mockdata/mock-rssFeed';
 import { NgFor } from '@angular/common';
 import { RssFeed} from '../../../domain/entities/rssFeed';
 import { InputComponent } from "../input/input.component";
@@ -43,11 +42,11 @@ export class RssFeedOverviewComponent {
     feedItems: this.rssFeedItems,
   }
 
-  RssFeeds = rssFeeds;
+  RssFeeds : RssFeed[] = [];
 
   deleteFeed(rssFeed : RssFeed) : void {
-    var index = rssFeeds.indexOf(rssFeed);
-    console.log(index);
-    rssFeeds.splice(index, 1);
+    // var index = rssFeeds.indexOf(rssFeed);
+    // console.log(index);
+    // rssFeeds.splice(index, 1);
     }
 }

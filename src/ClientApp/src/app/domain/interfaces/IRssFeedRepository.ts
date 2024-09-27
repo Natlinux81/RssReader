@@ -1,10 +1,8 @@
-import { Observable } from "rxjs";
 import { RssFeed } from "../entities/rssFeed";
-import { IGenericRepository } from "./IGenericRepository";
 
-export interface IRssFeedRepository extends IGenericRepository<RssFeed> {
+export interface IRssFeedRepository {
     // extra implementations
-    getByUrlAsync(url: string): Promise<RssFeed | null>;
+    getByUrlAsync(url: string): Promise<RssFeed>;
 
-    readRssFeed(url: URL): Observable<RssFeed>;
+    readRssFeed(url: URL): Promise<RssFeed>;
 }

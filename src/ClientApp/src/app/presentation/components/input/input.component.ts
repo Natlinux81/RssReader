@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { RssFeedItem } from '../../../domain/entities/rssFeedItem';
 import { RssFeed } from '../../../domain/entities/rssFeed';
-import { rssFeeds } from '../../../mockdata/mock-rssFeed';
 
 @Component({
   selector: 'app-input',
@@ -42,8 +41,8 @@ export class InputComponent {
 
 
   addFeed() {
-    console.log("addFeed");
-    rssFeeds.push(this.rssFeed);
+    // console.log("addFeed");
+    // rssFeeds.push(this.rssFeed);
 
   }
 }
