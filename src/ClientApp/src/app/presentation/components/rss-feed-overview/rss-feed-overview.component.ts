@@ -1,8 +1,10 @@
-import { RssFeedItem } from '../../../domain/entities/rssFeedItem';
-import { Component } from '@angular/core';
+import { GenericService } from '../../../infrastructure/repositories/Generic.service';
+import { Component, OnInit } from '@angular/core';
 import { NgFor } from '@angular/common';
 import { RssFeed} from '../../../domain/entities/rssFeed';
 import { InputComponent } from "../input/input.component";
+import { HttpHeaders } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-rss-feed-overview',
@@ -11,42 +13,22 @@ import { InputComponent } from "../input/input.component";
   templateUrl: './rss-feed-overview.component.html',
   styleUrl: './rss-feed-overview.component.scss'
 })
-export class RssFeedOverviewComponent {
+export class RssFeedOverviewComponent implements OnInit{
+  constructor(private genericService : GenericService<RssFeed>) {}
 
+  rssFeeds : RssFeed[] = [];
 
-  rssFeedItems: RssFeedItem[] = [
-    {
-      id: 1,
-      title: "Tech News Today",
-      link: "https://example.com/tech-news-today",
-      description: "Latest updates in the world of technology.",
-      publishDate: new Date("2024-09-01"),
-      imageUrl: "pexels-markusspiske-3970330.jpg",
-      rssFeedId: 3,
-    },
-    {
-      id: 2,
-      title: "Science Breakthroughs",
-      link: "https://example.com/science-breakthroughs",
-      description: "Recent discoveries in science and space exploration.",
-      publishDate: new Date("2024-09-02"),
-      imageUrl: "pexels-markusspiske-3970330.jpg",
-      rssFeedId: 3,
-    },
-  ];
-
-  rssFeed: RssFeed = {
-    id: 3,
-    url: "https://example.com/tech-rss",
-    channelTitle: "Tech & Science News",
-    feedItems: this.rssFeedItems,
+  ngOnInit(): void {
+      this.genericService.getAllAsync().subscribe((result)=>{
+      this.rssFeeds = result;
+    });
   }
 
-  RssFeeds : RssFeed[] = [];
+
 
   deleteFeed(rssFeed : RssFeed) : void {
-    // var index = rssFeeds.indexOf(rssFeed);
-    // console.log(index);
-    // rssFeeds.splice(index, 1);
+    console.log("deleteFeed");
+    this.genericService.delete(rssFeed).subscribe();
+    this.rssFeeds.splice(this.rssFeeds.indexOf(rssFeed), 1);
     }
 }

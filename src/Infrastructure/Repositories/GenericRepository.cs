@@ -27,7 +27,7 @@ namespace Infrastructure.Repositories
         public async Task<TEntity?> GetByIdAsync(int id)
         {
             return await DbSet.FindAsync(id);
-        }      
+        }
 
         public TEntity Update(TEntity entity)
         {

@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RssFeedItem } from '../../../domain/entities/rssFeedItem';
 import { RssFeed } from '../../../domain/entities/rssFeed';
+import { GenericService } from '../../../infrastructure/repositories/Generic.service';
 
 @Component({
   selector: 'app-input',
@@ -11,6 +12,8 @@ import { RssFeed } from '../../../domain/entities/rssFeed';
 })
 export class InputComponent {
 
+  rssFeeds: RssFeed[] = [];
+
   rssFeedItems: RssFeedItem[] = [
     {
       id: 1,
@@ -19,7 +22,7 @@ export class InputComponent {
       description: "Latest updates in the world of technology.",
       publishDate: new Date("2024-09-01"),
       imageUrl: "pexels-markusspiske-3970330.jpg",
-      rssFeedId: 1,
+      rssFeedId: 3,
     },
     {
       id: 2,
@@ -28,21 +31,26 @@ export class InputComponent {
       description: "Recent discoveries in science and space exploration.",
       publishDate: new Date("2024-09-02"),
       imageUrl: "pexels-markusspiske-3970330.jpg",
-      rssFeedId: 1,
+      rssFeedId: 3,
     },
   ];
 
   rssFeed: RssFeed = {
-    id: 1,
+    id: 3,
     url: "https://example.com/tech-rss",
-    channelTitle: "Tech & Science News",
+    channelTitle: "Test Feed",
     feedItems: this.rssFeedItems,
   }
 
-
-  addFeed() {
-    // console.log("addFeed");
-    // rssFeeds.push(this.rssFeed);
+  constructor(private genericService : GenericService<RssFeed>) {
 
   }
-}
+
+  addFeed() {
+      this.genericService.addAsync(this.rssFeed).subscribe((result)=>{
+      console.log("addFeed" , result);
+      this.rssFeeds.push(result);
+      console.log("this.rssFeeds" , this.rssFeeds);
+
+  });
+}}

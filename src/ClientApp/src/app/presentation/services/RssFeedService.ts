@@ -1,13 +1,13 @@
-import { RssFeed } from './../../domain/entities/rssFeed';
+import { RssFeed } from '../../domain/entities/rssFeed';
 import { IRssFeedRepository } from "../../domain/interfaces/IRssFeedRepository";
-import { IGenericService } from '../../domain/interfaces/IGenericService';
+import { IGenericRepository } from '../../domain/interfaces/IGenericRepository';
 
 
-export class RssFeedRepository implements IRssFeedRepository {
+export class RssFeedService implements IRssFeedRepository {
 
   rssFeed: RssFeed[] = [];
 
-  constructor(private rssFeedService : IGenericService<RssFeed>) {}
+  constructor(private rssFeedService : IGenericRepository<RssFeed>) {}
   getByUrlAsync(url: string): Promise<RssFeed> {
     throw new Error('Method not implemented.');
   }
