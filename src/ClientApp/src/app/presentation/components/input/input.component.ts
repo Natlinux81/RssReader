@@ -1,16 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { RssFeed } from './../../../domain/entities/rssFeed';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { RssFeedItem } from '../../../domain/entities/rssFeedItem';
-import { RssFeed } from '../../../domain/entities/rssFeed';
 import { GenericService } from '../../../infrastructure/repositories/Generic.service';
+import { FormsModule } from '@angular/forms';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-input',
   standalone: true,
-  imports: [],
+  imports: [FormsModule, NgIf],
   templateUrl: './input.component.html',
   styleUrl: './input.component.scss'
 })
 export class InputComponent {
+
+  @Output() feedAdded = new EventEmitter<RssFeed>();
+
+  inputRssFeed: string = "";
 
   rssFeeds: RssFeed[] = [];
 
@@ -30,7 +36,7 @@ export class InputComponent {
       link: "https://example.com/science-breakthroughs",
       description: "Recent discoveries in science and space exploration.",
       publishDate: new Date("2024-09-02"),
-      imageUrl: "pexels-markusspiske-3970330.jpg",
+      imageUrl: "pexels-brotin-biswas-158640-518543.jpg",
       rssFeedId: 3,
     },
   ];
@@ -49,8 +55,7 @@ export class InputComponent {
   addFeed() {
       this.genericService.addAsync(this.rssFeed).subscribe((result)=>{
       console.log("addFeed" , result);
-      this.rssFeeds.push(result);
-      console.log("this.rssFeeds" , this.rssFeeds);
-
+      this.feedAdded.emit(result);
+      this.inputRssFeed = "";
   });
 }}

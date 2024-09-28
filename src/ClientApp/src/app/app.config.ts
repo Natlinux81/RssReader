@@ -6,6 +6,7 @@ import { HttpClientInMemoryWebApiModule} from 'angular-in-memory-web-api';
 import { routes } from './app.routes';
 import { InMemoryDataService } from './presentation/services/inMemoryData.service';
 
+
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),

@@ -4,6 +4,7 @@ import { NgFor } from '@angular/common';
 import { RssFeed} from '../../../domain/entities/rssFeed';
 import { InputComponent } from "../input/input.component";
 import { HttpHeaders } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -18,17 +19,28 @@ export class RssFeedOverviewComponent implements OnInit{
 
   rssFeeds : RssFeed[] = [];
 
+  rssFeed: RssFeed = {
+    id: 3,
+    url: "https://example.com/tech-rss",
+    channelTitle: "Test Feed",
+    feedItems: []
+  }
+
   ngOnInit(): void {
       this.genericService.getAllAsync().subscribe((result)=>{
       this.rssFeeds = result;
-    });
+      console.log("ngOnInit" , this.rssFeeds);
+    })
   }
 
-
+  onFeedAdded(newFeed: RssFeed) {
+    this.rssFeeds.push(newFeed);  // Liste aktualisieren
+    console.log("Feed added:", newFeed);
+  }
 
   deleteFeed(rssFeed : RssFeed) : void {
-    console.log("deleteFeed");
     this.genericService.delete(rssFeed).subscribe();
-    this.rssFeeds.splice(this.rssFeeds.indexOf(rssFeed), 1);
+    this.rssFeeds = this.rssFeeds.filter(r => r.id !== rssFeed.id);
+    console.log("deleteFeed" , rssFeed.id);
     }
 }

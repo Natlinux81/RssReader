@@ -1,4 +1,4 @@
-<app-input></app-input>
+<app-input (feedAdded)="onFeedAdded($event)"></app-input>
 
 <div *ngFor="let rssFeed of rssFeeds" class="card mt-2">
   <div class="card-body">
