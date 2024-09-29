@@ -15,14 +15,18 @@ builder.Services.AddHttpClient();
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplication();
 
+// InMemory Database for testing
+builder.Services.AddDbContext<RssReaderDbContext>(options => 
+options.UseInMemoryDatabase(builder.Configuration.GetConnectionString("MyTestDb")));
+
 // get MariaDbSettings from configuration
-builder.Services.AddDbContext<RssReaderDbContext>(
-    options =>
-    {
-        var mariaDbSettings = builder.Configuration.GetRequiredSection("MariaDbSettings").Get<MariaDbSettings>();  
-        var connectionString = mariaDbSettings?.ConnectionString;
-        options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
-    });
+// builder.Services.AddDbContext<RssReaderDbContext>(
+//     options =>
+//     {
+//         var mariaDbSettings = builder.Configuration.GetRequiredSection("MariaDbSettings").Get<MariaDbSettings>();  
+//         var connectionString = mariaDbSettings?.ConnectionString;
+//         options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+//     });
 
 var app = builder.Build();
 
@@ -36,10 +40,10 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.MapControllers();
 
-using ( var scope = app.Services.CreateScope())
-{
-    var db = scope.ServiceProvider.GetRequiredService<RssReaderDbContext>();
-    db.Database.Migrate();
-}
+// using ( var scope = app.Services.CreateScope())
+// {
+//     var db = scope.ServiceProvider.GetRequiredService<RssReaderDbContext>();
+//     db.Database.Migrate();
+// }
 
 app.Run();

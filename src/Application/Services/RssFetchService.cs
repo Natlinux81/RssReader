@@ -31,4 +31,16 @@ public class RssFetchService(IUnitOfWork unitOfWork, IRssFeedRepository iRssFeed
         await unitOfWork.CommitAsync();
         return Result.Success("RSS-Feed added successfully");
     }
+
+    public async Task<Result> GetAllRssFeeds()
+    {       
+        var rssFeeds = await iRssFeedRepository.GetAllAsync();
+
+        if (rssFeeds == null || rssFeeds.Count == 0)
+        {
+            return Result.Failure(RssFeedError.InvalidRssFeedRequest);
+        }
+        await unitOfWork.CommitAsync();
+        return Result.Success(rssFeeds);
+    }
 }

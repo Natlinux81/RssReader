@@ -1,6 +1,7 @@
 using Application.Interfaces;
 using Application.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualBasic;
 
 namespace API.Controllers
 {
@@ -19,5 +20,24 @@ namespace API.Controllers
             }
             return Results.Ok(response);
         }
+
+        [HttpGet]
+        public async Task<IResult> GetAllRssFeeds()
+        {
+            // get all rss feeds from database
+            var response = await rssFetchService.GetAllRssFeeds();
+
+            // check if response is failure
+            if (response.IsFailure)
+            {
+                return Results.BadRequest(response);
+            }
+
+            return Results.Ok(response);
+        }
+
+
+
+
     }
 }
