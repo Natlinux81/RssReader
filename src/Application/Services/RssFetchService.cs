@@ -30,7 +30,7 @@ public class RssFetchService(IUnitOfWork unitOfWork, IRssFeedRepository iRssFeed
         await iRssFeedRepository.AddAsync(rssFeed);
         await unitOfWork.CommitAsync();
         return Result.Success("RSS-Feed added successfully");
-    }
+    } 
 
     public async Task<Result> GetAllRssFeeds()
     {       
@@ -43,4 +43,23 @@ public class RssFetchService(IUnitOfWork unitOfWork, IRssFeedRepository iRssFeed
         await unitOfWork.CommitAsync();
         return Result.Success(rssFeeds);
     }
+
+public async Task<Result> DeleteRssFeed(int id)
+{
+    // Überprüfen, ob der Feed existiert
+    var rssFeed = await iRssFeedRepository.GetByIdAsync(id);
+
+    if (rssFeed == null)
+    {
+        return Result.Failure(RssFeedError.RssFeedNotFound); // Falls der Feed nicht existiert
+    }
+
+    // Feed löschen
+    iRssFeedRepository.Delete(rssFeed);
+
+    // Änderungen in der Datenbank speichern
+    await unitOfWork.CommitAsync();
+
+    return Result.Success("RSS-Feed deleted successfully");
+}
 }

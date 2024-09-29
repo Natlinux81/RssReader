@@ -1,3 +1,4 @@
+using System.Net;
 using Application.Interfaces;
 using Application.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -36,8 +37,20 @@ namespace API.Controllers
             return Results.Ok(response);
         }
 
+        [HttpDelete("{id}")]
+        public async Task<IResult> DeleteRssFeed(int id)
+        {
+            // Delete RSS feed by ID
+            var response = await rssFetchService.DeleteRssFeed(id);
 
+            // Check if response is failure
+            if (response.IsFailure)
+            {
+                return Results.BadRequest(response);
+            }
 
+            return Results.Ok(response);
+        }
 
     }
 }
