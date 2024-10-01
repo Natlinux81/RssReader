@@ -39,8 +39,8 @@ public class RssFetchService(IUnitOfWork unitOfWork, IRssFeedRepository iRssFeed
         if (rssFeeds == null || rssFeeds.Count == 0)
         {
             return Result.Failure(RssFeedError.InvalidRssFeedRequest);
-        }
-        await unitOfWork.CommitAsync();
+        }       
+        
         return Result.Success(rssFeeds);
     }
 

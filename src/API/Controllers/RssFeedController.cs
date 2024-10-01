@@ -8,8 +8,8 @@ namespace API.Controllers
 {
     public class RssFeedController(IRssFetchService rssFetchService) : BaseApiController
     {
-        [HttpPost("api/[controller]")]
-        public async Task<IResult> AddRssFeed(CancellationToken cancellationToken, RssFeedRequest rssFedRequest, string feedUrl)
+        [HttpPost]
+        public async Task<IResult> AddRssFeed([FromQuery]CancellationToken cancellationToken, [FromBody] RssFeedRequest rssFedRequest, string feedUrl)
         {
             // add rss feed to database
             var response = await rssFetchService.AddRssFeed(rssFedRequest, feedUrl, cancellationToken);

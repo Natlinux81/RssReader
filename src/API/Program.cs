@@ -28,6 +28,17 @@ options.UseInMemoryDatabase(builder.Configuration.GetConnectionString("MyTestDb"
 //         options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 //     });
 
+builder.Services.AddCors(options =>
+{
+options.AddPolicy("AllowLocalhost",
+policy =>
+{
+policy.WithOrigins("http://localhost:44492")
+.AllowAnyHeader()
+.AllowAnyMethod();
+});
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -38,6 +49,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors("AllowLocalhost");
 app.MapControllers();
 
 // using ( var scope = app.Services.CreateScope())

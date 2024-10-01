@@ -16,7 +16,8 @@ namespace Infrastructure.Repositories
         public async Task<RssFeed?> GetByUrlAsync(string url)
         {
             return await _rssReaderDbContext.RssFeeds.FirstOrDefaultAsync(x => x.Url == url);
-        }
+        }     
+
 
         public async Task<RssFeed> ReadRssFeed(Uri rssFeedUri, CancellationToken cancellationToken)
         {

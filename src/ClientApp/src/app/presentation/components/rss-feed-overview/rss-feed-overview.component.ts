@@ -1,10 +1,11 @@
-import { GenericService } from '../../../infrastructure/repositories/Generic.service';
 import { Component, OnInit } from '@angular/core';
 import { NgFor } from '@angular/common';
 import { RssFeed} from '../../../domain/entities/rssFeed';
 import { InputComponent } from "../input/input.component";
-import { HttpHeaders } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { RssService } from '../../services/rss.service';
+import { Result } from '../../common/results/result';
+import { RssFeedRequest } from '../../models/RssFeedRequest';
+import { RssFeedItem } from '../../../domain/entities/rssFeedItem';
 
 
 @Component({
@@ -15,9 +16,11 @@ import { ActivatedRoute } from '@angular/router';
   styleUrl: './rss-feed-overview.component.scss'
 })
 export class RssFeedOverviewComponent implements OnInit{
-  constructor(private genericService : GenericService<RssFeed>) {}
+  constructor(private rssService : RssService) {}
 
   rssFeeds : RssFeed[] = [];
+
+  rssFeedItems : RssFeedItem[] = [];
 
   rssFeed: RssFeed = {
     id: 3,
@@ -27,20 +30,41 @@ export class RssFeedOverviewComponent implements OnInit{
   }
 
   ngOnInit(): void {
-      this.genericService.getAllAsync().subscribe((result)=>{
-      this.rssFeeds = result;
-      console.log("ngOnInit" , this.rssFeeds);
-    })
+    this.loadRssFeeds();
   }
 
-  onFeedAdded(newFeed: RssFeed) {
-    this.rssFeeds.push(newFeed);  // Liste aktualisieren
-    console.log("Feed added:", newFeed);
+  loadRssFeeds() {
+    this.rssService.getAllRssFeeds().subscribe((result: Result) => {
+      if (result.isSuccess) {
+        this.rssFeeds = result.value;
+        this.rssFeedItems = result.value;
+        console.log('RSS Feeds fetched successfully:', this.rssFeeds);
+        console.log('RSS FeedItems fetched successfully:', this.rssFeedItems);
+      } else {
+        console.error('Error fetching RSS feeds:', result.error);
+      }
+    });
   }
 
-  deleteFeed(rssFeed : RssFeed) : void {
-    this.genericService.delete(rssFeed).subscribe();
-    this.rssFeeds = this.rssFeeds.filter(r => r.id !== rssFeed.id);
-    console.log("deleteFeed" , rssFeed.id);
-    }
+  addRssFeed() {
+    const newFeed: RssFeedRequest = { channelTitle: 'New Feed', url: 'https://example.com/feed', feedItems: [] };
+    const feedUrl = 'https://example.com/feed'; // Beispiel-Feed-URL
+    this.rssService.addRssFeed(newFeed, feedUrl).subscribe((result: Result) => {
+      if (result.isSuccess) {
+        console.log('RSS Feed added successfully');
+      } else {
+        console.error('Error adding RSS feed:', result.error);
+      }
+    });
+  }
+
+  deleteRssFeed(id: number) {
+    this.rssService.deleteRssFeed(id).subscribe((result: Result) => {
+      if (result.isSuccess) {
+        console.log('RSS Feed deleted successfully');
+      } else {
+        console.error('Error deleting RSS feed:', result.error);
+      }
+    });
+  }
 }

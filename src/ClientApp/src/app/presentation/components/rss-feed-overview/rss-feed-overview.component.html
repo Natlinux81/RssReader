@@ -1,4 +1,4 @@
-<app-input (feedAdded)="onFeedAdded($event)"></app-input>
+<!-- <app-input (feedAdded)="onFeedAdded($event)"></app-input> -->
 
 <div *ngFor="let rssFeed of rssFeeds" class="card mt-2">
   <div class="card-body">
@@ -6,7 +6,7 @@
           <div class="flex-grow-1 text-center">
               <h5 class="card-title">{{rssFeed.channelTitle}}</h5>
           </div>
-          <button (click)="deleteFeed(rssFeed)" class="btn btn-danger"><i class="bi bi-trash3-fill"></i></button>
+          <button (click)="deleteRssFeed(rssFeed.id)" class="btn btn-danger"><i class="bi bi-trash3-fill"></i></button>
       </div>
       <div class="d-flex flex-wrap align-items-center justify-content-center">
           <div *ngFor="let feedItem of rssFeed.feedItems" class="card m-2" style="width: 20rem;">

@@ -9,7 +9,8 @@ import { HttpClient } from '@angular/common/http';
 })
 export class GenericService<TEntity> implements IGenericRepository<TEntity> {
 
-  private baseUrl = 'api/rssFeeds';
+  // private baseUrl = 'api/rssFeeds';
+  private baseUrl = 'https://localhost:7091/apiRssFeed';
 
   constructor(private httpClient : HttpClient) { }
 
