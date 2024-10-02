@@ -10,10 +10,14 @@ namespace Infrastructure.Context
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-       modelBuilder.Entity<RssFeed>()
-            .HasMany(r => r.FeedItems)
-            .WithOne(f => f.RssFeed)
-            .HasForeignKey(f => f.RssFeedId);
+      modelBuilder.Entity<RssFeed>().HasKey(k => k.Id);
+      modelBuilder.Entity<RssFeed>().ToTable("RssFeeds")
+          .HasMany(feedItem => feedItem.FeedItems);
+      modelBuilder.Entity<RssFeedItem>().HasKey(k => k.Id);
+      modelBuilder.Entity<RssFeedItem>().ToTable("RssFeedItems")
+          .HasOne(feed => feed.RssFeed)
+          .WithMany(feed => feed.FeedItems)
+          .HasForeignKey(feedItem => feedItem.RssFeedId);
     }
   }
 }

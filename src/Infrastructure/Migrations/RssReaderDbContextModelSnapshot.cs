@@ -38,7 +38,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("RssFeeds");
+                    b.ToTable("RssFeeds", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.RssFeedItem", b =>
@@ -71,7 +71,7 @@ namespace Infrastructure.Migrations
 
                     b.HasIndex("RssFeedId");
 
-                    b.ToTable("RssFeedItems");
+                    b.ToTable("RssFeedItems", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.RssFeedItem", b =>

@@ -19,15 +19,6 @@ builder.Services.AddApplication();
 builder.Services.AddDbContext<RssReaderDbContext>(options => 
 options.UseInMemoryDatabase(builder.Configuration.GetConnectionString("MyTestDb")));
 
-// get MariaDbSettings from configuration
-// builder.Services.AddDbContext<RssReaderDbContext>(
-//     options =>
-//     {
-//         var mariaDbSettings = builder.Configuration.GetRequiredSection("MariaDbSettings").Get<MariaDbSettings>();  
-//         var connectionString = mariaDbSettings?.ConnectionString;
-//         options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
-//     });
-
 builder.Services.AddCors(options =>
 {
 options.AddPolicy("AllowLocalhost",
