@@ -1,5 +1,6 @@
 ﻿using Application;
 using Application.Common.Results;
+using Application.DTOs;
 using Application.Interfaces;
 using Application.Models;
 using Domain.Interface;
@@ -34,14 +35,30 @@ public class RssFetchService(IUnitOfWork unitOfWork, IRssFeedRepository iRssFeed
 
     public async Task<Result> GetAllRssFeeds()
     {       
-        var rssFeeds = await iRssFeedRepository.GetAllAsync();
+        var rssFeeds = await iRssFeedRepository.GetByWithItemsAsync();
 
         if (rssFeeds == null || rssFeeds.Count == 0)
         {
             return Result.Failure(RssFeedError.InvalidRssFeedRequest);
-        }       
+        } 
         
-        return Result.Success(rssFeeds);
+        var rssFeedDtos = rssFeeds.Select(r => new RssFeedDto
+    {
+        Id = r.Id,
+        Url = r.Url,
+        ChannelTitle = r.ChannelTitle,
+        FeedItems = r.FeedItems.Select(fi => new RssFeedItemDto
+        {
+            Id = fi.Id,
+            Title = fi.Title,
+            Description = fi.Description,
+            Link = fi.Link,
+            PublishDate = fi.PublishDate,
+            ImageUrl = fi.ImageUrl
+        }).ToList()
+    }).ToList();      
+        
+        return Result.Success(rssFeedDtos);
     }
 
 public async Task<Result> DeleteRssFeed(int id)
