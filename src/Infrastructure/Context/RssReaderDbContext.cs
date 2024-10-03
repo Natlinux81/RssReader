@@ -1,4 +1,5 @@
 using Domain.Entities;
+using Infrastructure.Utilities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Context
@@ -18,6 +19,8 @@ namespace Infrastructure.Context
           .HasOne(feed => feed.RssFeed)
           .WithMany(feed => feed.FeedItems)
           .HasForeignKey(feedItem => feedItem.RssFeedId);
+
+           MockData.GetMockData(modelBuilder);
     }
   }
 }

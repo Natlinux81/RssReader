@@ -56,5 +56,12 @@ if (app.Environment.IsDevelopment() || app.Environment.IsEnvironment("Test"))
 app.UseHttpsRedirection();
 app.UseCors("AllowLocalhost");
 app.MapControllers();
+app.UseStaticFiles();
+
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<RssReaderDbContext>();
+    context.Database.EnsureCreated(); // Erstellt die Datenbank, wenn sie nicht existiert.
+}
 
 app.Run();

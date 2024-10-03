@@ -30,6 +30,14 @@
     <ProjectReference Include="..\Domain\Domain.csproj" />   
   </ItemGroup>
 
+      <ItemGroup> 
+      <ResolvedFileToPublish Include="@(DistFiles-&gt;'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
+        <RelativePath>wwwroot\%(RecursiveDir)%(FileName)%(Extension)</RelativePath>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      </ResolvedFileToPublish>
+    </ItemGroup>
+
   <ItemGroup>
     <Folder Include="Migrations/" />
   </ItemGroup>
