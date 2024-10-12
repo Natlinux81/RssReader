@@ -8,5 +8,5 @@ export interface IRssService {
 
     getAllRssFeeds(): Observable<RssFeed[]>;
 
-    deleteRssFeed(id: string): Observable<boolean>;
+    deleteRssFeed(id: string): Observable<RssFeed>;
 }

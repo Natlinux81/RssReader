@@ -30,7 +30,7 @@ export class RssService {
 
     deleteRssFeed(id: number): Observable<Result> {
       return this.httpClient
-        .delete<Result>(this.baseUrl + id)
+        .delete<Result>(this.baseUrl + '/' + id)
         .pipe(catchError(this.handleError));
     }
 

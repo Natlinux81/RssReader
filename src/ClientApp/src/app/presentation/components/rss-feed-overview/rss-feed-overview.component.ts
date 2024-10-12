@@ -39,7 +39,6 @@ export class RssFeedOverviewComponent implements OnInit{
         this.rssFeeds = result.value;
         this.rssFeedItems = result.value;
         console.log('RSS Feeds fetched successfully:', this.rssFeeds);
-        console.log('RSS FeedItems fetched successfully:', this.rssFeedItems);
       } else {
         console.error('Error fetching RSS feeds:', result.error);
       }
@@ -61,6 +60,7 @@ export class RssFeedOverviewComponent implements OnInit{
   deleteRssFeed(id: number) {
     this.rssService.deleteRssFeed(id).subscribe((result: Result) => {
       if (result.isSuccess) {
+        this.rssFeeds = this.rssFeeds.filter(feed => feed.id !== id);
         console.log('RSS Feed deleted successfully');
       } else {
         console.error('Error deleting RSS feed:', result.error);
