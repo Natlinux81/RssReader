@@ -4,7 +4,6 @@ using Infrastructure.Utilities;
 using Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -17,7 +16,7 @@ builder.Services.AddApplication();
 
 if (builder.Environment.IsDevelopment())
 {
-    // MariaDb Database for deployment
+    // MariaDb Database for development
     builder.Services.AddDbContext<RssReaderDbContext>(
         options =>
         {

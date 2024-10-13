@@ -1,33 +1,32 @@
-import { Component, OnInit } from '@angular/core';
-import { NgFor } from '@angular/common';
-import { RssFeed} from '../../../domain/entities/rssFeed';
-import { InputComponent } from "../input/input.component";
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgFor, NgIf } from '@angular/common';
+import { RssFeed } from '../../../domain/entities/rssFeed';
 import { RssService } from '../../services/rss.service';
 import { Result } from '../../common/results/result';
-import { RssFeedRequest } from '../../models/RssFeedRequest';
 import { RssFeedItem } from '../../../domain/entities/rssFeedItem';
+import { FormsModule, NgForm } from '@angular/forms';
+import { RssFeedItemRequest } from '../../models/RssFeedItemRequest';
+import { RssFeedRequest } from '../../models/RssFeedRequest';
 
 
 @Component({
   selector: 'app-rss-feed-overview',
   standalone: true,
-  imports: [NgFor, InputComponent],
+  imports: [NgFor, FormsModule, NgIf],
   templateUrl: './rss-feed-overview.component.html',
   styleUrl: './rss-feed-overview.component.scss'
 })
-export class RssFeedOverviewComponent implements OnInit{
-  constructor(private rssService : RssService) {}
+export class RssFeedOverviewComponent implements OnInit {
 
-  rssFeeds : RssFeed[] = [];
+  @ViewChild('formInput', { static: false }) formInput!: NgForm;
 
-  rssFeedItems : RssFeedItem[] = [];
+  rssFeeds: RssFeed[] = [];
+  rssFeedItems: RssFeedItem[] = [];
+  feedItems: RssFeedItemRequest[] = [];
+  inputRssFeed: string = "";
+  channelTitle: string = '';
 
-  rssFeed: RssFeed = {
-    id: 3,
-    url: "https://example.com/tech-rss",
-    channelTitle: "Test Feed",
-    feedItems: []
-  }
+  constructor(private rssService: RssService) { }
 
   ngOnInit(): void {
     this.loadRssFeeds();
@@ -45,12 +44,20 @@ export class RssFeedOverviewComponent implements OnInit{
     });
   }
 
-  addRssFeed() {
-    const newFeed: RssFeedRequest = { channelTitle: 'New Feed', url: 'https://example.com/feed', feedItems: [] };
-    const feedUrl = 'https://example.com/feed'; // Beispiel-Feed-URL
-    this.rssService.addRssFeed(newFeed, feedUrl).subscribe((result: Result) => {
+  addFeed(): void {
+    const rssFeedRequest: RssFeedRequest = {
+      url: this.inputRssFeed,
+      channelTitle: this.channelTitle,
+      feedItems: this.feedItems
+    };
+
+    this.rssService.addRssFeed(rssFeedRequest, this.inputRssFeed).subscribe((result: Result) => {
       if (result.isSuccess) {
-        console.log('RSS Feed added successfully');
+        this.inputRssFeed = '';
+        this.loadRssFeeds();
+        this.formInput.resetForm();
+        console.log('Feed added successfully', result);
+
       } else {
         console.error('Error adding RSS feed:', result.error);
       }

@@ -21,12 +21,11 @@ export class GenericService<TEntity> implements IGenericRepository<TEntity> {
   getByIdAsync(entity: TEntity): Observable<TEntity> {
     return this.httpClient.get<TEntity>(this.baseUrl + "/" + entity);
   }
+
   addAsync(entity: TEntity): Observable<TEntity> {
     return this.httpClient.post<TEntity>(this.baseUrl, entity);
   }
-  update(entity: TEntity): TEntity {
-    throw new Error('Method not implemented.');
-  }
+
   delete(entity: TEntity):Observable <TEntity> {
     return this.httpClient.delete<TEntity>(this.baseUrl + "/" + entity);
   }

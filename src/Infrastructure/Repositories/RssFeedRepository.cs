@@ -49,7 +49,7 @@ namespace Infrastructure.Repositories
 
         }
 
-        public async Task<List<RssFeed>> GetByWithItemsAsync()
+        public async Task<List<RssFeed>> GetWithItemsAsync()
         {
             return await _rssReaderDbContext.RssFeeds.
             Include(r => r.FeedItems).

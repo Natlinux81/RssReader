@@ -35,7 +35,7 @@ public class RssFetchService(IUnitOfWork unitOfWork, IRssFeedRepository iRssFeed
 
     public async Task<Result> GetAllRssFeeds()
     {       
-        var rssFeeds = await iRssFeedRepository.GetByWithItemsAsync();
+        var rssFeeds = await iRssFeedRepository.GetWithItemsAsync();
 
         if (rssFeeds == null || rssFeeds.Count == 0)
         {
