@@ -1,15 +1,13 @@
-using System.Net;
 using Application.Interfaces;
 using Application.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualBasic;
 
 namespace API.Controllers
 {
     public class RssFeedController(IRssFetchService rssFetchService) : BaseApiController
     {
         [HttpPost]
-        public async Task<IResult> AddRssFeed([FromQuery]CancellationToken cancellationToken, [FromBody] RssFeedRequest rssFedRequest, string feedUrl)
+        public async Task<IResult> AddRssFeed([FromQuery] CancellationToken cancellationToken, [FromBody] RssFeedRequest rssFedRequest, string feedUrl)
         {
             // add rss feed to database
             var response = await rssFetchService.AddRssFeed(rssFedRequest, feedUrl, cancellationToken);

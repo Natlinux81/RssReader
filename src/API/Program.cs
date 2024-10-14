@@ -28,8 +28,15 @@ if (builder.Environment.IsDevelopment())
 else
 {
     // InMemory Database for testing
+    var dbName = builder.Configuration.GetConnectionString("MyTestDb");
+
+    if (string.IsNullOrEmpty(dbName))
+    {
+        throw new ArgumentNullException(nameof(dbName), "Database name should not be null or empty.");
+    }
+
     builder.Services.AddDbContext<RssReaderDbContext>(options =>
-    options.UseInMemoryDatabase(builder.Configuration.GetConnectionString("MyTestDb")));
+        options.UseInMemoryDatabase(dbName));
 }
 
 builder.Services.AddCors(options =>
@@ -60,7 +67,7 @@ app.UseStaticFiles();
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<RssReaderDbContext>();
-    context.Database.EnsureCreated(); // Erstellt die Datenbank, wenn sie nicht existiert.
+    context.Database.EnsureCreated();
 }
 
 app.Run();
