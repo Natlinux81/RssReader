@@ -1,4 +1,4 @@
-export interface Error {
+export interface RssError {
   code: string;
   message: string;
 }
