@@ -1,0 +1,17 @@
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <p class="modal-title" id="staticBackdropLabel">{{ feedItem?.title }}</p>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <img *ngIf="feedItem?.imageUrl" [src]="feedItem?.imageUrl" alt="Feed Image" class="img-fluid" />
+        <p class="mt-2">{{ feedItem?.description }}</p>
+      </div>
+      <div class="modal-footer">
+        <a *ngIf="feedItem?.link" [href]="feedItem?.link" target="_blank">{{ feedItem?.link }}</a>
+      </div>
+    </div>
+  </div>
+</div>

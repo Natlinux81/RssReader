@@ -7,18 +7,21 @@ import { RssFeedItem } from '../../../domain/entities/rssFeedItem';
 import { FormsModule, NgForm } from '@angular/forms';
 import { RssFeedItemRequest } from '../../models/RssFeedItemRequest';
 import { RssFeedRequest } from '../../models/RssFeedRequest';
+import { FeedItemModalComponent } from "../../shared/feed-item-modal/feed-item-modal.component";
 
 
 @Component({
   selector: 'app-rss-feed-overview',
   standalone: true,
-  imports: [NgFor, FormsModule, NgIf],
+  imports: [NgFor, FormsModule, NgIf, FeedItemModalComponent],
   templateUrl: './rss-feed-overview.component.html',
   styleUrl: './rss-feed-overview.component.scss'
 })
 export class RssFeedOverviewComponent implements OnInit {
 
   @ViewChild('formInput', { static: false }) formInput!: NgForm;
+
+  selectedFeedItem: RssFeedItem | null = null;
 
   rssFeeds: RssFeed[] = [];
   rssFeedItems: RssFeedItem[] = [];
@@ -73,5 +76,10 @@ export class RssFeedOverviewComponent implements OnInit {
         console.error('Error deleting RSS feed:', result.error);
       }
     });
+  }
+
+  selectFeedItem(feedItem: RssFeedItem): void {
+    this.selectedFeedItem = feedItem;
+    console.log('Selected feed item:', feedItem);
   }
 }

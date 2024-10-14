@@ -10,4 +10,6 @@ export interface IRssService {
     getAllRssFeeds(): Observable<Result>;
 
     deleteRssFeed(id: number): Observable<Result>;
+    
+    getRssFeedById(id: number): Observable<Result>;
 }
