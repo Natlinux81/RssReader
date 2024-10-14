@@ -9,8 +9,8 @@
         <img *ngIf="feedItem?.imageUrl" [src]="feedItem?.imageUrl" alt="Feed Image" class="img-fluid" />
         <p class="mt-2">{{ feedItem?.description }}</p>
       </div>
-      <div class="modal-footer">
-        <a *ngIf="feedItem?.link" [href]="feedItem?.link" target="_blank">{{ feedItem?.link }}</a>
+      <div class="modal-footer d-flex justify-content-center">
+        <a  *ngIf="feedItem?.link" [href]="feedItem!.link" target="_blank">{{ feedItem!.link | shortenLink:40 }}</a>
       </div>
     </div>
   </div>
