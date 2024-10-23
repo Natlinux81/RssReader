@@ -1,6 +1,8 @@
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog" [ngClass]="{'text-white': darkModeService.darkModeSignal() === 'dark'}">
     <div class="modal-content">
+      <small class="m-2 text-end" *ngIf="feedItem?.publishDate">{{ feedItem?.publishDate! | timeElapsed }} ago</small>
+
       <div class="modal-header">
         <h5 class="modal-title" id="staticBackdropLabel">{{ feedItem?.title }}</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -8,6 +10,7 @@
       <div class="modal-body">
         <img *ngIf="feedItem?.imageUrl" [src]="feedItem?.imageUrl" alt="Feed Image" class="img-fluid" />
         <p class="mt-2">{{ feedItem?.description }}</p>
+
       </div>
       <div class="modal-footer d-flex justify-content-center">
         <a *ngIf="feedItem?.link" [href]="feedItem!.link" target="_blank">{{ feedItem!.link | shortenLink:40 }}</a>

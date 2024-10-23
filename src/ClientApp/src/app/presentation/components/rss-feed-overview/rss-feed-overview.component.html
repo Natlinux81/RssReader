@@ -27,10 +27,14 @@
       <div class="d-flex flex-wrap justify-content-between">
         <div *ngFor="let feedItem of rssFeed.feedItems" class="card mt-3 item_card d-flex justify-content-center align-items-center" type="button" data-bs-toggle="modal"
           data-bs-target="#staticBackdrop" style="width: 22rem; height: 20rem" (click)="selectFeedItem(feedItem)">
+         <div class="d-flex justify-content-end me-4 mt-4" style="width: 100%;">
+          <small>{{feedItem.publishDate | timeElapsed}} ago</small>
+         </div>
           <img src="{{feedItem.imageUrl}}" class="mt-3" alt="Feed Image" style="display: block; width: 20rem; height: auto;">
+
           <div class="card-body">
             <h5 class="card-title">{{feedItem.title}}</h5>
-            <small>{{feedItem.publishDate | timeElapsed}} ago</small>
+
           </div>
         </div>
       </div>
