@@ -30,6 +30,7 @@
           <img src="{{feedItem.imageUrl}}" class="mt-3" alt="Feed Image" style="display: block; width: 20rem; height: auto;">
           <div class="card-body">
             <h5 class="card-title">{{feedItem.title}}</h5>
+            <small>{{feedItem.publishDate | timeElapsed}} ago</small>
           </div>
         </div>
       </div>

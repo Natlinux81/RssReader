@@ -8,12 +8,13 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { RssFeedItemRequest } from '../../models/RssFeedItemRequest';
 import { RssFeedRequest } from '../../models/RssFeedRequest';
 import { FeedItemModalComponent } from "../../shared/feed-item-modal/feed-item-modal.component";
+import { TimeElapsedPipe } from '../../../infrastructure/utilities/time-elapsed.pipe';
 
 
 @Component({
   selector: 'app-rss-feed-overview',
   standalone: true,
-  imports: [NgFor, FormsModule, NgIf, FeedItemModalComponent],
+  imports: [NgFor, FormsModule, NgIf, FeedItemModalComponent,TimeElapsedPipe],
   templateUrl: './rss-feed-overview.component.html',
   styleUrl: './rss-feed-overview.component.scss'
 })

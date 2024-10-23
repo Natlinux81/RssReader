@@ -29,7 +29,7 @@ namespace Infrastructure.Utilities
                 Title = "Test Feed Item 1 Künstliche Intelligenz; Arbeitsminister Heil will KI \"auf die Straße bringen",
                 Description = "Bundesarbeitsminister Heil will den Einsatz von Künstlicher Intelligenz (KI) in der Arbeitswelt vorantreiben. Arbeit werde sich verändern, aber nicht ausgehen, so Heil. In seinem Ministerium gebe es dazu bereits eine Denkfabrik.",
                 Link = "https://www.tagesschau.de/wirtschaft/digitales/spd-heil-ki-arbeitswelt-100.html",
-                PublishDate = new System.DateTime(2021, 4, 21, 10, 30, 0),
+                PublishDate = new System.DateTime(2024, 4, 21, 10, 30, 0),
                 ImageUrl = "https://images.tagesschau.de/image/8616ee35-2c95-46f8-b8b5-0f5da2c4b359/AAABiL5ZIxM/AAABkZLhkrw/16x9-1280/roboter-ki-100.jpg",
                 RssFeedId = 1
             },
