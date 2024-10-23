@@ -1,17 +1,19 @@
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { RssFeedItem } from '../../../domain/entities/rssFeedItem';
-import { NgIf } from '@angular/common';
+import { NgClass, NgIf } from '@angular/common';
 import { ShortenLinkPipe } from "../../../infrastructure/utilities/shorten-link.pipe";
+import { DarkModeService } from '../../services/dark-mode.service';
 
 @Component({
   selector: 'app-feed-item-modal',
   standalone: true,
-  imports: [NgIf, ShortenLinkPipe],
+  imports: [NgIf, ShortenLinkPipe, NgClass],
   templateUrl: './feed-item-modal.component.html',
   styleUrl: './feed-item-modal.component.scss'
 })
-export class FeedItemModalComponent {
+export class FeedItemModalComponent { darkModeService : DarkModeService = inject(DarkModeService);
+
   @Input() feedItem: RssFeedItem | null = null;
 
 }
