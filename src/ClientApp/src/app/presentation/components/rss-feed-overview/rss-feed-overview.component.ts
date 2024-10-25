@@ -5,8 +5,6 @@ import { RssService } from '../../services/rss.service';
 import { Result } from '../../common/results/result';
 import { RssFeedItem } from '../../../domain/entities/rssFeedItem';
 import { FormsModule, NgForm } from '@angular/forms';
-import { RssFeedItemRequest } from '../../models/RssFeedItemRequest';
-import { RssFeedRequest } from '../../models/RssFeedRequest';
 import { FeedItemModalComponent } from "../../shared/feed-item-modal/feed-item-modal.component";
 import { TimeElapsedPipe } from '../../../infrastructure/utilities/time-elapsed.pipe';
 
@@ -26,20 +24,23 @@ export class RssFeedOverviewComponent implements OnInit {
 
   rssFeeds: RssFeed[] = [];
   rssFeedItems: RssFeedItem[] = [];
-  feedItems: RssFeedItemRequest[] = [];
-  inputRssFeed: string = "";
-  channelTitle: string = '';
 
   constructor(private rssService: RssService) { }
 
   ngOnInit(): void {
     this.loadRssFeeds();
+
+    this.rssService.feedAdded$.subscribe((feedAdded) => {
+      if (feedAdded) {
+        this.loadRssFeeds();
+      }
+    });
   }
 
   loadRssFeeds() {
     this.rssService.getAllRssFeeds().subscribe((result: Result) => {
       if (result.isSuccess) {
-        this.rssFeeds = result.value;
+        this.rssFeeds = result.value.reverse();
         this.rssFeedItems = result.value;
         console.log('RSS Feeds fetched successfully:', this.rssFeeds);
       } else {
@@ -47,27 +48,6 @@ export class RssFeedOverviewComponent implements OnInit {
       }
     });
   }
-
-  addFeed(): void {
-    const rssFeedRequest: RssFeedRequest = {
-      url: this.inputRssFeed,
-      channelTitle: this.channelTitle,
-      feedItems: this.feedItems
-    };
-
-    this.rssService.addRssFeed(rssFeedRequest, this.inputRssFeed).subscribe((result: Result) => {
-      if (result.isSuccess) {
-        this.inputRssFeed = '';
-        this.loadRssFeeds();
-        this.formInput.resetForm();
-        console.log('Feed added successfully', result);
-
-      } else {
-        console.error('Error adding RSS feed:', result.error);
-      }
-    });
-  }
-
   deleteRssFeed(id: number) {
     this.rssService.deleteRssFeed(id).subscribe((result: Result) => {
       if (result.isSuccess) {

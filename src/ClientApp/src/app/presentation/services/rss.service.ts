@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { catchError, Observable, of } from 'rxjs';
+import {BehaviorSubject, catchError, Observable, of, tap} from 'rxjs';
 import { RssFeedRequest } from '../models/RssFeedRequest';
 import { HttpClient } from '@angular/common/http';
 import { Result } from '../common/results/result';
@@ -12,12 +12,16 @@ export class RssService implements IRssService {
 
   // private baseUrl = 'api/rssFeeds';
   private baseUrl = 'https://localhost:7091/apiRssFeed';
+  private feedAddedSubject = new BehaviorSubject<boolean>(false);
+
+  feedAdded$ = this.feedAddedSubject.asObservable();
 
   constructor(private httpClient: HttpClient) { }
 
   addRssFeed(rssFeedRequest: RssFeedRequest, feedUrl: string): Observable<Result> {
     const url = `${this.baseUrl}?feedUrl=${encodeURIComponent(feedUrl)}`;
     return this.httpClient.post<Result>(url, rssFeedRequest).pipe(
+      tap(() => this.feedAddedSubject.next(true)),
       catchError((error) => this.handleError<Result>('errorAddRssFeed', error))
     );
   }
@@ -37,7 +41,7 @@ export class RssService implements IRssService {
   getRssFeedById(id: number): Observable<Result> {
     return this.httpClient.get<Result>(this.baseUrl + '/' + id).pipe(
       catchError((error) => this.handleError<Result>('errorGetRssFeedById', error))
-    );  
+    );
   }
 
   // Fehlerbehandlung
