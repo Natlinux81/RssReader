@@ -1,16 +1,14 @@
-﻿using Application;
-using Application.Common.Results;
+﻿using Application.Common.Results;
 using Application.DTOs;
 using Application.Interfaces;
 using Application.Models;
 using Domain.Interface;
 
-
-namespace Domain;
+namespace Application.Services;
 
 public class RssFetchService(IUnitOfWork unitOfWork, IRssFeedRepository iRssFeedRepository) : IRssFetchService
 {
-    public async Task<Result> AddRssFeed(RssFeedRequest rssFeedRequest, string feedUrl, CancellationToken cancellationToken)
+    public async Task<Result> AddRssFeed(RssFeedRequest? rssFeedRequest, string feedUrl, CancellationToken cancellationToken)
     {
         // Check if RssFeedRequest is null. if yes, return error
         if (rssFeedRequest == null)
@@ -37,7 +35,7 @@ public class RssFetchService(IUnitOfWork unitOfWork, IRssFeedRepository iRssFeed
     {
         var rssFeeds = await iRssFeedRepository.GetWithItemsAsync();
 
-        if (rssFeeds == null || rssFeeds.Count == 0)
+        if (rssFeeds.Count == 0)
         {
             return Result.Failure(RssFeedError.InvalidRssFeedRequest);
         }
@@ -63,18 +61,18 @@ public class RssFetchService(IUnitOfWork unitOfWork, IRssFeedRepository iRssFeed
 
     public async Task<Result> DeleteRssFeed(int id)
     {
-        // Überprüfen, ob der Feed existiert
+        // check if Feed exist
         var rssFeed = await iRssFeedRepository.GetByIdAsync(id);
 
         if (rssFeed == null)
         {
-            return Result.Failure(RssFeedError.RssFeedNotFound); // Falls der Feed nicht existiert
+            return Result.Failure(RssFeedError.RssFeedNotFound); // if Feed not exist
         }
 
-        // Feed löschen
+        // Feed delete
         iRssFeedRepository.Delete(rssFeed);
 
-        // Änderungen in der Datenbank speichern
+        // save changes to database
         await unitOfWork.CommitAsync();
 
         return Result.Success("RSS-Feed deleted successfully");

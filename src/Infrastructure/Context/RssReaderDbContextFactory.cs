@@ -21,7 +21,8 @@ namespace Infrastructure.Context
             var mariaDbSettings = configuration.GetRequiredSection("MariaDbSettings").Get<MariaDbSettings>();
             var connectionString = mariaDbSettings?.ConnectionString;
             var optionBuilder = new DbContextOptionsBuilder<RssReaderDbContext>();
-            optionBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+            if (connectionString != null)
+                optionBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
             return new RssReaderDbContext(optionBuilder.Options);
         }
     }

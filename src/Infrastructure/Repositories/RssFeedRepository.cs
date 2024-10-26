@@ -1,4 +1,3 @@
-using System.Net;
 using System.ServiceModel.Syndication;
 using System.Xml;
 using Domain.Entities;
@@ -16,7 +15,7 @@ namespace Infrastructure.Repositories
         public async Task<RssFeed?> GetByUrlAsync(string url)
         {
             return await _rssReaderDbContext.RssFeeds
-                                 .Include(r => r.FeedItems)  // Optionales Eager Loading, falls benötigt
+                                 .Include(r => r.FeedItems)  // optional Eager Loading, if needed
                                  .FirstOrDefaultAsync(r => r.Url == url);
         }
 
@@ -26,7 +25,7 @@ namespace Infrastructure.Repositories
             var response = await httpClient.GetAsync(rssFeedUri, cancellationToken);
             response.EnsureSuccessStatusCode();
 
-            using var stream = await response.Content.ReadAsStreamAsync(cancellationToken);
+            await using var stream = await response.Content.ReadAsStreamAsync(cancellationToken);
             using XmlReader reader = XmlReader.Create(stream);
 
             SyndicationFeed feed = SyndicationFeed.Load(reader);
