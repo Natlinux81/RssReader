@@ -11,13 +11,13 @@ namespace Infrastructure.Utilities
                .HasData(new RssFeed
                 {
                     Id = 1,
-                    Url = "https://testurl1.com/",
+                    Url = "https://www.spiegel.de/politik/index.rss",
                     ChannelTitle = "Test Feed 1 Technologie Nachrichten und neue Entwicklungen"
                 },
                 new RssFeed
                 {
                     Id = 2,                    
-                    Url = "https://testurl2.com/",
+                    Url = "https://www.welt.de/feeds/section/wissenschaft.rss",
                     ChannelTitle = "Test Feed 2 Wissenschaft - WELT"
                 });
 

@@ -50,5 +50,18 @@ namespace API.Controllers
             return Results.Ok(response);
         }
 
+        [HttpPut("update")]
+        public async Task<IResult> UpdateRssFeedItems(int id, [FromQuery] CancellationToken cancellationToken)
+        {
+            // update RSSFeedItems
+            var response = await rssFetchService.UpdateFeedItemsAsync(cancellationToken);
+            
+            // Check if response is failure
+            if (response.IsFailure)
+            {
+                return Results.BadRequest(response);
+            }
+            return Results.Ok(response);
+        }
     }
 }

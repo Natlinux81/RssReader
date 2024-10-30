@@ -77,4 +77,51 @@ public class RssFetchService(IUnitOfWork unitOfWork, IRssFeedRepository iRssFeed
 
         return Result.Success("RSS-Feed deleted successfully");
     }
+
+    public async Task<Result> UpdateFeedItemsAsync(CancellationToken cancellationToken)
+    {
+        var rssFeeds = await iRssFeedRepository.GetWithItemsAsync();
+
+        foreach (var existingFeed in rssFeeds)
+        {
+            if (existingFeed.Url != null)
+            {
+                var updatedFeed = await iRssFeedRepository.ReadRssFeed(new Uri(existingFeed.Url), cancellationToken);
+
+                // New feed items that don't exist in the current items
+                var newFeedItems = updatedFeed.FeedItems
+                    .Where(newItem => existingFeed.FeedItems.All(existingItem => existingItem.Link != newItem.Link))
+                    .ToList();
+
+                // Obsolete feed items that no longer exist in the updated feed
+                var obsoleteFeedItems = existingFeed.FeedItems
+                    .Where(existingItem => updatedFeed.FeedItems.All(newItem => newItem.Link != existingItem.Link))
+                    .ToList();
+
+                // Add new feed items
+                if (newFeedItems.Any())
+                {
+                    existingFeed.FeedItems.AddRange(newFeedItems);
+                }
+
+                // Remove obsolete feed items
+                if (obsoleteFeedItems.Count != 0)
+                {
+                    foreach (var obsoleteItem in obsoleteFeedItems)
+                    {
+                        existingFeed.FeedItems.Remove(obsoleteItem);
+                    }
+                }
+
+                // Commit changes to the database if there are new or obsolete items
+                if (newFeedItems.Count != 0 || obsoleteFeedItems.Count != 0)
+                {
+                    await unitOfWork.CommitAsync();
+                }
+            }
+        }
+
+        return Result.Success("RSS-Feeds updated successfully");
+    }
+    
 }
