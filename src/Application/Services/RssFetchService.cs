@@ -37,7 +37,7 @@ public class RssFetchService(IUnitOfWork unitOfWork, IRssFeedRepository iRssFeed
 
         if (rssFeeds.Count == 0)
         {
-            return Result.Failure(RssFeedError.InvalidRssFeedRequest);
+            return Result.Failure(RssFeedError.RssFeedNotFound);
         }
 
         var rssFeedDtos = rssFeeds.Select(r => new RssFeedDto
@@ -82,42 +82,45 @@ public class RssFetchService(IUnitOfWork unitOfWork, IRssFeedRepository iRssFeed
     {
         var rssFeeds = await iRssFeedRepository.GetWithItemsAsync();
 
+        if (rssFeeds.Count == 0)
+        {
+            return Result.Failure(RssFeedError.RssFeedNotFound);
+        }
+
         foreach (var existingFeed in rssFeeds)
         {
-            if (existingFeed.Url != null)
+            if (existingFeed.Url == null) continue;
+            var updatedFeed = await iRssFeedRepository.ReadRssFeed(new Uri(existingFeed.Url), cancellationToken);
+
+            // New feed items that don't exist in the current items
+            var newFeedItems = updatedFeed.FeedItems
+                .Where(newItem => existingFeed.FeedItems.All(existingItem => existingItem.Link != newItem.Link))
+                .ToList();
+
+            // Obsolete feed items that no longer exist in the updated feed
+            var obsoleteFeedItems = existingFeed.FeedItems
+                .Where(existingItem => updatedFeed.FeedItems.All(newItem => newItem.Link != existingItem.Link))
+                .ToList();
+
+            // Add new feed items
+            if (newFeedItems.Count != 0)
             {
-                var updatedFeed = await iRssFeedRepository.ReadRssFeed(new Uri(existingFeed.Url), cancellationToken);
+                existingFeed.FeedItems.AddRange(newFeedItems);
+            }
 
-                // New feed items that don't exist in the current items
-                var newFeedItems = updatedFeed.FeedItems
-                    .Where(newItem => existingFeed.FeedItems.All(existingItem => existingItem.Link != newItem.Link))
-                    .ToList();
-
-                // Obsolete feed items that no longer exist in the updated feed
-                var obsoleteFeedItems = existingFeed.FeedItems
-                    .Where(existingItem => updatedFeed.FeedItems.All(newItem => newItem.Link != existingItem.Link))
-                    .ToList();
-
-                // Add new feed items
-                if (newFeedItems.Any())
+            // Remove obsolete feed items
+            if (obsoleteFeedItems.Count != 0)
+            {
+                foreach (var obsoleteItem in obsoleteFeedItems)
                 {
-                    existingFeed.FeedItems.AddRange(newFeedItems);
+                    existingFeed.FeedItems.Remove(obsoleteItem);
                 }
+            }
 
-                // Remove obsolete feed items
-                if (obsoleteFeedItems.Count != 0)
-                {
-                    foreach (var obsoleteItem in obsoleteFeedItems)
-                    {
-                        existingFeed.FeedItems.Remove(obsoleteItem);
-                    }
-                }
-
-                // Commit changes to the database if there are new or obsolete items
-                if (newFeedItems.Count != 0 || obsoleteFeedItems.Count != 0)
-                {
-                    await unitOfWork.CommitAsync();
-                }
+            // Commit changes to the database if there are new or obsolete items
+            if (newFeedItems.Count != 0 || obsoleteFeedItems.Count != 0)
+            {
+                await unitOfWork.CommitAsync();
             }
         }
 

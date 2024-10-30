@@ -7,6 +7,7 @@ import { RssFeedItem } from '../../../domain/entities/rssFeedItem';
 import { FormsModule, NgForm } from '@angular/forms';
 import { FeedItemModalComponent } from "../../shared/feed-item-modal/feed-item-modal.component";
 import { TimeElapsedPipe } from '../../../infrastructure/utilities/time-elapsed.pipe';
+import {UpdateFeedItemsService} from "../../services/update-feed-items.service";
 
 
 @Component({
@@ -25,7 +26,7 @@ export class RssFeedOverviewComponent implements OnInit {
   rssFeeds: RssFeed[] = [];
   rssFeedItems: RssFeedItem[] = [];
 
-  constructor(private rssService: RssService) { }
+  constructor(private rssService: RssService, private updateRssFeedItemsService : UpdateFeedItemsService) { }
 
   ngOnInit(): void {
     this.loadRssFeeds();
@@ -35,6 +36,8 @@ export class RssFeedOverviewComponent implements OnInit {
         this.loadRssFeeds();
       }
     });
+
+    this.updateRssFeedItemsService.updateFeedItems()
   }
 
   loadRssFeeds() {

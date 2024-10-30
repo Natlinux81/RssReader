@@ -43,6 +43,11 @@ export class RssService implements IRssService {
       catchError((error) => this.handleError<Result>('errorGetRssFeedById', error))
     );
   }
+  updateRssFeedItems(): Observable<Result> {
+    return this.httpClient.put<Result>(this.baseUrl + '/update', null).pipe(
+      catchError((error) => this.handleError<Result>('errorUpdateRssFeedItems', error))
+    );
+  }
 
   // Fehlerbehandlung
   private handleError<T>(operation: string, error: any): Observable<T> {

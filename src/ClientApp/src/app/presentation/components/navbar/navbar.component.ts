@@ -7,6 +7,7 @@ import {NgIf} from "@angular/common";
 import {Result} from "../../common/results/result";
 import {RssService} from "../../services/rss.service";
 import {RssFeedOverviewComponent} from "../rss-feed-overview/rss-feed-overview.component";
+import {UpdateFeedItemsService} from "../../services/update-feed-items.service";
 
 @Component({
   selector: 'app-navbar',
@@ -25,7 +26,7 @@ export class NavbarComponent { darkModeService : DarkModeService = inject(DarkMo
   feedItems: RssFeedItemRequest[] = [];
   inputRssFeed: string = "";
   channelTitle: string = '';
-  constructor(private rssService: RssService) { }
+  constructor(private rssService: RssService, private updateRssFeedItemsService: UpdateFeedItemsService) { }
 
   toggleDarkMode() {
     this.darkModeService.updateDarkMode();
@@ -48,5 +49,9 @@ export class NavbarComponent { darkModeService : DarkModeService = inject(DarkMo
         console.error('Error adding RSS feed:', result.error);
       }
     });
+  }
+
+  updateRssFeeds() {
+    this.updateRssFeedItemsService.updateFeedItems();
   }
 }
