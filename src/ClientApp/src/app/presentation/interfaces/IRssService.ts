@@ -1,14 +1,13 @@
 import { Observable } from "rxjs";
 import { RssFeedRequest } from "../models/RssFeedRequest";
-import { Result } from "../common/results/result";
 
 export interface IRssService {
 
-    addRssFeed(rssFeedRequest: RssFeedRequest, url: string): Observable<Result>;
+    addRssFeed(rssFeedRequest: RssFeedRequest, url: string): Observable<any>;
 
-    getAllRssFeeds(): Observable<Result>;
+    getAllRssFeeds(): Observable<any>;
 
-    deleteRssFeed(id: number): Observable<Result>;
+    deleteRssFeed(id: number): Observable<any>;
 
-    getRssFeedById(id: number): Observable<Result>;
+    getRssFeedById(id: number): Observable<any>;
 }

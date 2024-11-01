@@ -9,8 +9,8 @@ namespace Application
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
             services.AddScoped<IRssFetchService, RssFetchService>();
-            services.AddHostedService<RssFeedUpdateService>();
-            
+            // services.AddHostedService<RssFeedUpdateService>();
+
             return services;
         }
     }

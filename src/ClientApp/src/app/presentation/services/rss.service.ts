@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import {BehaviorSubject, catchError, Observable, of, tap} from 'rxjs';
 import { RssFeedRequest } from '../models/RssFeedRequest';
 import { HttpClient } from '@angular/common/http';
-import { Result } from '../common/results/result';
 import { IRssService } from '../interfaces/IRssService';
+import {ErrorHandlerService} from "./error-handler.service";
 
 @Injectable({
   providedIn: 'root'
@@ -12,55 +12,38 @@ export class RssService implements IRssService {
 
   // private baseUrl = 'api/rssFeeds';
   private baseUrl = 'https://localhost:7091/apiRssFeed';
+
   private feedAddedSubject = new BehaviorSubject<boolean>(false);
 
   feedAdded$ = this.feedAddedSubject.asObservable();
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private handleErrorService: ErrorHandlerService) { }
 
-  addRssFeed(rssFeedRequest: RssFeedRequest, feedUrl: string): Observable<Result> {
+  addRssFeed(rssFeedRequest: RssFeedRequest, feedUrl: string): Observable<any> {
     const url = `${this.baseUrl}?feedUrl=${encodeURIComponent(feedUrl)}`;
-    return this.httpClient.post<Result>(url, rssFeedRequest).pipe(
+    return this.httpClient.post<any>(url, rssFeedRequest).pipe(
       tap(() => this.feedAddedSubject.next(true)),
-      catchError((error) => this.handleError<Result>('errorAddRssFeed', error))
+      catchError(async (error) => this.handleErrorService.handleError(error))
     );
   }
-
-  getAllRssFeeds(): Observable<Result> {
-    return this.httpClient.get<Result>(this.baseUrl).pipe(
-      catchError((error) => this.handleError<Result>('errorGetAllRssFeeds', error))
+  getAllRssFeeds(): Observable<any> {
+    return this.httpClient.get<any>(this.baseUrl).pipe(
+      catchError(async (error) => this.handleErrorService.handleError(error))
     );
   }
-
-  deleteRssFeed(id: number): Observable<Result> {
-    return this.httpClient.delete<Result>(this.baseUrl + '/' + id).pipe(
-      catchError((error) => this.handleError<Result>('errorDeleteRssFeed', error))
+  deleteRssFeed(id: number): Observable<any> {
+    return this.httpClient.delete<any>(this.baseUrl + '/' + id).pipe(
+      catchError(async (error) => this.handleErrorService.handleError( error))
     );
   }
-
-  getRssFeedById(id: number): Observable<Result> {
-    return this.httpClient.get<Result>(this.baseUrl + '/' + id).pipe(
-      catchError((error) => this.handleError<Result>('errorGetRssFeedById', error))
+  getRssFeedById(id: number): Observable<any> {
+    return this.httpClient.get<any>(this.baseUrl + '/' + id).pipe(
+      catchError(async (error) => this.handleErrorService.handleError(error))
     );
   }
-  updateRssFeedItems(): Observable<Result> {
-    return this.httpClient.put<Result>(this.baseUrl + '/update', null).pipe(
-      catchError((error) => this.handleError<Result>('errorUpdateRssFeedItems', error))
+  updateRssFeedItems(): Observable<any> {
+    return this.httpClient.put<any>(this.baseUrl + '/update', null).pipe(
+      catchError(async (error) => this.handleErrorService.handleError(error))
     );
-  }
-
-  // Fehlerbehandlung
-  private handleError<T>(operation: string, error: any): Observable<T> {
-    // Fehler in der Konsole protokollieren
-    console.error(`${operation} fehlgeschlagen: ${error.message}`);
-
-    // Strukturierte Fehlerantwort zurückgeben
-    const errorResult: Result = {
-      isSuccess: false,
-      isFailure: true,
-      error: { code: 'InternalServerError', message: 'Ein Fehler ist aufgetreten, während Ihre Anfrage bearbeitet wurde.' }
-    };
-
-    return of(errorResult as T);
   }
 }

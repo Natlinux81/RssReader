@@ -1,32 +1,31 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { NgFor, NgIf } from '@angular/common';
-import { RssFeed } from '../../../domain/entities/rssFeed';
-import { RssService } from '../../services/rss.service';
-import { Result } from '../../common/results/result';
-import { RssFeedItem } from '../../../domain/entities/rssFeedItem';
-import { FormsModule, NgForm } from '@angular/forms';
-import { FeedItemModalComponent } from "../../shared/feed-item-modal/feed-item-modal.component";
-import { TimeElapsedPipe } from '../../../infrastructure/utilities/time-elapsed.pipe';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {NgFor, NgIf} from '@angular/common';
+import {RssFeed} from '../../../domain/entities/rssFeed';
+import {RssService} from '../../services/rss.service';
+import {RssFeedItem} from '../../../domain/entities/rssFeedItem';
+import {FormsModule, NgForm} from '@angular/forms';
+import {FeedItemModalComponent} from "../../shared/feed-item-modal/feed-item-modal.component";
+import {TimeElapsedPipe} from '../../../infrastructure/utilities/time-elapsed.pipe';
 import {UpdateFeedItemsService} from "../../services/update-feed-items.service";
-
 
 @Component({
   selector: 'app-rss-feed-overview',
   standalone: true,
-  imports: [NgFor, FormsModule, NgIf, FeedItemModalComponent,TimeElapsedPipe],
+  imports: [NgFor, FormsModule, NgIf, FeedItemModalComponent, TimeElapsedPipe],
   templateUrl: './rss-feed-overview.component.html',
   styleUrl: './rss-feed-overview.component.scss'
 })
 export class RssFeedOverviewComponent implements OnInit {
 
-  @ViewChild('formInput', { static: false }) formInput!: NgForm;
+  @ViewChild('formInput', {static: false}) formInput!: NgForm;
 
   selectedFeedItem: RssFeedItem | null = null;
 
   rssFeeds: RssFeed[] = [];
   rssFeedItems: RssFeedItem[] = [];
 
-  constructor(private rssService: RssService, private updateRssFeedItemsService : UpdateFeedItemsService) { }
+  constructor(private rssService: RssService, private updateRssFeedItemsService: UpdateFeedItemsService) {
+  }
 
   ngOnInit(): void {
     this.loadRssFeeds();
@@ -41,21 +40,22 @@ export class RssFeedOverviewComponent implements OnInit {
   }
 
   loadRssFeeds() {
-    this.rssService.getAllRssFeeds().subscribe((result: Result) => {
+    this.rssService.getAllRssFeeds().subscribe((result) => {
       if (result.isSuccess) {
         this.rssFeeds = result.value.reverse();
         this.rssFeedItems = result.value;
-        console.log('RSS Feeds fetched successfully:', this.rssFeeds);
+        console.log('RSS Feeds fetched successfully:', this.rssFeeds, result);
       } else {
         console.error('Error fetching RSS feeds:', result.error);
       }
     });
   }
+
   deleteRssFeed(id: number) {
-    this.rssService.deleteRssFeed(id).subscribe((result: Result) => {
+    this.rssService.deleteRssFeed(id).subscribe((result) => {
       if (result.isSuccess) {
         this.rssFeeds = this.rssFeeds.filter(feed => feed.id !== id);
-        console.log('RSS Feed deleted successfully');
+        console.log('RSS Feed deleted successfully', result);
       } else {
         console.error('Error deleting RSS feed:', result.error);
       }
