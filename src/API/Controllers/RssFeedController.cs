@@ -1,3 +1,4 @@
+using API.Extension;
 using Application.Interfaces;
 using Application.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -12,14 +13,8 @@ namespace API.Controllers
         {
             // add rss feed to database
             var response = await rssFetchService.AddRssFeed(rssFedRequest, feedUrl, cancellationToken);
-
-            // check if response is failure
-            if (response.IsFailure)
-            {
-                return Results.BadRequest(response);
-            }
-
-            return Results.Ok(response);
+            // error Status
+            return response.ToHttpResponse();
         }
 
         [HttpGet]
@@ -27,14 +22,8 @@ namespace API.Controllers
         {
             // get all rss feeds from database
             var response = await rssFetchService.GetAllRssFeeds();
-
-            // check if response is failure
-            if (response.IsFailure)
-            {
-                return Results.BadRequest(response);
-            }
-
-            return Results.Ok(response);
+            // error Status
+            return response.ToHttpResponse();
         }
 
         [HttpDelete("{id}")]
@@ -42,14 +31,8 @@ namespace API.Controllers
         {
             // Delete RSS feed by ID
             var response = await rssFetchService.DeleteRssFeed(id);
-
-            // Check if response is failure
-            if (response.IsFailure)
-            {
-                return Results.BadRequest(response);
-            }
-
-            return Results.Ok(response);
+            // error Status
+            return response.ToHttpResponse();
         }
 
         [HttpPut("update")]
@@ -57,14 +40,8 @@ namespace API.Controllers
         {
             // update RSSFeedItems
             var response = await rssFetchService.UpdateFeedItemsAsync(cancellationToken);
-
-            // Check if response is failure
-            if (response.IsFailure)
-            {
-                return Results.BadRequest(response);
-            }
-
-            return Results.Ok(response);
+            // error Status
+            return response.ToHttpResponse();
         }
     }
 }

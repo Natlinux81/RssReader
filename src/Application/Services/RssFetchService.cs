@@ -11,7 +11,7 @@ public class RssFetchService(IUnitOfWork unitOfWork, IRssFeedRepository iRssFeed
     public async Task<Result> AddRssFeed(RssFeedRequest? rssFeedRequest, string feedUrl, CancellationToken cancellationToken)
     {
         // Check if RssFeedRequest is null. if yes, return error
-        if (rssFeedRequest == null)
+        if (rssFeedRequest is null)
         {
             return Result.Failure(RssFeedError.InvalidRssFeedRequest);
         }
@@ -37,7 +37,7 @@ public class RssFetchService(IUnitOfWork unitOfWork, IRssFeedRepository iRssFeed
 
         if (rssFeeds.Count == 0)
         {
-            return Result.Failure(RssFeedError.RssFeedNotFound);
+            return Result.Failure(RssFeedError.RssFeedsNotFound);
         }
 
         var rssFeedDtos = rssFeeds.Select(r => new RssFeedDto
@@ -66,7 +66,7 @@ public class RssFetchService(IUnitOfWork unitOfWork, IRssFeedRepository iRssFeed
 
         if (rssFeed == null)
         {
-            return Result.Failure(RssFeedError.RssFeedNotFound); // if Feed not exist
+            return Result.Failure(RssFeedError.RssFeedsNotFound); // if Feed not exist
         }
 
         // Feed delete
@@ -84,7 +84,7 @@ public class RssFetchService(IUnitOfWork unitOfWork, IRssFeedRepository iRssFeed
 
         if (rssFeeds.Count == 0)
         {
-            return Result.Failure(RssFeedError.RssFeedNotFound);
+            return Result.Failure(RssFeedError.RssFeedsNotFound);
         }
 
         foreach (var existingFeed in rssFeeds)
