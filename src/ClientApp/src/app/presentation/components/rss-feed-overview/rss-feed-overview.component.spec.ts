@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { RssFeedOverviewComponent } from './rss-feed-overview.component';
+import {RssFeedOverviewComponent} from './rss-feed-overview.component';
 
 describe('RssFeedOverviewComponent', () => {
   let component: RssFeedOverviewComponent;
@@ -10,7 +10,7 @@ describe('RssFeedOverviewComponent', () => {
     await TestBed.configureTestingModule({
       imports: [RssFeedOverviewComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(RssFeedOverviewComponent);
     component = fixture.componentInstance;

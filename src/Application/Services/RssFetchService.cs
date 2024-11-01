@@ -1,5 +1,6 @@
 ﻿using Application.Common.Results;
 using Application.DTOs;
+using Application.Error;
 using Application.Interfaces;
 using Application.Models;
 using Domain.Interface;
@@ -8,20 +9,15 @@ namespace Application.Services;
 
 public class RssFetchService(IUnitOfWork unitOfWork, IRssFeedRepository iRssFeedRepository) : IRssFetchService
 {
-    public async Task<Result> AddRssFeed(RssFeedRequest? rssFeedRequest, string feedUrl, CancellationToken cancellationToken)
+    public async Task<Result> AddRssFeed(RssFeedRequest? rssFeedRequest, string feedUrl,
+        CancellationToken cancellationToken)
     {
         // Check if RssFeedRequest is null. if yes, return error
-        if (rssFeedRequest is null)
-        {
-            return Result.Failure(RssFeedError.InvalidRssFeedRequest);
-        }
+        if (rssFeedRequest is null) return Result.Failure(RssFeedError.InvalidRssFeedRequest);
         // Check if RssFeed already exists
         var rssFeedExists = await iRssFeedRepository.GetByUrlAsync(feedUrl);
 
-        if (rssFeedExists is not null)
-        {
-            return Result.Failure(RssFeedError.RssFeedAlreadyExists);
-        }
+        if (rssFeedExists is not null) return Result.Failure(RssFeedError.RssFeedAlreadyExists);
 
         // Add RssFeed to database
         var rssFeed = await iRssFeedRepository.ReadRssFeed(new Uri(feedUrl), cancellationToken);
@@ -35,10 +31,7 @@ public class RssFetchService(IUnitOfWork unitOfWork, IRssFeedRepository iRssFeed
     {
         var rssFeeds = await iRssFeedRepository.GetWithItemsAsync();
 
-        if (rssFeeds.Count == 0)
-        {
-            return Result.Failure(RssFeedError.RssFeedsNotFound);
-        }
+        if (rssFeeds.Count == 0) return Result.Failure(RssFeedError.RssFeedsNotFound);
 
         var rssFeedDtos = rssFeeds.Select(r => new RssFeedDto
         {
@@ -64,10 +57,7 @@ public class RssFetchService(IUnitOfWork unitOfWork, IRssFeedRepository iRssFeed
         // check if Feed exist
         var rssFeed = await iRssFeedRepository.GetByIdAsync(id);
 
-        if (rssFeed == null)
-        {
-            return Result.Failure(RssFeedError.RssFeedsNotFound); // if Feed not exist
-        }
+        if (rssFeed == null) return Result.Failure(RssFeedError.RssFeedsNotFound); // if Feed not exist
 
         // Feed delete
         iRssFeedRepository.Delete(rssFeed);
@@ -82,10 +72,7 @@ public class RssFetchService(IUnitOfWork unitOfWork, IRssFeedRepository iRssFeed
     {
         var rssFeeds = await iRssFeedRepository.GetWithItemsAsync();
 
-        if (rssFeeds.Count == 0)
-        {
-            return Result.Failure(RssFeedError.RssFeedsNotFound);
-        }
+        if (rssFeeds.Count == 0) return Result.Failure(RssFeedError.RssFeedsNotFound);
 
         foreach (var existingFeed in rssFeeds)
         {
@@ -103,28 +90,17 @@ public class RssFetchService(IUnitOfWork unitOfWork, IRssFeedRepository iRssFeed
                 .ToList();
 
             // Add new feed items
-            if (newFeedItems.Count != 0)
-            {
-                existingFeed.FeedItems.AddRange(newFeedItems);
-            }
+            if (newFeedItems.Count != 0) existingFeed.FeedItems.AddRange(newFeedItems);
 
             // Remove obsolete feed items
             if (obsoleteFeedItems.Count != 0)
-            {
                 foreach (var obsoleteItem in obsoleteFeedItems)
-                {
                     existingFeed.FeedItems.Remove(obsoleteItem);
-                }
-            }
 
             // Commit changes to the database if there are new or obsolete items
-            if (newFeedItems.Count != 0 || obsoleteFeedItems.Count != 0)
-            {
-                await unitOfWork.CommitAsync();
-            }
+            if (newFeedItems.Count != 0 || obsoleteFeedItems.Count != 0) await unitOfWork.CommitAsync();
         }
 
         return Result.Success("RSS-Feeds updated successfully");
     }
-    
 }

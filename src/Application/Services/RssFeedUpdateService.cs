@@ -12,9 +12,9 @@ public class RssFeedUpdateService(IServiceProvider serviceProvider) : Background
         {
             using var scope = serviceProvider.CreateScope();
             var rssFetchService = scope.ServiceProvider.GetRequiredService<IRssFetchService>();
-                
+
             await rssFetchService.UpdateFeedItemsAsync(stoppingToken);
-                
+
             await Task.Delay(TimeSpan.FromDays(1), stoppingToken); // Adjust interval as needed
         }
     }

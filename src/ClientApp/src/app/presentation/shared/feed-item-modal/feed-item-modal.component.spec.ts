@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { FeedItemModalComponent } from './feed-item-modal.component';
+import {FeedItemModalComponent} from './feed-item-modal.component';
 
 describe('FeedItemModalComponent', () => {
   let component: FeedItemModalComponent;
@@ -10,7 +10,7 @@ describe('FeedItemModalComponent', () => {
     await TestBed.configureTestingModule({
       imports: [FeedItemModalComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(FeedItemModalComponent);
     component = fixture.componentInstance;

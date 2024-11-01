@@ -1,4 +1,4 @@
-import { RssFeedItem } from "./rssFeedItem";
+import {RssFeedItem} from "./rssFeedItem";
 
 export interface RssFeed {
   id: number;

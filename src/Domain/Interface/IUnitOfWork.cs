@@ -1,8 +1,7 @@
-namespace Domain.Interface
+namespace Domain.Interface;
+
+public interface IUnitOfWork
 {
-    public interface IUnitOfWork
-    {
-         void Commit();
-         Task CommitAsync();
-    }
+    void Commit();
+    Task CommitAsync();
 }

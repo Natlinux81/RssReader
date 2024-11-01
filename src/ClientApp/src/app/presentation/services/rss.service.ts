@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import {BehaviorSubject, catchError, Observable, of, tap} from 'rxjs';
-import { RssFeedRequest } from '../models/RssFeedRequest';
-import { HttpClient } from '@angular/common/http';
-import { IRssService } from '../interfaces/IRssService';
+import {Injectable} from '@angular/core';
+import {BehaviorSubject, catchError, Observable, tap} from 'rxjs';
+import {RssFeedRequest} from '../models/RssFeedRequest';
+import {HttpClient} from '@angular/common/http';
+import {IRssService} from '../interfaces/IRssService';
 import {ErrorHandlerService} from "./error-handler.service";
 
 @Injectable({
@@ -17,7 +17,8 @@ export class RssService implements IRssService {
 
   feedAdded$ = this.feedAddedSubject.asObservable();
 
-  constructor(private httpClient: HttpClient, private handleErrorService: ErrorHandlerService) { }
+  constructor(private httpClient: HttpClient, private handleErrorService: ErrorHandlerService) {
+  }
 
   addRssFeed(rssFeedRequest: RssFeedRequest, feedUrl: string): Observable<any> {
     const url = `${this.baseUrl}?feedUrl=${encodeURIComponent(feedUrl)}`;
@@ -26,21 +27,25 @@ export class RssService implements IRssService {
       catchError(async (error) => this.handleErrorService.handleError(error))
     );
   }
+
   getAllRssFeeds(): Observable<any> {
     return this.httpClient.get<any>(this.baseUrl).pipe(
       catchError(async (error) => this.handleErrorService.handleError(error))
     );
   }
+
   deleteRssFeed(id: number): Observable<any> {
     return this.httpClient.delete<any>(this.baseUrl + '/' + id).pipe(
-      catchError(async (error) => this.handleErrorService.handleError( error))
+      catchError(async (error) => this.handleErrorService.handleError(error))
     );
   }
+
   getRssFeedById(id: number): Observable<any> {
     return this.httpClient.get<any>(this.baseUrl + '/' + id).pipe(
       catchError(async (error) => this.handleErrorService.handleError(error))
     );
   }
+
   updateRssFeedItems(): Observable<any> {
     return this.httpClient.put<any>(this.baseUrl + '/update', null).pipe(
       catchError(async (error) => this.handleErrorService.handleError(error))
