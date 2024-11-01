@@ -3,17 +3,27 @@ using Application.DTOs;
 using Application.Error;
 using Application.Interfaces;
 using Application.Models;
+using Application.Validators;
 using Domain.Interface;
 
 namespace Application.Services;
 
-public class RssFetchService(IUnitOfWork unitOfWork, IRssFeedRepository iRssFeedRepository) : IRssFetchService
+public class RssFetchService(IUnitOfWork unitOfWork, 
+    IRssFeedRepository iRssFeedRepository,
+    RssFeedRequestValidator rssFeedRequestValidator) : IRssFetchService
 {
-    public async Task<Result> AddRssFeed(RssFeedRequest? rssFeedRequest, string feedUrl,
+    public async Task<Result> AddRssFeed(RssFeedRequest rssFeedRequest, string feedUrl,
         CancellationToken cancellationToken)
     {
         // Check if RssFeedRequest is null. if yes, return error
-        if (rssFeedRequest is null) return Result.Failure(RssFeedError.InvalidRssFeedRequest);
+
+            var validationResult = await rssFeedRequestValidator.ValidateAsync(rssFeedRequest, cancellationToken);
+            if (!validationResult.IsValid)
+            {
+                var errors = validationResult.Errors.Select(x => x.ErrorMessage);
+                return Result.Failure(RssFeedError.InvalidRssFeedUrl(errors));
+            }
+
         // Check if RssFeed already exists
         var rssFeedExists = await iRssFeedRepository.GetByUrlAsync(feedUrl);
 

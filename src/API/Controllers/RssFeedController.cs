@@ -9,7 +9,7 @@ public class RssFeedController(IRssFetchService rssFetchService) : BaseApiContro
 {
     [HttpPost]
     public async Task<IResult> AddRssFeed([FromQuery] CancellationToken cancellationToken,
-        [FromBody] RssFeedRequest? rssFedRequest, string feedUrl)
+        [FromBody] RssFeedRequest rssFedRequest, string feedUrl)
     {
         // add rss feed to database
         var response = await rssFetchService.AddRssFeed(rssFedRequest, feedUrl, cancellationToken);
