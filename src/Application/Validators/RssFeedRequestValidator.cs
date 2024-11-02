@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using Application.Models;
 using FluentValidation;
 
@@ -7,8 +8,8 @@ public class RssFeedRequestValidator : AbstractValidator<RssFeedRequest>
 {
     public RssFeedRequestValidator()
     {
-        RuleFor( x => x.Url )
-            .NotEmpty().WithMessage("Url is required")
-            .Equal("https?://.*rss.*").WithMessage("Url is not valid");
+        RuleFor(x => x.Url)
+            .NotEmpty().WithMessage("Url is required");
+        // .Matches(new Regex(@"^https?://.*rss.*$")).WithMessage("Url is not valid");
     }
 }
