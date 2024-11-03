@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, catchError, Observable, tap} from 'rxjs';
+import {BehaviorSubject, catchError, Observable, tap, throwError} from 'rxjs';
 import {RssFeedRequest} from '../models/RssFeedRequest';
 import {HttpClient} from '@angular/common/http';
 import {IRssService} from '../interfaces/IRssService';
@@ -24,7 +24,10 @@ export class RssService implements IRssService {
     const url = `${this.baseUrl}?feedUrl=${encodeURIComponent(feedUrl)}`;
     return this.httpClient.post<any>(url, rssFeedRequest).pipe(
       tap(() => this.feedAddedSubject.next(true)),
-      catchError(async (error) => this.handleErrorService.handleError(error))
+      catchError((error) => {
+        this.handleErrorService.handleError(error);
+        return throwError(() => new Error());
+      })
     );
   }
 
