@@ -24,7 +24,8 @@ export class RssFeedOverviewComponent implements OnInit {
   rssFeeds: RssFeed[] = [];
   rssFeedItems: RssFeedItem[] = [];
 
-  constructor(private rssService: RssService, private updateRssFeedItemsService: UpdateFeedItemsService) {
+  constructor(private rssService: RssService,
+              private updateRssFeedItemsService: UpdateFeedItemsService) {
   }
 
   ngOnInit(): void {

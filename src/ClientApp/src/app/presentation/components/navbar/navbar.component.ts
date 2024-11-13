@@ -1,4 +1,4 @@
-import {Component, inject, TemplateRef, ViewChild} from '@angular/core';
+import {Component, inject, SecurityContext, TemplateRef, ViewChild} from '@angular/core';
 import {DarkModeService} from '../../services/dark-mode.service';
 import {FormsModule, NgForm} from "@angular/forms";
 import {RssFeedItemRequest} from "../../models/RssFeedItemRequest";
@@ -6,8 +6,9 @@ import {RssFeedRequest} from "../../models/RssFeedRequest";
 import {NgIf} from "@angular/common";
 import {RssService} from "../../services/rss.service";
 import {RssFeedOverviewComponent} from "../rss-feed-overview/rss-feed-overview.component";
-import {UpdateFeedItemsService} from "../../services/update-feed-items.service";
 import {ToastService} from "../../services/toast.service";
+import {DomSanitizer} from "@angular/platform-browser";
+import {SanitizerService} from "../../services/sanitizer.service";
 
 @Component({
   selector: 'app-navbar',
@@ -31,44 +32,33 @@ export class NavbarComponent {
   inputRssFeed: string = "";
   channelTitle: string = '';
 
-  constructor(private rssService: RssService, private updateRssFeedItemsService: UpdateFeedItemsService) {
+  constructor(private rssService: RssService,
+              private sanitizer: DomSanitizer,
+              private sanitizerService: SanitizerService) {
   }
 
   toggleDarkMode() {
     this.darkModeService.updateDarkMode();
   }
-
   addFeed(): void {
+    const sanitizedInput = this.sanitizer.sanitize(SecurityContext.URL, this.inputRssFeed) || '';
+    const sanitizedFeedItems = this.feedItems.map(item => this.sanitizerService.sanitizeFeed(item))
     const rssFeedRequest: RssFeedRequest = {
-      url: this.inputRssFeed,
-      channelTitle: this.channelTitle,
-      feedItems: this.feedItems
-    };
-    this.formInput.resetForm();
-    this.rssService.addRssFeed(rssFeedRequest, this.inputRssFeed).subscribe({
 
-      next: (result) => {
-        if (result.isSuccess) {
-          console.log('Feed added successfully', result);
-          this.toastService.show({
-            template: this.successTpl,
-            classname: 'bg-success text-light',
-            delay: 10000
-          });
-        }
-      },
-      error: (err) => {
-        console.error('Error adding RSS feed:', err);
+      url: sanitizedInput,
+      channelTitle: this.channelTitle,
+      feedItems: sanitizedFeedItems,
+    };
+    this.rssService.addRssFeed(rssFeedRequest, this.inputRssFeed).subscribe((result) => {
+      if (result.isSuccess) {
+        this.formInput.resetForm();
+        console.log('Feed added successfully', result);
         this.toastService.show({
-          template: this.dangerTpl,
-          classname: 'bg-danger text-light',
+          template: this.successTpl,
+          classname: 'bg-success text-light',
           delay: 10000
         });
       }
     });
-  }
-
-  updateRssFeeds() {
-    this.updateRssFeedItemsService.updateFeedItems();
   }
 }
