@@ -6,11 +6,10 @@ import {DarkModeService} from '../../services/dark-mode.service';
 import {TimeElapsedPipe} from '../../../infrastructure/utilities/time-elapsed.pipe';
 
 @Component({
-  selector: 'app-feed-item-modal',
-  standalone: true,
-  imports: [NgIf, ShortenLinkPipe, NgClass, TimeElapsedPipe],
-  templateUrl: './feed-item-modal.component.html',
-  styleUrl: './feed-item-modal.component.scss'
+    selector: 'app-feed-item-modal',
+    imports: [NgIf, ShortenLinkPipe, NgClass, TimeElapsedPipe],
+    templateUrl: './feed-item-modal.component.html',
+    styleUrl: './feed-item-modal.component.scss'
 })
 export class FeedItemModalComponent {
   darkModeService: DarkModeService = inject(DarkModeService);

@@ -10,14 +10,13 @@ import {DomSanitizer} from "@angular/platform-browser";
 import {SanitizerService} from "../../services/sanitizer.service";
 
 @Component({
-  selector: 'app-navbar',
-  standalone: true,
-  imports: [
-    FormsModule,
-    NgIf
-  ],
-  templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.scss'
+    selector: 'app-navbar',
+    imports: [
+        FormsModule,
+        NgIf
+    ],
+    templateUrl: './navbar.component.html',
+    styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent {
   darkModeService: DarkModeService = inject(DarkModeService);

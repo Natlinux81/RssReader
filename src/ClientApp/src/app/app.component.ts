@@ -6,11 +6,10 @@ import {FooterComponent} from './presentation/components/footer/footer.component
 import {ToastComponent} from "./presentation/shared/toast/toast.component";
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet, NavbarComponent, FooterComponent, ToastComponent],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+    selector: 'app-root',
+    imports: [RouterOutlet, NavbarComponent, FooterComponent, ToastComponent],
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.scss'
 })
 export class AppComponent {
   title = 'ClientApp';

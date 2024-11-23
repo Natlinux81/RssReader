@@ -9,11 +9,10 @@ import {TimeElapsedPipe} from '../../../infrastructure/utilities/time-elapsed.pi
 import {UpdateFeedItemsService} from "../../services/update-feed-items.service";
 
 @Component({
-  selector: 'app-rss-feed-overview',
-  standalone: true,
-  imports: [NgFor, FormsModule, FeedItemModalComponent, TimeElapsedPipe],
-  templateUrl: './rss-feed-overview.component.html',
-  styleUrl: './rss-feed-overview.component.scss'
+    selector: 'app-rss-feed-overview',
+    imports: [NgFor, FormsModule, FeedItemModalComponent, TimeElapsedPipe],
+    templateUrl: './rss-feed-overview.component.html',
+    styleUrl: './rss-feed-overview.component.scss'
 })
 export class RssFeedOverviewComponent implements OnInit {
 
