@@ -5,7 +5,6 @@ import {RssFeedItemRequest} from "../../models/RssFeedItemRequest";
 import {RssFeedRequest} from "../../models/RssFeedRequest";
 import {NgIf} from "@angular/common";
 import {RssService} from "../../services/rss.service";
-import {RssFeedOverviewComponent} from "../rss-feed-overview/rss-feed-overview.component";
 import {ToastService} from "../../services/toast.service";
 import {DomSanitizer} from "@angular/platform-browser";
 import {SanitizerService} from "../../services/sanitizer.service";
@@ -15,7 +14,7 @@ import {SanitizerService} from "../../services/sanitizer.service";
   standalone: true,
   imports: [
     FormsModule,
-    NgIf, RssFeedOverviewComponent
+    NgIf
   ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
@@ -40,6 +39,7 @@ export class NavbarComponent {
   toggleDarkMode() {
     this.darkModeService.updateDarkMode();
   }
+
   addFeed(): void {
     const sanitizedInput = this.sanitizer.sanitize(SecurityContext.URL, this.inputRssFeed) || '';
     const sanitizedFeedItems = this.feedItems.map(item => this.sanitizerService.sanitizeFeed(item))

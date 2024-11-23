@@ -4,9 +4,16 @@ namespace Application.Error;
 
 public static class RssFeedError
 {
-    public static Common.Results.Error InvalidRssFeedRequest => new(ErrorTypeConstant.ValidationError, "Invalid RSS-Feed request");
-    public static Common.Results.Error RssFeedAlreadyExists => new(ErrorTypeConstant.ValidationError, "RSS-Feed already exists");
+    public static Common.Results.Error InvalidRssFeedRequest =>
+        new(ErrorTypeConstant.ValidationError, "Invalid RSS-Feed request");
+
+    public static Common.Results.Error RssFeedAlreadyExists =>
+        new(ErrorTypeConstant.ValidationError, "RSS-Feed already exists");
+
     public static Common.Results.Error RssFeedsNotFound => new(ErrorTypeConstant.NotFound, "RSS-Feeds not found");
-    public static Common.Results.Error InvalidRssFeedUrl(IEnumerable<string> errors) =>
-     new(ErrorTypeConstant.ValidationError, string.Join(',', errors));
+
+    public static Common.Results.Error InvalidRssFeedUrl(IEnumerable<string> errors)
+    {
+        return new Common.Results.Error(ErrorTypeConstant.ValidationError, string.Join(',', errors));
+    }
 }

@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {NgFor, NgIf} from '@angular/common';
+import {NgFor} from '@angular/common';
 import {RssFeed} from '../../../domain/entities/rssFeed';
 import {RssService} from '../../services/rss.service';
 import {RssFeedItem} from '../../../domain/entities/rssFeedItem';
@@ -11,7 +11,7 @@ import {UpdateFeedItemsService} from "../../services/update-feed-items.service";
 @Component({
   selector: 'app-rss-feed-overview',
   standalone: true,
-  imports: [NgFor, FormsModule, NgIf, FeedItemModalComponent, TimeElapsedPipe],
+  imports: [NgFor, FormsModule, FeedItemModalComponent, TimeElapsedPipe],
   templateUrl: './rss-feed-overview.component.html',
   styleUrl: './rss-feed-overview.component.scss'
 })

@@ -1,4 +1,4 @@
-import { Injectable, signal, effect } from '@angular/core';
+import {effect, Injectable, signal} from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +15,8 @@ export class DarkModeService {
     });
   }
 
-  updateDarkMode(){
-    this.darkModeSignal.update((value) => (value === 'dark'? 'null' : 'dark'));
+  updateDarkMode() {
+    this.darkModeSignal.update((value) => (value === 'dark' ? 'null' : 'dark'));
   }
 
 }

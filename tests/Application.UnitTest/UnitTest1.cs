@@ -11,7 +11,7 @@ public class UnitTest1
     {
         // Arrange
         var options = new DbContextOptionsBuilder<RssReaderDbContext>()
-            .UseInMemoryDatabase(databaseName: "TestDatabase") // Benenne die In-Memory-Datenbank
+            .UseInMemoryDatabase("TestDatabase") // Benenne die In-Memory-Datenbank
             .Options;
 
         using (var context = new RssReaderDbContext(options))
@@ -22,8 +22,8 @@ public class UnitTest1
                 ChannelTitle = "Test Feed",
                 FeedItems = new List<RssFeedItem>
                 {
-                    new RssFeedItem { Id = 1, Title = "First Item", RssFeedId = 1 },
-                    new RssFeedItem { Id = 2, Title = "Second Item", RssFeedId = 1 }
+                    new() { Id = 1, Title = "First Item", RssFeedId = 1 },
+                    new() { Id = 2, Title = "Second Item", RssFeedId = 1 }
                 }
             };
 

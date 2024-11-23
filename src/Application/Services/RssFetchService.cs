@@ -8,7 +8,8 @@ using Domain.Interface;
 
 namespace Application.Services;
 
-public class RssFetchService(IUnitOfWork unitOfWork, 
+public class RssFetchService(
+    IUnitOfWork unitOfWork,
     IRssFeedRepository iRssFeedRepository,
     RssFeedRequestValidator rssFeedRequestValidator) : IRssFetchService
 {
@@ -17,12 +18,12 @@ public class RssFetchService(IUnitOfWork unitOfWork,
     {
         // Check if RssFeedRequest is null. if yes, return error
 
-            var validationResult = await rssFeedRequestValidator.ValidateAsync(rssFeedRequest, cancellationToken);
-            if (!validationResult.IsValid)
-            {
-                var errors = validationResult.Errors.Select(x => x.ErrorMessage);
-                return Result.Failure(RssFeedError.InvalidRssFeedUrl(errors));
-            }
+        var validationResult = await rssFeedRequestValidator.ValidateAsync(rssFeedRequest, cancellationToken);
+        if (!validationResult.IsValid)
+        {
+            var errors = validationResult.Errors.Select(x => x.ErrorMessage);
+            return Result.Failure(RssFeedError.InvalidRssFeedUrl(errors));
+        }
 
         // Check if RssFeed already exists
         var rssFeedExists = await iRssFeedRepository.GetByUrlAsync(feedUrl);

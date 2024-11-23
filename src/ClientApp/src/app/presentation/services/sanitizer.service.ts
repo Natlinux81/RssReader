@@ -7,7 +7,8 @@ import {DomSanitizer} from "@angular/platform-browser";
 })
 export class SanitizerService {
 
-  constructor(private sanitizer: DomSanitizer) { }
+  constructor(private sanitizer: DomSanitizer) {
+  }
 
   sanitizeFeed(feedItem: RssFeedItemRequest): RssFeedItemRequest {
     return {
