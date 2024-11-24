@@ -6,7 +6,7 @@ import {DomSanitizer} from "@angular/platform-browser";
   providedIn: 'root'
 })
 export class SanitizerService {
-  sanitizer =inject(DomSanitizer)
+  sanitizer = inject(DomSanitizer)
 
   sanitizeFeed(feedItem: RssFeedItemRequest): RssFeedItemRequest {
     return {
