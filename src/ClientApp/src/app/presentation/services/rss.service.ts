@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {BehaviorSubject, catchError, Observable, tap, throwError} from 'rxjs';
 import {RssFeedRequest} from '../models/RssFeedRequest';
 import {HttpClient} from '@angular/common/http';
@@ -9,16 +9,14 @@ import {ErrorHandlerService} from "./error-handler.service";
   providedIn: 'root'
 })
 export class RssService implements IRssService {
+  httpClient = inject(HttpClient)
+  handleErrorService = inject(ErrorHandlerService)
 
   // private baseUrl = 'api/rssFeeds';
   private baseUrl = 'https://localhost:7091/apiRssFeed';
-
   private feedAddedSubject = new BehaviorSubject<boolean>(false);
 
   feedAdded$ = this.feedAddedSubject.asObservable();
-
-  constructor(private httpClient: HttpClient, private handleErrorService: ErrorHandlerService) {
-  }
 
   addRssFeed(rssFeedRequest: RssFeedRequest, feedUrl: string): Observable<any> {
     const url = `${this.baseUrl}?feedUrl=${encodeURIComponent(feedUrl)}`;

@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using API.Extension;
 using Application.Interfaces;
 using Application.Models;
@@ -8,6 +9,7 @@ namespace API.Controllers;
 public class RssFeedController(IRssFetchService rssFetchService) : BaseApiController
 {
     [HttpPost]
+    [SuppressMessage("ReSharper.DPA", "DPA0000: DPA issues")]
     public async Task<IResult> AddRssFeed([FromQuery] CancellationToken cancellationToken,
         [FromBody] RssFeedRequest rssFedRequest, string feedUrl)
     {
@@ -18,6 +20,7 @@ public class RssFeedController(IRssFetchService rssFetchService) : BaseApiContro
     }
 
     [HttpGet]
+    [SuppressMessage("ReSharper.DPA", "DPA0000: DPA issues")]
     public async Task<IResult> GetAllRssFeeds()
     {
         // get all rss feeds from database
@@ -26,7 +29,7 @@ public class RssFeedController(IRssFetchService rssFetchService) : BaseApiContro
         return response.ToHttpResponse();
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("{id:int}")]
     public async Task<IResult> DeleteRssFeed(int id)
     {
         // Delete RSS feed by ID
@@ -36,6 +39,7 @@ public class RssFeedController(IRssFetchService rssFetchService) : BaseApiContro
     }
 
     [HttpPut("update")]
+    [SuppressMessage("ReSharper.DPA", "DPA0000: DPA issues")]
     public async Task<IResult> UpdateRssFeedItems(int id, [FromQuery] CancellationToken cancellationToken)
     {
         // update RSSFeedItems

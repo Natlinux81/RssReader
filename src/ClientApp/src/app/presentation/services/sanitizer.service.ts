@@ -1,4 +1,4 @@
-import {Injectable, SecurityContext} from '@angular/core';
+import {inject, Injectable, SecurityContext} from '@angular/core';
 import {RssFeedItemRequest} from "../models/RssFeedItemRequest";
 import {DomSanitizer} from "@angular/platform-browser";
 
@@ -6,9 +6,7 @@ import {DomSanitizer} from "@angular/platform-browser";
   providedIn: 'root'
 })
 export class SanitizerService {
-
-  constructor(private sanitizer: DomSanitizer) {
-  }
+  sanitizer =inject(DomSanitizer)
 
   sanitizeFeed(feedItem: RssFeedItemRequest): RssFeedItemRequest {
     return {

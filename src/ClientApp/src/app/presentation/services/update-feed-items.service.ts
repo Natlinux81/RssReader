@@ -1,13 +1,11 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {RssService} from "./rss.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UpdateFeedItemsService {
-
-  constructor(private rssService: RssService) {
-  }
+  rssService = inject(RssService)
 
   updateFeedItems() {
     this.rssService.updateRssFeedItems().subscribe({

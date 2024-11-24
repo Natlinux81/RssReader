@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {NgFor, NgOptimizedImage} from '@angular/common';
 import {RssFeed} from '../../../domain/entities/rssFeed';
 import {RssService} from '../../services/rss.service';
@@ -15,14 +15,12 @@ import {UpdateFeedItemsService} from "../../services/update-feed-items.service";
   styleUrl: './rss-feed-overview.component.scss'
 })
 export class RssFeedOverviewComponent implements OnInit {
+  rssService = inject(RssService)
+  updateRssFeedItemsService = inject(UpdateFeedItemsService)
 
   selectedFeedItem: RssFeedItem | null = null;
   rssFeeds: RssFeed[] = [];
   rssFeedItems: RssFeedItem[] = [];
-
-  constructor(private rssService: RssService,
-              private updateRssFeedItemsService: UpdateFeedItemsService) {
-  }
 
   ngOnInit(): void {
     this.loadRssFeeds();

@@ -10,7 +10,8 @@
         <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
       </div>
       <div class="modal-body">
-        <img *ngIf="feedItem?.imageUrl" ngSrc="{{ feedItem?.imageUrl }}" class="img-fluid" alt="Feed Image" width="600" height="375"/>
+        <img *ngIf="feedItem?.imageUrl" alt="Feed Image" class="img-fluid" height="375" ngSrc="{{ feedItem?.imageUrl }}"
+             width="600"/>
         <p class="mt-2">{{ feedItem?.description }}</p>
 
       </div>
