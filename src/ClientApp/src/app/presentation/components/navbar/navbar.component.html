@@ -16,7 +16,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <form #formInput="ngForm" class="w-50 mx-auto text-center">
         <div class="input-group d-flex justify-content-center">
-          <input #RssFeedInput="ngModel" (keydown.enter)="formInput.valid && addFeed()" [(ngModel)]="inputRssFeed"
+          <input #rssFeedInput="ngModel" (keydown.enter)="formInput.valid && addFeed()" [(ngModel)]="inputRssFeed"
                  aria-describedby="button-addon2" aria-label="Recipient's username"
                  class="form-control me-2" name="input" pattern="https?://.*rss.*" placeholder="Add Rss-Feed"
                  required style="max-width: 400px;"
@@ -26,9 +26,9 @@
           </button>
         </div>
 
-        <div *ngIf="RssFeedInput.invalid && (RssFeedInput.touched || RssFeedInput.dirty)" class="mt-1">
-          <small *ngIf="RssFeedInput.errors?.['required']" class="m-2 text-danger">* URL is required</small>
-          <small *ngIf="RssFeedInput.errors?.['pattern']" class="m-2 text-danger">* URL not valid</small>
+        <div *ngIf="rssFeedInput.invalid && (rssFeedInput.touched || rssFeedInput.dirty)" class="mt-1">
+          <small *ngIf="rssFeedInput.errors?.['required']" class="m-2 text-danger">* URL is required</small>
+          <small *ngIf="rssFeedInput.errors?.['pattern']" class="m-2 text-danger">* URL not valid</small>
         </div>
       </form>
 

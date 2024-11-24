@@ -16,8 +16,7 @@
           <div class="d-flex justify-content-end me-4 mt-4" style="width: 100%;">
             <small>{{ feedItem.publishDate | timeElapsed }} ago</small>
           </div>
-          <img alt="Feed Image" class="mt-3" src="{{feedItem.imageUrl}}"
-               style="display: block; width: 20rem; height: auto;">
+          <img alt="Feed Image" class="mt-3" ngSrc="{{feedItem.imageUrl}}" width="320" height="180">
 
           <div class="card-body">
             <h5 class="card-title">{{ feedItem.title }}</h5>

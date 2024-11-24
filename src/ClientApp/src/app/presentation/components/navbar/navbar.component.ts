@@ -1,4 +1,4 @@
-import {Component, inject, SecurityContext, TemplateRef, ViewChild} from '@angular/core';
+import {Component, effect, ElementRef, inject, SecurityContext, TemplateRef, viewChild} from '@angular/core';
 import {DarkModeService} from '../../services/dark-mode.service';
 import {FormsModule, NgForm} from "@angular/forms";
 import {RssFeedItemRequest} from "../../models/RssFeedItemRequest";
@@ -10,21 +10,22 @@ import {DomSanitizer} from "@angular/platform-browser";
 import {SanitizerService} from "../../services/sanitizer.service";
 
 @Component({
-    selector: 'app-navbar',
-    imports: [
-        FormsModule,
-        NgIf
-    ],
-    templateUrl: './navbar.component.html',
-    styleUrl: './navbar.component.scss'
+  selector: 'app-navbar',
+  imports: [
+    FormsModule,
+    NgIf
+  ],
+  templateUrl: './navbar.component.html',
+  styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent {
   darkModeService: DarkModeService = inject(DarkModeService);
   toastService = inject(ToastService);
 
-  @ViewChild('formInput', {static: false}) formInput!: NgForm;
-  @ViewChild('successTpl', {static: false}) successTpl!: TemplateRef<any>;
-  @ViewChild('dangerTpl', {static: false}) dangerTpl!: TemplateRef<any>;
+  private formInput = viewChild <NgForm>('formInput');
+  private rssFeedInput = viewChild <ElementRef<HTMLInputElement>>('rssFeedInput');
+  private successTpl = viewChild <TemplateRef<any>>('successTpl');
+  private dangerTpl = viewChild <TemplateRef<any>>('dangerTpl');
 
   feedItems: RssFeedItemRequest[] = [];
   inputRssFeed: string = "";
@@ -33,6 +34,9 @@ export class NavbarComponent {
   constructor(private rssService: RssService,
               private sanitizer: DomSanitizer,
               private sanitizerService: SanitizerService) {
+    effect(() =>{
+      this.rssFeedInput()!.nativeElement.focus();
+    })
   }
 
   toggleDarkMode() {
@@ -50,10 +54,10 @@ export class NavbarComponent {
     };
     this.rssService.addRssFeed(rssFeedRequest, this.inputRssFeed).subscribe((result) => {
       if (result.isSuccess) {
-        this.formInput.resetForm();
+        this.formInput()!.resetForm();
         console.log('Feed added successfully', result);
         this.toastService.show({
-          template: this.successTpl,
+          template: this.successTpl()!,
           classname: 'bg-success text-light',
           delay: 10000
         });
