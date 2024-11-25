@@ -1,13 +1,13 @@
-import {Component, effect, ElementRef, inject, SecurityContext, TemplateRef, viewChild} from '@angular/core';
-import {DarkModeService} from '../../services/dark-mode.service';
+import {Component, inject, SecurityContext, TemplateRef, viewChild} from '@angular/core';
+import {DarkModeService} from '../../../infrastructure/services/dark-mode.service';
 import {FormsModule, NgForm} from "@angular/forms";
 import {RssFeedItemRequest} from "../../models/RssFeedItemRequest";
 import {RssFeedRequest} from "../../models/RssFeedRequest";
 import {NgIf} from "@angular/common";
-import {RssService} from "../../services/rss.service";
-import {ToastService} from "../../services/toast.service";
+import {RssService} from "../../../infrastructure/services/rss.service";
+import {ToastService} from "../../../infrastructure/services/toast.service";
 import {DomSanitizer} from "@angular/platform-browser";
-import {SanitizerService} from "../../services/sanitizer.service";
+import {SanitizerService} from "../../../infrastructure/services/sanitizer.service";
 
 @Component({
   selector: 'app-navbar',
@@ -29,15 +29,8 @@ export class NavbarComponent {
   inputRssFeed: string = "";
   channelTitle: string = '';
   private formInput = viewChild<NgForm>('formInput');
-  private rssFeedInput = viewChild<ElementRef<HTMLInputElement>>('rssFeedInput');
   private successTpl = viewChild<TemplateRef<any>>('successTpl');
   private dangerTpl = viewChild<TemplateRef<any>>('dangerTpl');
-
-  constructor() {
-    effect(() => {
-      this.rssFeedInput()!.nativeElement.focus();
-    })
-  }
 
   toggleDarkMode() {
     this.darkModeService.updateDarkMode();

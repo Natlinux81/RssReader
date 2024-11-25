@@ -1,7 +1,7 @@
 import {Component, inject} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
 import {NavbarComponent} from "./presentation/components/navbar/navbar.component";
-import {DarkModeService} from './presentation/services/dark-mode.service';
+import {DarkModeService} from './infrastructure/services/dark-mode.service';
 import {FooterComponent} from './presentation/components/footer/footer.component';
 import {ToastComponent} from "./presentation/shared/toast/toast.component";
 

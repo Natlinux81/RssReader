@@ -1,12 +1,12 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {NgFor, NgOptimizedImage} from '@angular/common';
 import {RssFeed} from '../../../domain/entities/rssFeed';
-import {RssService} from '../../services/rss.service';
+import {RssService} from '../../../infrastructure/services/rss.service';
 import {RssFeedItem} from '../../../domain/entities/rssFeedItem';
 import {FormsModule} from '@angular/forms';
 import {FeedItemModalComponent} from "../../shared/feed-item-modal/feed-item-modal.component";
 import {TimeElapsedPipe} from '../../../infrastructure/utilities/time-elapsed.pipe';
-import {UpdateFeedItemsService} from "../../services/update-feed-items.service";
+import {UpdateFeedItemsService} from "../../../infrastructure/services/update-feed-items.service";
 
 @Component({
   selector: 'app-rss-feed-overview',
@@ -20,28 +20,25 @@ export class RssFeedOverviewComponent implements OnInit {
 
   selectedFeedItem: RssFeedItem | null = null;
   rssFeeds: RssFeed[] = [];
-  rssFeedItems: RssFeedItem[] = [];
 
   ngOnInit(): void {
-    this.loadRssFeeds();
+    this.fetchRssFeeds();
 
     this.rssService.feedAdded$.subscribe((feedAdded) => {
       if (feedAdded) {
-        this.loadRssFeeds();
+        this.fetchRssFeeds();
       }
     });
 
     this.updateRssFeedItemsService.updateFeedItems()
   }
-
-  loadRssFeeds() {
-    this.rssService.getAllRssFeeds().subscribe((result) => {
-      if (result.isSuccess) {
-        this.rssFeeds = result.value.reverse();
-        this.rssFeedItems = result.value;
-        console.log('RSS Feeds fetched successfully:', this.rssFeeds, result);
-      } else {
-        console.error('Error fetching RSS feeds:', result.error);
+  fetchRssFeeds() {
+    this.rssService.getAllRssFeeds().subscribe({
+      next: (result) => {
+        if (result.isSuccess) {
+          this.rssFeeds = result.value.reverse();
+          console.log('RSS Feeds fetched successfully:', this.rssFeeds);
+        }
       }
     });
   }

@@ -2,7 +2,7 @@ import {Component, inject, Input} from '@angular/core';
 import {RssFeedItem} from '../../../domain/entities/rssFeedItem';
 import {NgClass, NgIf, NgOptimizedImage} from '@angular/common';
 import {ShortenLinkPipe} from "../../../infrastructure/utilities/shorten-link.pipe";
-import {DarkModeService} from '../../services/dark-mode.service';
+import {DarkModeService} from '../../../infrastructure/services/dark-mode.service';
 import {TimeElapsedPipe} from '../../../infrastructure/utilities/time-elapsed.pipe';
 
 @Component({
