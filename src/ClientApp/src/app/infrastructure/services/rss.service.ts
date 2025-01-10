@@ -3,6 +3,7 @@ import {BehaviorSubject, Observable, tap} from 'rxjs';
 import {RssFeedRequest} from '../../presentation/models/RssFeedRequest';
 import {HttpClient} from '@angular/common/http';
 import {IRssService} from '../../presentation/interfaces/IRssService';
+import {RssFeed} from "../../domain/entities/rssFeed";
 
 @Injectable({
   providedIn: 'root'
@@ -12,9 +13,12 @@ export class RssService implements IRssService {
 
   // private baseUrl = 'api/rssFeeds';
   private baseUrl = 'https://localhost:7091/apiRssFeed';
-  private feedAddedSubject = new BehaviorSubject<boolean>(false);
 
+  private feedAddedSubject = new BehaviorSubject<boolean>(false);
   feedAdded$ = this.feedAddedSubject.asObservable();
+
+  private rssFeedsSubject = new BehaviorSubject<RssFeed[]>([]);
+  rssFeeds$ = this.rssFeedsSubject.asObservable();
 
   addRssFeed(rssFeedRequest: RssFeedRequest, feedUrl: string): Observable<any> {
     const url = `${this.baseUrl}?feedUrl=${encodeURIComponent(feedUrl)}`;
@@ -23,6 +27,19 @@ export class RssService implements IRssService {
     );
   }
 
+  loadRssFeeds(): void {
+    this.getAllRssFeeds().subscribe({
+      next: (result) => {
+        if (result.isSuccess) {
+          this.rssFeedsSubject.next(result.value.reverse());
+          console.log('RSS Feeds loaded into BehaviorSubject:', result.value);
+        }
+      },
+      error: (err) => {
+        console.error('Error loading RSS feeds:', err);
+      }
+    });
+  }
   getAllRssFeeds(): Observable<any> {
     return this.httpClient.get<any>(this.baseUrl);
   }

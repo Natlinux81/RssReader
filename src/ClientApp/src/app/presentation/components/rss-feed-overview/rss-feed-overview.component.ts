@@ -22,25 +22,20 @@ export class RssFeedOverviewComponent implements OnInit {
   rssFeeds: RssFeed[] = [];
 
   ngOnInit(): void {
-    this.fetchRssFeeds();
+    this.rssService.rssFeeds$.subscribe((feeds) => {
+      this.rssFeeds = feeds;
+    });
+
+    // Initiales Laden der Feeds
+    this.rssService.loadRssFeeds();
 
     this.rssService.feedAdded$.subscribe((feedAdded) => {
       if (feedAdded) {
-        this.fetchRssFeeds();
+        this.rssService.loadRssFeeds();
       }
     });
 
-    this.updateRssFeedItemsService.updateFeedItems()
-  }
-  fetchRssFeeds() {
-    this.rssService.getAllRssFeeds().subscribe({
-      next: (result) => {
-        if (result.isSuccess) {
-          this.rssFeeds = result.value.reverse();
-          console.log('RSS Feeds fetched successfully:', this.rssFeeds);
-        }
-      }
-    });
+    this.updateRssFeedItemsService.updateFeedItems();
   }
 
   deleteRssFeed(id: number) {

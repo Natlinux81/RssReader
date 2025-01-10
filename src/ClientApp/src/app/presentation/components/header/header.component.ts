@@ -10,15 +10,15 @@ import {DomSanitizer} from "@angular/platform-browser";
 import {SanitizerService} from "../../../infrastructure/services/sanitizer.service";
 
 @Component({
-  selector: 'app-navbar',
+  selector: 'app-header',
   imports: [
     FormsModule,
     NgIf
   ],
-  templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.scss'
+  templateUrl: './header.component.html',
+  styleUrl: './header.component.scss'
 })
-export class NavbarComponent {
+export class HeaderComponent {
   darkModeService: DarkModeService = inject(DarkModeService);
   toastService = inject(ToastService);
   rssService = inject(RssService);

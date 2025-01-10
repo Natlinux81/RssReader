@@ -16,7 +16,7 @@
 
       </div>
       <div class="modal-footer d-flex justify-content-center">
-        <a *ngIf="feedItem?.link" [href]="feedItem!.link" target="_blank">{{ feedItem!.link | shortenLink:40 }}</a>
+        <a *ngIf="feedItem?.link" [href]="feedItem!.link" target="_blank">{{ feedItem!.link | shortenString:40 }}</a>
       </div>
     </div>
   </div>

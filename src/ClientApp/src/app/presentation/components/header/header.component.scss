@@ -1,0 +1,15 @@
+.theme-toggle svg {
+  transition: transform 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.theme-toggle svg:hover {
+  transform: scale(1.1) rotate(10deg);
+}
+
+.sidebar-toggle svg:hover {
+  transition: scale 0.3s ease-in-out;
+  transform: scale(1.1);
+  background-color: rgba(151, 142, 142, 0.3);
+  border-radius: 20%;
+}

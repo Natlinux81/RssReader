@@ -1,5 +1,11 @@
 <div [attr.data-bs-theme]="darkModeService.darkModeSignal()" class="bg-body-tertiary">
-  <app-navbar></app-navbar>
+  <app-header></app-header>
+<div style="height: 4rem;">
+
+</div>
+  <div class="sidebar-container">
+   <app-sidebar></app-sidebar>
+ </div>
   <router-outlet></router-outlet>
   <app-footer></app-footer>
   <app-toast></app-toast>

@@ -1,5 +1,17 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary border-bottom">
+<nav class="navbar navbar-expand-lg bg-body-tertiary border-bottomsidebar-toggle" data-bs-toggle="offcanvas">
   <div class="container-fluid">
+    <div class="sidebar-toggle p-2 me-1 text-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+      @if(darkModeService.darkModeSignal() === 'dark'){
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
+        </svg>
+      } @else {
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
+        </svg>
+      }
+    </div>
+
     <a class="navbar-brand" href="#" title="Refresh">
       <svg class="bi bi-rss-fill" fill="orange" height="24" viewBox="0 0 18 18" width="24"
            xmlns="http://www.w3.org/2000/svg">
@@ -27,7 +39,7 @@
         </div>
 
         <div *ngIf="rssFeedInput.invalid && (rssFeedInput.touched || rssFeedInput.dirty)" class="mt-1">
-          <small *ngIf="rssFeedInput.errors?.['required']" class="m-2 text-danger">* URL is required</small>
+<!--          <small *ngIf="rssFeedInput.errors?.['required']" class="m-2 text-danger">* URL is required</small>-->
           <small *ngIf="rssFeedInput.errors?.['pattern']" class="m-2 text-danger">* URL not valid</small>
         </div>
       </form>
