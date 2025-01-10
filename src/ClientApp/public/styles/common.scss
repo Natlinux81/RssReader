@@ -1,0 +1,43 @@
+/* Variables */
+$gradient-color1: #fda400; /* Dunkles Orange */
+$gradient-color2: #4d82c3; /* Dunkles Blau */
+$gradient-color3: #605d5d; /* Dunkles Grau */
+$gradient-color4: #A685E2; /* Pastell-Lila */
+
+.card{
+  margin-top: 4rem;
+  border-radius: 12px;
+  box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.8);
+  background: linear-gradient( $gradient-color2, $gradient-color3, $gradient-color1);
+  color: black;
+}
+
+.error{
+  border-color: red;
+}
+
+h1{
+  color: black;
+  font-weight: 600;
+}
+
+i{
+  font-size: 20px;
+  color: black;
+}
+
+u{
+  color: black;
+}
+
+.form-check-input{
+  background-color: white;
+}
+
+
+
+span{
+  background-color: white;
+}
+
+

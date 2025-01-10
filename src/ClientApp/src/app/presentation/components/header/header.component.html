@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary border-bottomsidebar-toggle" data-bs-toggle="offcanvas">
+<nav class="navbar navbar-expand-lg bg-body-tertiary border-bottom sidebar-toggle" data-bs-toggle="offcanvas">
   <div class="container-fluid">
     <div class="sidebar-toggle p-2 me-1 text-secondary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
       @if(darkModeService.darkModeSignal() === 'dark'){
@@ -44,6 +44,8 @@
         </div>
       </form>
 
+
+
       <div class="ms-auto">
         @if (darkModeService.darkModeSignal() === 'dark') {
           <span (click)="toggleDarkMode()" class="theme-toggle">
@@ -65,9 +67,30 @@
           </span>
         }
       </div>
+
     </div>
   </div>
+
+  <ul class="navbar-nav ms-auto">
+    <li class="nav-item">
+      <a class="nav-link text-nowrap" [routerLink]="['/register']">Sing up</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="['/login']">Login</a>
+    </li>
+    <li class="nav-item dropdown">
+      <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+        Dropdown
+      </button>
+      <ul class="dropdown-menu dropdown-menu-dark">
+        <li><a class="dropdown-item" href="#">Action</a></li>
+        <li><a class="dropdown-item" href="#">Another action</a></li>
+        <li><a class="dropdown-item" href="#">Something else here</a></li>
+      </ul>
+    </li>
+  </ul>
 </nav>
+
 <ng-template #successTpl>RssFeed added successfully</ng-template>
 
 <ng-template #dangerTpl>

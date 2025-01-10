@@ -8,12 +8,14 @@ import {RssService} from "../../../infrastructure/services/rss.service";
 import {ToastService} from "../../../infrastructure/services/toast.service";
 import {DomSanitizer} from "@angular/platform-browser";
 import {SanitizerService} from "../../../infrastructure/services/sanitizer.service";
+import {Router, RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-header',
   imports: [
     FormsModule,
-    NgIf
+    NgIf,
+    RouterLink
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
@@ -24,6 +26,7 @@ export class HeaderComponent {
   rssService = inject(RssService);
   sanitizer = inject(DomSanitizer);
   sanitizerService = inject(SanitizerService);
+
 
   feedItems: RssFeedItemRequest[] = [];
   inputRssFeed: string = "";
@@ -57,4 +60,5 @@ export class HeaderComponent {
       }
     });
   }
+
 }

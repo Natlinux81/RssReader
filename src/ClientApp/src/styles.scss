@@ -3,3 +3,47 @@
 
 /* Importing Bootstrap SCSS file. */
 @use 'bootstrap/scss/bootstrap';
+
+body, html {
+  height: 100%;
+  margin: 0;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+app-header {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  height: 4rem;
+  z-index: 2;
+}
+
+app-sidebar {
+  position: absolute;
+  width: 100%;
+  top: 4rem;
+  z-index: 1;
+}
+
+app-footer {
+  height: 4rem;
+  margin-top: auto;
+}
+.form-control{
+  background-color: white;
+  color: black;
+}
+
+.form-control:focus{
+  background-color: white;
+  color: black;
+}
+
+.form-control::placeholder{
+  color: gray;
+}
