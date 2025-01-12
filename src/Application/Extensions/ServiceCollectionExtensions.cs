@@ -10,6 +10,7 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
         services.AddValidatorsFromAssembly(typeof(ServiceCollectionExtensions).Assembly);
+        services.AddScoped<IAuthenticationService, AuthenticationService>();
         services.AddScoped<IRssFetchService, RssFetchService>();
         services.AddHostedService<RssFeedUpdateService>();
 

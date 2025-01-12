@@ -9,7 +9,6 @@ namespace API.Controllers;
 public class RssFeedController(IRssFetchService rssFetchService) : BaseApiController
 {
     [HttpPost]
-    [SuppressMessage("ReSharper.DPA", "DPA0000: DPA issues")]
     public async Task<IResult> AddRssFeed([FromQuery] CancellationToken cancellationToken,
         [FromBody] RssFeedRequest rssFedRequest, string feedUrl)
     {
@@ -20,7 +19,6 @@ public class RssFeedController(IRssFetchService rssFetchService) : BaseApiContro
     }
 
     [HttpGet]
-    [SuppressMessage("ReSharper.DPA", "DPA0000: DPA issues")]
     public async Task<IResult> GetAllRssFeeds()
     {
         // get all rss feeds from database
@@ -39,7 +37,6 @@ public class RssFeedController(IRssFetchService rssFetchService) : BaseApiContro
     }
 
     [HttpPut("update")]
-    [SuppressMessage("ReSharper.DPA", "DPA0000: DPA issues")]
     public async Task<IResult> UpdateRssFeedItems(int id, [FromQuery] CancellationToken cancellationToken)
     {
         // update RSSFeedItems

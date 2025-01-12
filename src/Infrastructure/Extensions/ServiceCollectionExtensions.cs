@@ -12,6 +12,7 @@ public static class ServiceCollectionExtensions
         // Register repositories and unit of work
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
         services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IRssFeedRepository, RssFeedRepository>();
 
         return services;

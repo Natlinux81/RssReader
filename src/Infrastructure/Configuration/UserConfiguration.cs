@@ -31,5 +31,9 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.HasMany(x => x.UserRoles)
             .WithOne(x => x.User)
             .HasForeignKey(x => x.UserId);
+
+        builder.HasData(
+            new User { Id = 1, Username = "admin", Password = "Admin@123", Email = "admin@localhost" },
+            new User { Id = 2, Username = "user", Password = "User@123", Email = "user@localhost" });
     }
 }

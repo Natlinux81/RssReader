@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories;
 
-public class GenericRepository<TEntity>(RssReaderDbContext context) : IGenericRepository<TEntity> where TEntity : class
+public class GenericRepository<TEntity>(RssReaderDbContext rssReaderDbContext) : IGenericRepository<TEntity> where TEntity : class
 {
-    internal readonly DbSet<TEntity> DbSet = context.Set<TEntity>();
+    internal readonly DbSet<TEntity> DbSet = rssReaderDbContext.Set<TEntity>();
 
     public async Task<TEntity> AddAsync(TEntity entity)
     {

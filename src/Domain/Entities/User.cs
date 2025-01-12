@@ -9,6 +9,6 @@ public class User
 
     public int RssFeedId { get; set; }
     public RssFeed? RssFeed { get; set; }
-    public List<UserRole> UserRoles { get; set; }
-    public List<RssFeed> RssFeeds { get; set; }
+    public List<UserRole> UserRoles { get; set; } = [];
+    public List<RssFeed> RssFeeds { get; set; } = [];
 }
