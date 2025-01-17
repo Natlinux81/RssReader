@@ -1,5 +1,5 @@
 using Application.Common.Results;
-using Application.Error;
+using Application.Errors;
 using Application.Interfaces;
 using Application.Models;
 using Domain.Entities;
@@ -11,15 +11,15 @@ public class AuthenticationService (
     IUnitOfWork unitOfWork,
     IUserRepository iUserRepository) : IAuthenticationService
 {
-    public async Task<Result> RegisterAsync(RegisterRequest registerRequest)
+    public async Task<Result> RegisterAsync(RegisterRequest? registerRequest)
     {
-        if (registerRequest == null)
+        if (registerRequest is null)
         {
-            throw new ArgumentNullException(nameof(registerRequest));
+           return Result.Failure(AuthError.InvalidRegisterRequest);
         }
 
         var userExists = await iUserRepository.GetByEmailAsync(registerRequest.Email);
-        if (userExists is not null) return Result.Failure(RssFeedError.RssFeedAlreadyExists);
+        if (userExists is not null) return Result.Failure(AuthError.UserAlreadyExists);
 
         var user = new User
         {
@@ -32,8 +32,27 @@ public class AuthenticationService (
         return Result.Success("User registered successfully.");
     }
 
-    public Task<Result> LoginAsync(LoginRequest loginRequest)
+    public async Task<Result> LoginAsync(LoginRequest? loginRequest)
     {
-        throw new NotImplementedException();
+        if (loginRequest is null)
+        {
+            return Result.Failure(AuthError.InvalidLoginRequest);
+        }
+
+        var (email, password) = (loginRequest);
+        var user = await iUserRepository.GetByEmailAsync(email);
+        if (user is null) return Result.Failure(AuthError.UserNotFound);
+        if (user.Password != password)
+        {
+            return Result.Failure(AuthError.InvalidPassword);   
+        }
+        var token = "token";
+        var result = new
+        {
+            Token = token,
+            Username = user.Username
+        };
+        return Result.Success(result);
     }
+
 }

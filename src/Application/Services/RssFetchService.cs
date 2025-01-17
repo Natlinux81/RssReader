@@ -1,6 +1,6 @@
 ﻿using Application.Common.Results;
 using Application.DTOs;
-using Application.Error;
+using Application.Errors;
 using Application.Interfaces;
 using Application.Models;
 using Application.Validators;
