@@ -12,8 +12,7 @@ public static class RssFeedError
 
     public static Error RssFeedsNotFound => new Error(ErrorTypeConstant.NotFound, "RSS-Feeds not found");
 
-    public static Error InvalidRssFeedUrl(IEnumerable<string> errors)
-    {
-        return new Error(ErrorTypeConstant.ValidationError, string.Join(',', errors));
-    }
+    public static Error CreateInvalidRssFeedRequestError(IEnumerable<string> errors) =>
+    new Error(ErrorTypeConstant.ValidationError, string.Join(",", errors));
+
 }

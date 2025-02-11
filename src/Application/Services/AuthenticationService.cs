@@ -2,6 +2,7 @@ using Application.Common.Results;
 using Application.Errors;
 using Application.Interfaces;
 using Application.Models;
+using Application.Validators;
 using Domain.Entities;
 using Domain.Interface;
 
@@ -9,14 +10,18 @@ namespace Application.Services;
 
 public class AuthenticationService (
     IUnitOfWork unitOfWork,
-    IUserRepository iUserRepository) : IAuthenticationService
+    IUserRepository iUserRepository,
+    LoginRequestValidator loginRequestValidator,
+    RegisterRequestValidator registerRequestValidator) : IAuthenticationService
 {
-    public async Task<Result> RegisterAsync(RegisterRequest? registerRequest)
+    public async Task<Result> RegisterAsync(RegisterRequest registerRequest)
     {
-        if (registerRequest is null)
+        var validationResult = await registerRequestValidator.ValidateAsync(registerRequest);
+        if (!validationResult.IsValid)
         {
-           return Result.Failure(AuthError.InvalidRegisterRequest);
-        }
+            var errors = validationResult.Errors.Select(x => x.ErrorMessage);
+            return Result.Failure(AuthError.CreateInvalidRegisterRequestError(errors));
+        } 
 
         var userExists = await iUserRepository.GetByEmailAsync(registerRequest.Email);
         if (userExists is not null) return Result.Failure(AuthError.UserAlreadyExists);
@@ -32,14 +37,16 @@ public class AuthenticationService (
         return Result.Success("User registered successfully.");
     }
 
-    public async Task<Result> LoginAsync(LoginRequest? loginRequest)
+    public async Task<Result> LoginAsync(LoginRequest loginRequest)
     {
-        if (loginRequest is null)
+        var validationResult = await loginRequestValidator.ValidateAsync(loginRequest);
+        if (!validationResult.IsValid) 
         {
-            return Result.Failure(AuthError.InvalidLoginRequest);
-        }
+            var errors = validationResult.Errors.Select(x => x.ErrorMessage);
+            return Result.Failure(AuthError.CreateInvalidLoginRequestError(errors));
+        } 
 
-        var (email, password) = (loginRequest);
+        var (email, password) = loginRequest;
         var user = await iUserRepository.GetByEmailAsync(email);
         if (user is null) return Result.Failure(AuthError.UserNotFound);
         if (user.Password != password)

@@ -22,7 +22,7 @@ public class RssFetchService(
         if (!validationResult.IsValid)
         {
             var errors = validationResult.Errors.Select(x => x.ErrorMessage);
-            return Result.Failure(RssFeedError.InvalidRssFeedUrl(errors));
+            return Result.Failure(RssFeedError.CreateInvalidRssFeedRequestError(errors));
         }
 
         // Check if RssFeed already exists

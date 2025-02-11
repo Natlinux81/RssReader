@@ -14,8 +14,10 @@ public static class AuthError
     public static Error InvalidPassword =>
         new Error(ErrorTypeConstant.ValidationError, "Invalid Password");
 
-    public static Error InvalidRssFeedUrl(IEnumerable<string> errors)
-    {
-        return new Error(ErrorTypeConstant.ValidationError, string.Join(',', errors));
-    }
+    public static Error CreateInvalidLoginRequestError(IEnumerable<string> errors) =>
+        new Error(ErrorTypeConstant.ValidationError, string.Join(", ", errors));
+    
+    public static Error CreateInvalidRegisterRequestError(IEnumerable<string> errors) =>
+        new Error(ErrorTypeConstant.ValidationError, string.Join(", ", errors));
+
 }
