@@ -12,7 +12,8 @@ public class AuthenticationService (
     IUnitOfWork unitOfWork,
     IUserRepository iUserRepository,
     LoginRequestValidator loginRequestValidator,
-    RegisterRequestValidator registerRequestValidator) : IAuthenticationService
+    RegisterRequestValidator registerRequestValidator,
+    IJwtService jwtService) : IAuthenticationService
 {
     public async Task<Result> RegisterAsync(RegisterRequest registerRequest)
     {
@@ -23,7 +24,7 @@ public class AuthenticationService (
             return Result.Failure(AuthError.CreateInvalidRegisterRequestError(errors));
         } 
 
-        var userExists = await iUserRepository.GetByEmailAsync(registerRequest.Email);
+        var userExists = await iUserRepository.GetUserByEmailAsync(registerRequest.Email);
         if (userExists is not null) return Result.Failure(AuthError.UserAlreadyExists);
 
         var user = new User
@@ -47,13 +48,13 @@ public class AuthenticationService (
         } 
 
         var (email, password) = loginRequest;
-        var user = await iUserRepository.GetByEmailAsync(email);
+        var user = await iUserRepository.GetUserByEmailAsync(email);
         if (user is null) return Result.Failure(AuthError.UserNotFound);
         if (user.Password != password)
         {
             return Result.Failure(AuthError.InvalidPassword);   
         }
-        var token = "token";
+        var token = await jwtService.GenerateTokenAsync(email);
         var result = new
         {
             Token = token,

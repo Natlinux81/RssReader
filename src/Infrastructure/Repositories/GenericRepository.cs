@@ -4,7 +4,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories;
 
-public class GenericRepository<TEntity>(RssReaderDbContext rssReaderDbContext) : IGenericRepository<TEntity> where TEntity : class
+public class GenericRepository<TEntity>(RssReaderDbContext rssReaderDbContext)
+    : IGenericRepository<TEntity> where TEntity : class
 {
     internal readonly DbSet<TEntity> DbSet = rssReaderDbContext.Set<TEntity>();
 

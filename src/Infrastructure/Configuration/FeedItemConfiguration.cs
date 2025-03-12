@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.Configuration;
 
-public class FeedItemConfiguration: IEntityTypeConfiguration<RssFeedItem>
+public class FeedItemConfiguration : IEntityTypeConfiguration<RssFeedItem>
 {
     public void Configure(EntityTypeBuilder<RssFeedItem> builder)
     {

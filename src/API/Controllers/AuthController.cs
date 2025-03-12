@@ -21,5 +21,3 @@ public class AuthController(IAuthenticationService authService) : BaseApiControl
         return response.ToHttpResponse();
     }
 }
-
-

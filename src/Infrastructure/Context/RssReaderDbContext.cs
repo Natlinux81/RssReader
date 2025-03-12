@@ -9,7 +9,7 @@ public class RssReaderDbContext(DbContextOptions<RssReaderDbContext> options) : 
     public DbSet<User> Users { get; set; }
     public DbSet<Role> Roles { get; set; }
     public DbSet<UserRole> UserRoles { get; set; }
-    
+
     public DbSet<RssFeed> RssFeeds { get; set; }
     public DbSet<RssFeedItem> RssFeedItems { get; set; }
 
@@ -23,7 +23,7 @@ public class RssReaderDbContext(DbContextOptions<RssReaderDbContext> options) : 
         //     .HasOne(feed => feed.RssFeed)
         //     .WithMany(feed => feed.FeedItems)
         //     .HasForeignKey(feedItem => feedItem.RssFeedId);
-        
+
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(RssReaderDbContext).Assembly);
 
         MockData.GetMockData(modelBuilder);

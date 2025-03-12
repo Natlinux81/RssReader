@@ -11,6 +11,7 @@ public static class ServiceCollectionExtensions
     {
         services.AddValidatorsFromAssembly(typeof(ServiceCollectionExtensions).Assembly);
         services.AddScoped<IAuthenticationService, AuthenticationService>();
+        services.AddScoped<IJwtService, JwtService>();
         services.AddScoped<IRssFetchService, RssFetchService>();
         services.AddHostedService<RssFeedUpdateService>();
 

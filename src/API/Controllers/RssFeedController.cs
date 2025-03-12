@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using API.Extension;
 using Application.Interfaces;
 using Application.Models;
