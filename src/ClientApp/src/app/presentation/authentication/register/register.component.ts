@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {RouterLink} from "@angular/router";
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {NgIf} from "@angular/common";
+import ValidateForm from "../../../infrastructure/utilities/validateForm";
 
 @Component({
   selector: 'app-register',
@@ -33,6 +34,22 @@ constructor(private formBuilder: FormBuilder) {
     this.isText ? this.type = "text" : this.type = "password";
   }
   onSignUp() {
-    // TODO: Implement sign up functionality
+    if (this.registerForm.valid) {
+      // console.log(this.registerForm.value)
+      // // Send the obj to database
+      // this.authenticateService.signUp(this.registerForm.value).subscribe({
+      //   next:(result) => {
+      //     alert(result.message)
+      //     this.registerForm.reset();
+      //     this.router.navigate(['/login'])
+      //   },
+      //   error:(err) =>{
+      //     alert(err.message)
+      //   }
+      // })
+    } else{
+      // throw error
+      ValidateForm.validateAllFormFields(this.registerForm)
+    }
   }
 }

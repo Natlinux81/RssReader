@@ -54,7 +54,7 @@ public class AuthenticationService (
         {
             return Result.Failure(AuthError.InvalidPassword);   
         }
-        var token = await jwtService.GenerateTokenAsync(email);
+        var token = await jwtService.GenerateTokenAsync(user);
         var result = new
         {
             Token = token,

@@ -1,6 +1,8 @@
+using Domain.Entities;
+
 namespace Application.Interfaces;
 
 public interface IJwtService
 {
-    Task<string> GenerateTokenAsync(string email);
+    Task<string> GenerateTokenAsync(User user);
 }
