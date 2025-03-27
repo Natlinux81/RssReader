@@ -27,7 +27,7 @@ public class JwtService(IConfiguration configuration, IUserRepository userReposi
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(claims),
-            Expires = DateTime.UtcNow.AddSeconds(10), // set token expiration time
+            Expires = DateTime.UtcNow.AddMinutes(5), // set token expiration time
             SigningCredentials = credentials,
             Issuer = configuration["Jwt:Issuer"],
             Audience = configuration["Jwt:Audience"],

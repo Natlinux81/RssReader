@@ -1,4 +1,5 @@
 using System.Text;
+using API;
 using Application.Extensions;
 using Infrastructure;
 using Infrastructure.Context;
@@ -6,16 +7,18 @@ using Infrastructure.Utilities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 builder.Services.AddHttpClient();
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplication();
+builder.Services.AddWebServices(builder.Configuration);
 
 if (builder.Environment.IsDevelopment())
 {
@@ -51,24 +54,6 @@ builder.Services.AddCors(options =>
         });
 });
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
-    {
-        options.TokenValidationParameters = new()
-        {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            ValidIssuer = builder.Configuration["Jwt:Issuer"],
-            ValidAudience = builder.Configuration["Jwt:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey
-                (Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
-            ClockSkew = TimeSpan.Zero // remove delay of token expiration time
-        };
-    });
-        
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -90,3 +75,21 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.Run();
+
+public class LowerCaseDocumentFilter : IDocumentFilter
+{
+    public void Apply(OpenApiDocument swaggerDoc, DocumentFilterContext context)
+    {
+        // get the paths
+        var paths = swaggerDoc.Paths.ToDictionary(
+            path => path.Key.ToLowerInvariant(),
+            path => swaggerDoc.Paths[path.Key]);
+        
+        // add the paths
+        swaggerDoc.Paths = new OpenApiPaths();
+        foreach (var pathItem in paths)
+        {
+            swaggerDoc.Paths.Add(pathItem.Key, pathItem.Value);
+        }
+    }
+}

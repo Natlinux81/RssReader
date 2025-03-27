@@ -12,7 +12,7 @@ export class RssService implements IRssService {
   httpClient = inject(HttpClient)
 
   // private baseUrl = 'api/rssFeeds';
-  private baseUrl = 'https://localhost:7091/apiRssFeed';
+  private baseUrl = 'https://localhost:7091/api/RssFeed';
 
   private feedAddedSubject = new BehaviorSubject<boolean>(false);
   feedAdded$ = this.feedAddedSubject.asObservable();
