@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {RouterLink} from "@angular/router";
 import {NgIf, NgOptimizedImage} from "@angular/common";
-import ValidateForm from "../../../infrastructure/utilities/validateForm";
+import ValidateForm from "../../../infrastructure/utilities/validate-form";
 
 @Component({
   selector: 'app-login',

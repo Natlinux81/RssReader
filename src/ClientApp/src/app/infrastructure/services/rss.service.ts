@@ -1,9 +1,9 @@
 import {inject, Injectable} from '@angular/core';
 import {BehaviorSubject, Observable, tap} from 'rxjs';
-import {RssFeedRequest} from '../../presentation/models/RssFeedRequest';
+import {RssFeedRequest} from '../../presentation/models/rss-feed-request';
 import {HttpClient} from '@angular/common/http';
-import {IRssService} from '../../presentation/interfaces/IRssService';
-import {RssFeed} from "../../domain/entities/rssFeed";
+import {IRssService} from '../../presentation/interfaces/irss-service';
+import {RssFeed} from "../../domain/entities/rss-feed";
 
 @Injectable({
   providedIn: 'root'

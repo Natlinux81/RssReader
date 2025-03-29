@@ -1,5 +1,5 @@
 import {inject, Injectable, SecurityContext} from '@angular/core';
-import {RssFeedItemRequest} from "../../presentation/models/RssFeedItemRequest";
+import {RssFeedItemRequest} from "../../presentation/models/rss-feed-item-request";
 import {DomSanitizer} from "@angular/platform-browser";
 
 @Injectable({

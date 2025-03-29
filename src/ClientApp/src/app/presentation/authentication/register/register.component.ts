@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import {RouterLink} from "@angular/router";
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {NgIf} from "@angular/common";
-import ValidateForm from "../../../infrastructure/utilities/validateForm";
+import ValidateForm from "../../../infrastructure/utilities/validate-form";
 
 @Component({
   selector: 'app-register',

@@ -1,6 +1,6 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {DarkModeService} from "../../../infrastructure/services/dark-mode.service";
-import {RssFeed} from "../../../domain/entities/rssFeed";
+import {RssFeed} from "../../../domain/entities/rss-feed";
 import {NgFor, NgIf} from "@angular/common";
 import {RssService} from "../../../infrastructure/services/rss.service";
 import {ShortenStringPipe} from "../../../infrastructure/utilities/shorten-link.pipe";

@@ -1,5 +1,5 @@
 import {Component, inject, Input} from '@angular/core';
-import {RssFeedItem} from '../../../domain/entities/rssFeedItem';
+import {RssFeedItem} from '../../../domain/entities/rss-feed-item';
 import {NgClass, NgIf, NgOptimizedImage} from '@angular/common';
 import {ShortenStringPipe} from "../../../infrastructure/utilities/shorten-link.pipe";
 import {DarkModeService} from '../../../infrastructure/services/dark-mode.service';

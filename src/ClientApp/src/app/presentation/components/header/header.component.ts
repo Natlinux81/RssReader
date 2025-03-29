@@ -1,8 +1,8 @@
 import {Component, inject, SecurityContext, TemplateRef, viewChild} from '@angular/core';
 import {DarkModeService} from '../../../infrastructure/services/dark-mode.service';
 import {FormsModule, NgForm} from "@angular/forms";
-import {RssFeedItemRequest} from "../../models/RssFeedItemRequest";
-import {RssFeedRequest} from "../../models/RssFeedRequest";
+import {RssFeedItemRequest} from "../../models/rss-feed-item-request";
+import {RssFeedRequest} from "../../models/rss-feed-request";
 import {NgIf} from "@angular/common";
 import {RssService} from "../../../infrastructure/services/rss.service";
 import {ToastService} from "../../../infrastructure/services/toast.service";

@@ -7,6 +7,4 @@ export interface RssFeedItem {
   imageUrl: string;
 
   rssFeedId: number;
-
-
 }

@@ -1,8 +1,8 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {NgFor, NgOptimizedImage} from '@angular/common';
-import {RssFeed} from '../../../domain/entities/rssFeed';
+import {RssFeed} from '../../../domain/entities/rss-feed';
 import {RssService} from '../../../infrastructure/services/rss.service';
-import {RssFeedItem} from '../../../domain/entities/rssFeedItem';
+import {RssFeedItem} from '../../../domain/entities/rss-feed-item';
 import {FormsModule} from '@angular/forms';
 import {FeedItemModalComponent} from "../../shared/feed-item-modal/feed-item-modal.component";
 import {TimeElapsedPipe} from '../../../infrastructure/utilities/time-elapsed.pipe';
