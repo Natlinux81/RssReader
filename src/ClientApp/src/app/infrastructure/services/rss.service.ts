@@ -4,6 +4,7 @@ import {RssFeedRequest} from '../../presentation/models/rss-feed-request';
 import {HttpClient} from '@angular/common/http';
 import {IRssService} from '../../presentation/interfaces/irss-service';
 import {RssFeed} from "../../domain/entities/rss-feed";
+import {environment} from "../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +12,7 @@ import {RssFeed} from "../../domain/entities/rss-feed";
 export class RssService implements IRssService {
   httpClient = inject(HttpClient)
 
-  // private baseUrl = 'api/rssFeeds';
-  private baseUrl = 'https://localhost:7091/api/RssFeed';
+  private baseUrl = environment.baseUrl;
 
   private feedAddedSubject = new BehaviorSubject<boolean>(false);
   feedAdded$ = this.feedAddedSubject.asObservable();
@@ -21,7 +21,7 @@ export class RssService implements IRssService {
   rssFeeds$ = this.rssFeedsSubject.asObservable();
 
   addRssFeed(rssFeedRequest: RssFeedRequest, feedUrl: string): Observable<any> {
-    const url = `${this.baseUrl}?feedUrl=${encodeURIComponent(feedUrl)}`;
+    const url = `${this.baseUrl + 'rssFeed'}?feedUrl=${encodeURIComponent(feedUrl)}`;
     return this.httpClient.post<any>(url, rssFeedRequest).pipe(
         tap(() => this.feedAddedSubject.next(true))
     );
@@ -41,18 +41,18 @@ export class RssService implements IRssService {
     });
   }
   getAllRssFeeds(): Observable<any> {
-    return this.httpClient.get<any>(this.baseUrl);
+    return this.httpClient.get<any>(this.baseUrl + 'rssFeed');
   }
 
   deleteRssFeed(id: number): Observable<any> {
-    return this.httpClient.delete<any>(this.baseUrl + '/' + id);
+    return this.httpClient.delete<any>(this.baseUrl + 'rssFeed/' + id);
   }
 
   getRssFeedById(id: number): Observable<any> {
-    return this.httpClient.get<any>(this.baseUrl + '/' + id);
+    return this.httpClient.get<any>(this.baseUrl + 'rssFeed/' + id);
   }
 
   updateRssFeedItems(): Observable<any> {
-    return this.httpClient.put<any>(this.baseUrl + '/update', null);
+    return this.httpClient.put<any>(this.baseUrl + 'rssFeed/update', null);
   }
 }
