@@ -1,1 +1,11 @@
 @import url('../../../../../public/styles/common.scss');
+
+.checkbox{
+  border-color: black;
+  cursor: pointer;
+
+}
+.form-check-input:checked {
+  background-color: #716969;
+
+}

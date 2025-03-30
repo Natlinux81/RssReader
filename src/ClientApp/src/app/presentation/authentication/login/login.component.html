@@ -6,18 +6,18 @@
           <div class="card-body p-5">
             <h1 class="text-center mb-5">Log in</h1>
             <form [formGroup]="loginForm">
-              <!-- Username -->
+              <!-- E-Mail -->
               <div class="input-group">
-                <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
-                <input type="text" formControlName="username" class="form-control" placeholder="Username"
-                       [class.error]="loginForm.controls['username'].dirty && loginForm.hasError('required' , 'username')">
+                <span class="input-group-text"><i class="bi bi-envelope-fill"></i></span>
+                <input type="email" formControlName="email" class="form-control" placeholder="E-Mail" id="email" autocomplete="email"
+                       [class.error]="loginForm.controls['email'].dirty && loginForm.hasError('required' , 'email')">
               </div>
-              <small *ngIf="loginForm.controls['username'].dirty && loginForm.hasError('required' , 'username')"
-                     class="text-danger">*Username is required</small>
+              <small *ngIf="loginForm.controls['email'].dirty && loginForm.hasError('required' , 'email')"
+                     class="text-danger">*E-Mail is required</small>
               <!-- Password -->
               <div class="input-group mt-5">
                 <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
-                <input [type]="type" formControlName="password" class="form-control" placeholder="Password"
+                <input [type]="type" formControlName="password" class="form-control" placeholder="Password" id="password" autocomplete="current-password"
                        [class.error]="loginForm.controls['password'].dirty && loginForm.hasError('required' , 'password')">
                 <span (click)="hideShowPassword()" class="input-group-text"><i class="bi {{eyeIcon}}"></i></span>
               </div>
@@ -26,7 +26,7 @@
               <!-- Redirect links -->
               <p class="m-1"><a (click)="openPopup()" class="fw-bold text-body"><u>Forgot Password?</u></a></p>
               <div class="d-flex justify-content-center">
-                <button [disabled]="loginForm.invalid" (click)="onSignIn()" type="submit"
+                <button [disabled]="loginForm.invalid" (click)="onLogin()" type="submit"
                         class="btn btn-lg btn-light">Sign in</button>
               </div>
               <p class="text-center text-black-50 mt-5 mb-0">You don´t have an account? <a [routerLink]="['/register']"

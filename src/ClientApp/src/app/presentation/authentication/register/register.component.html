@@ -9,7 +9,7 @@
               <!-- Username -->
               <div class="input-group">
                 <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
-                <input type="text" formControlName="username" class="form-control" placeholder="Username"
+                <input type="text" formControlName="username" class="form-control" placeholder="Username" id="username" name="username" autocomplete="username"
                        [class.error]="registerForm.controls['username'].dirty && registerForm.hasError('required' , 'username')">
               </div>
               <small *ngIf="registerForm.controls['username'].dirty && registerForm.hasError('minlength' , 'username')"
@@ -17,7 +17,7 @@
               <!-- E-Mail -->
               <div class="input-group mt-5">
                 <span class="input-group-text"><i class="bi bi-envelope-fill"></i></span>
-                <input type="email" formControlName="email" class="form-control" placeholder="E-Mail"
+                <input type="email" formControlName="email" class="form-control" placeholder="E-Mail" id="email" name="email" autocomplete="email"
                        [class.error]="registerForm.controls['email'].dirty && registerForm.hasError('required' , 'email' )">
               </div>
               <small *ngIf="registerForm.controls['email'].dirty && registerForm.hasError('pattern' , 'email')"
@@ -26,7 +26,7 @@
               <!-- Password -->
               <div class="input-group mt-5">
                 <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
-                <input [type]="type" formControlName="password" class="form-control" placeholder="Password"
+                <input [type]="type" formControlName="password" class="form-control" placeholder="Password" id="password" name="password" autocomplete="new-password"
                        [class.error]="registerForm.controls['password'].dirty && registerForm.hasError('required' , 'password')">
                 <span (click)="hideShowPassword()" class="input-group-text"><i class="bi {{eyeIcon}}"></i></span>
               </div>
@@ -34,17 +34,18 @@
                      class="text-danger">*Password is required</small>
               <!-- Checkbox Terms -->
               <div class="form-check d-flex justify-content-center mt-5">
-                <input formControlName="terms" class="form-check-input me-2" type="checkbox" value=""
-                       id="form2Example3cg"
-                       [class.error]="registerForm.controls['terms'].dirty && registerForm.hasError('required' , 'terms')" />
-                <label class="form-check-label" >
-                  I agree all statements in <a href="#" class="text-body"><u>Terms of service</u></a>
+                <input type="checkbox" id="terms" formControlName="terms" class="checkbox form-check-input me-2">
+                <label for="terms" class="form-check-label">
+                  I agree to the <a href="#" class="text-body"><u>Terms of service</u></a>
                 </label>
               </div>
               <div class="text-center">
-                <small *ngIf="registerForm.controls['terms'].dirty && registerForm.hasError('required' , 'terms')"
-                       class="text-danger">*agree Terms required</small>
+                <small *ngIf="registerForm.controls['terms'].touched && registerForm.controls['terms'].invalid" class="text-danger">
+                  *You must agree to the terms
+                </small>
               </div>
+
+
               <!-- Button -->
               <div class="d-flex justify-content-center">
                 <button [disabled]="registerForm.invalid" (click)="onSignUp()" type="submit" class="btn btn-lg btn-light mt-5">Sign up</button>
