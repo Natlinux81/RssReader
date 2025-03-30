@@ -4,6 +4,7 @@ import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/
 import {NgIf} from "@angular/common";
 import ValidateForm from "../../../infrastructure/utilities/validate-form";
 import {AuthService} from "../../../infrastructure/services/auth-service";
+import {ToastService} from "../../../infrastructure/services/toast.service";
 
 @Component({
   selector: 'app-register',
@@ -24,6 +25,7 @@ export class RegisterComponent {
 
   authenticateService = inject(AuthService)
   private router = inject(Router)
+  toastService = inject(ToastService);
 constructor(private formBuilder: FormBuilder) {
   this.registerForm = this.formBuilder.group({
     username: ['' , [Validators.required, Validators.minLength(3)]],
@@ -43,7 +45,10 @@ constructor(private formBuilder: FormBuilder) {
       // Send the obj to database
       this.authenticateService.register(this.registerForm.value).subscribe({
         next:(result) => {
-            alert(result.value);
+          this.toastService.show(result.value, {
+            classname: 'bg-success text-light',
+            delay: 2000
+          });
             this.registerForm.reset();
            this.router.navigate(['/login'])
         },

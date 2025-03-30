@@ -7,15 +7,11 @@ import {Toast} from "../../presentation/interfaces/toast";
 export class ToastService {
   toasts: Toast[] = [];
 
-  show(toast: Toast) {
-    this.toasts.push(toast);
+  show(message: string, options: Partial<Toast> = {}) {
+    this.toasts.push({ message, ...options });
   }
 
   remove(toast: Toast) {
-    this.toasts = this.toasts.filter((t) => t !== toast);
-  }
-
-  clear() {
-    this.toasts.splice(0, this.toasts.length);
+    this.toasts = this.toasts.filter(t => t !== toast);
   }
 }

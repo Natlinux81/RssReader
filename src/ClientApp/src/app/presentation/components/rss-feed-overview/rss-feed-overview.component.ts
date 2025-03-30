@@ -7,6 +7,7 @@ import {FormsModule} from '@angular/forms';
 import {FeedItemModalComponent} from "../../shared/feed-item-modal/feed-item-modal.component";
 import {TimeElapsedPipe} from '../../../infrastructure/utilities/time-elapsed.pipe';
 import {UpdateFeedItemsService} from "../../../infrastructure/services/update-feed-items.service";
+import {ToastService} from "../../../infrastructure/services/toast.service";
 
 @Component({
   selector: 'app-rss-feed-overview',
@@ -17,6 +18,7 @@ import {UpdateFeedItemsService} from "../../../infrastructure/services/update-fe
 export class RssFeedOverviewComponent implements OnInit {
   rssService = inject(RssService)
   updateRssFeedItemsService = inject(UpdateFeedItemsService)
+  toastService = inject(ToastService);
 
   selectedFeedItem: RssFeedItem | null = null;
   rssFeeds: RssFeed[] = [];
@@ -40,13 +42,13 @@ export class RssFeedOverviewComponent implements OnInit {
 
   deleteRssFeed(id: number) {
     this.rssService.deleteRssFeed(id).subscribe((result) => {
-      if (result.isSuccess) {
         this.rssFeeds = this.rssFeeds.filter(feed => feed.id !== id);
-        console.log('RSS Feed deleted successfully', result);
-      } else {
-        console.error('Error deleting RSS feed:', result.error);
-      }
-    });
+        this.toastService.show(result.value, {
+          classname: 'bg-danger text-light',
+          delay: 3000
+        });
+    }
+    );
   }
 
   selectFeedItem(feedItem: RssFeedItem): void {

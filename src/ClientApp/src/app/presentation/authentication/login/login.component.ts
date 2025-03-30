@@ -4,6 +4,7 @@ import {Router, RouterLink} from "@angular/router";
 import {NgIf, NgOptimizedImage} from "@angular/common";
 import ValidateForm from "../../../infrastructure/utilities/validate-form";
 import {AuthService} from "../../../infrastructure/services/auth-service";
+import {ToastService} from "../../../infrastructure/services/toast.service";
 
 @Component({
   selector: 'app-login',
@@ -25,6 +26,7 @@ export class LoginComponent {
 
   authenticateService = inject(AuthService)
   private router = inject(Router)
+  toastService = inject(ToastService);
   constructor(private formBuilder: FormBuilder) {
     this.loginForm = this.formBuilder.group({
       email: ['' , [Validators.required, Validators.pattern(this.emailPattern)]],
@@ -48,7 +50,10 @@ export class LoginComponent {
       // Send the obj to database
       this.authenticateService.login(this.loginForm.value).subscribe({
         next: (result) => {
-          alert('login successful');
+          this.toastService.show(result.value, {
+            classname: 'bg-success text-light',
+            delay: 2000
+          });
           this.loginForm.reset();
           // this.authenticateService.storeToken(result.accessToken);
           // this.authenticateService.storeRefreshToken(result.refreshToken)
@@ -59,7 +64,7 @@ export class LoginComponent {
 
         },
         error: (err) => {
-          alert(err.value);
+          alert(err.failureMessage);
         }
       })
 

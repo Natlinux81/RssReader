@@ -49,15 +49,12 @@ export class HeaderComponent {
       feedItems: sanitizedFeedItems,
     };
     this.rssService.addRssFeed(rssFeedRequest, this.inputRssFeed).subscribe((result) => {
-      if (result.isSuccess) {
-        this.formInput()!.resetForm();
-        console.log('Feed added successfully', result);
-        this.toastService.show({
-          template: this.successTpl()!,
-          classname: 'bg-success text-light',
-          delay: 1000
-        });
-      }
+      this.formInput()!.resetForm();
+      console.log('Feed added successfully', result);
+      this.toastService.show(result.value, {
+        classname: 'bg-success text-light',
+        delay: 3000
+      });
     });
   }
 

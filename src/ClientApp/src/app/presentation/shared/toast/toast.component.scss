@@ -1,0 +1,23 @@
+ngb-toast {
+  position: fixed;
+  top: 20px;
+  right: -100%; // Start außerhalb des Bildschirms
+  z-index: 1200;
+  text-align: center;
+  min-width: 200px;
+  max-width: 300px;
+  border: 2px solid transparent;
+  animation: slideIn 0.5s ease-out forwards;
+}
+
+// Animation für Slide-in von rechts nach links
+@keyframes slideIn {
+  from {
+    right: -100%; // Startposition außerhalb des Bildschirms
+    opacity: 0;
+  }
+  to {
+    right: 20px; // Endposition sichtbar auf der rechten Seite
+    opacity: 1;
+  }
+}
