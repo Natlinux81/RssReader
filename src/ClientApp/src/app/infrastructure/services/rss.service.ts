@@ -5,12 +5,14 @@ import {HttpClient} from '@angular/common/http';
 import {IRssService} from '../../presentation/interfaces/irss-service';
 import {RssFeed} from "../../domain/entities/rss-feed";
 import {environment} from "../../../environments/environment";
+import {ToastService} from "./toast.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class RssService implements IRssService {
   httpClient = inject(HttpClient)
+  toastService = inject(ToastService);
 
   private baseUrl = environment.baseUrl;
 
@@ -30,13 +32,15 @@ export class RssService implements IRssService {
   loadRssFeeds(): void {
     this.getAllRssFeeds().subscribe({
       next: (result) => {
-        if (result.isSuccess) {
           this.rssFeedsSubject.next(result.value.reverse());
           console.log('RSS Feeds loaded into BehaviorSubject:', result.value);
-        }
       },
       error: (err) => {
-        console.error('Error loading RSS feeds:', err);
+        console.error('Error loading RSS feeds:', err.error.error.message);
+        this.toastService.show(err.error.error.message, {
+          classname: 'bg-danger text-light',
+          delay: 3000
+        });
       }
     });
   }

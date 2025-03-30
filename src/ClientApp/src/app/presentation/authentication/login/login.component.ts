@@ -64,7 +64,11 @@ export class LoginComponent {
 
         },
         error: (err) => {
-          alert(err.failureMessage);
+          console.error(err.error.error.message);
+          this.toastService.show(err.error.error.message, {
+            classname: 'bg-danger text-light',
+            delay: 7000
+          });
         }
       })
 

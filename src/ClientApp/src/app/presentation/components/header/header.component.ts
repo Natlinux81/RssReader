@@ -32,8 +32,6 @@ export class HeaderComponent {
   inputRssFeed: string = "";
   channelTitle: string = '';
   private formInput = viewChild<NgForm>('formInput');
-  private successTpl = viewChild<TemplateRef<any>>('successTpl');
-  private dangerTpl = viewChild<TemplateRef<any>>('dangerTpl');
 
   toggleDarkMode() {
     this.darkModeService.updateDarkMode();
@@ -49,13 +47,18 @@ export class HeaderComponent {
       feedItems: sanitizedFeedItems,
     };
     this.rssService.addRssFeed(rssFeedRequest, this.inputRssFeed).subscribe((result) => {
-      this.formInput()!.resetForm();
       console.log('Feed added successfully', result);
       this.toastService.show(result.value, {
         classname: 'bg-success text-light',
         delay: 3000
       });
+    }, (err) => {
+      console.error('Rss-Feed already exists', err.error.error.message);
+      this.toastService.show(err.error.error.message, {
+        classname: 'bg-danger text-light',
+        delay: 3000
+      });
     });
+    this.formInput()!.resetForm();
   }
-
 }

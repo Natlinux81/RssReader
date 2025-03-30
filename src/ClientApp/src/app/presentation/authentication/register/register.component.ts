@@ -53,7 +53,11 @@ constructor(private formBuilder: FormBuilder) {
            this.router.navigate(['/login'])
         },
         error:(err) =>{
-          alert(err?.error.message)
+          console.error(err?.error.error.message);
+          this.toastService.show(err.error.error.message, {
+            classname: 'bg-danger text-light',
+            delay: 7000
+          });
         }
       })
 

@@ -12,8 +12,8 @@
                 <input type="email" formControlName="email" class="form-control" placeholder="E-Mail" id="email" autocomplete="email"
                        [class.error]="loginForm.controls['email'].dirty && loginForm.hasError('required' , 'email')">
               </div>
-              <small *ngIf="loginForm.controls['email'].dirty && loginForm.hasError('required' , 'email')"
-                     class="text-danger">*E-Mail is required</small>
+              <small *ngIf="loginForm.controls['email'].dirty && loginForm.hasError('pattern' , 'email')"
+                     class="text-danger">*invalid E-Mail</small>
               <!-- Password -->
               <div class="input-group mt-5">
                 <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>

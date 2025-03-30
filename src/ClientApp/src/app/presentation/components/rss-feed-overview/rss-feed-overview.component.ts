@@ -29,7 +29,7 @@ export class RssFeedOverviewComponent implements OnInit {
     });
 
     // Initiales Laden der Feeds
-    this.rssService.loadRssFeeds();
+    // this.rssService.loadRssFeeds();
 
     this.rssService.feedAdded$.subscribe((feedAdded) => {
       if (feedAdded) {
