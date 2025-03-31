@@ -1,4 +1,4 @@
-import {Component, inject, SecurityContext, TemplateRef, viewChild} from '@angular/core';
+import {Component, inject, SecurityContext, viewChild} from '@angular/core';
 import {DarkModeService} from '../../../infrastructure/services/dark-mode.service';
 import {FormsModule, NgForm} from "@angular/forms";
 import {RssFeedItemRequest} from "../../models/rss-feed-item-request";
@@ -8,7 +8,7 @@ import {RssService} from "../../../infrastructure/services/rss.service";
 import {ToastService} from "../../../infrastructure/services/toast.service";
 import {DomSanitizer} from "@angular/platform-browser";
 import {SanitizerService} from "../../../infrastructure/services/sanitizer.service";
-import {Router, RouterLink} from "@angular/router";
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-header',
@@ -46,18 +46,22 @@ export class HeaderComponent {
       channelTitle: this.channelTitle,
       feedItems: sanitizedFeedItems,
     };
-    this.rssService.addRssFeed(rssFeedRequest, this.inputRssFeed).subscribe((result) => {
-      console.log('Feed added successfully', result);
-      this.toastService.show(result.value, {
-        classname: 'bg-success text-light',
-        delay: 3000
-      });
-    }, (err) => {
+    this.rssService.addRssFeed(rssFeedRequest, this.inputRssFeed).subscribe({
+      next: (result) => {
+        console.log('Feed added successfully', result);
+        this.toastService.show(result.value, {
+          classname: 'bg-success text-light',
+          delay: 3000
+        });
+
+    },
+  error: (err) => {
       console.error('Rss-Feed already exists', err.error.error.message);
       this.toastService.show(err.error.error.message, {
         classname: 'bg-danger text-light',
         delay: 3000
       });
+    }
     });
     this.formInput()!.resetForm();
   }
