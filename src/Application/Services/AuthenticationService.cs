@@ -5,6 +5,7 @@ using Application.Models;
 using Application.Validators;
 using Domain.Entities;
 using Domain.Interface;
+using Infrastructure.Utilities;
 
 namespace Application.Services;
 
@@ -31,7 +32,7 @@ public class AuthenticationService (
         {
             Username = registerRequest.Username,
             Email = registerRequest.Email,
-            Password = registerRequest.Password,
+            Password = PasswordHasher.HashPassword(registerRequest.Password)
         };
         await iUserRepository.AddAsync(user);
         await unitOfWork.CommitAsync();

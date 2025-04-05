@@ -14,6 +14,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IJwtService, JwtService>();
         services.AddScoped<IRssFetchService, RssFetchService>();
         services.AddHostedService<RssFeedUpdateService>();
+        services.AddScoped<IUserService, UserService>();
 
         return services;
     }

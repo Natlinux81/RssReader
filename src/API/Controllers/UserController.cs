@@ -1,17 +1,17 @@
+using API.Extension;
 using Microsoft.AspNetCore.Authorization;
+using Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
 
-public class UserController : BaseApiController
+public class UserController (IUserService userService) : BaseApiController
 {
     [Authorize]
     [HttpGet]
-    public string[] GetUsers()
+    public async Task<IResult> GetAllUsers()
     {
-        return new[]
-        {
-            "User1", "User2", "User3", "User4", "User5"
-        };
+        var response = await userService.GetAllUsers();
+        return response.ToHttpResponse();
     }
 }
