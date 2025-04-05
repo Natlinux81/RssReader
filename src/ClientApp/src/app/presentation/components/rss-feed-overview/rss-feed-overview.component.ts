@@ -28,9 +28,6 @@ export class RssFeedOverviewComponent implements OnInit {
       this.rssFeeds = feeds;
     });
 
-    // Initiales Laden der Feeds
-    // this.rssService.loadRssFeeds();
-
     this.rssService.feedAdded$.subscribe((feedAdded) => {
       if (feedAdded) {
         this.rssService.loadRssFeeds();
