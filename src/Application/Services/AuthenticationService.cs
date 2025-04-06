@@ -55,13 +55,20 @@ public class AuthenticationService (
         {
             return Result.Failure(AuthError.InvalidPassword);   
         }
-        var token = await jwtService.GenerateTokenAsync(user);
-        var result = new
-        {
-            Token = token,
-            Username = user.Username
-        };
+        
+        var result = await jwtService.CreateTokenResponse(user);
+
         return Result.Success(result);
     }
-
+    
+    public async Task<Result> RefreshTokensAsync(RefreshTokenRequest request)
+    {
+        var user = await jwtService.ValidateRefreshTokenAsync(request.UserId, request.RefreshToken);
+        if (user is null) return Result.Failure(AuthError.UserNotFound);
+        
+        var result = await jwtService.CreateTokenResponse(user);
+        if (result.AccessToken is null || result.RefreshToken is null) 
+            return Result.Failure(AuthError.InvalidRefreshToken);
+        return Result.Success(result);
+    }
 }

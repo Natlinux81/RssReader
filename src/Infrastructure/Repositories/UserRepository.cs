@@ -21,4 +21,9 @@ public class UserRepository(RssReaderDbContext rssReaderDbContext)
             .Select(ur => ur.Role.Name)
             .ToListAsync();
     }
+
+    public async Task<User?> GetUserByIdAsync(Guid id)
+    {
+        return await rssReaderDbContext.Users.FindAsync(id);
+    }
 }

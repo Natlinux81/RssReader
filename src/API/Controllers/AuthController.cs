@@ -20,4 +20,11 @@ public class AuthController(IAuthenticationService authService) : BaseApiControl
         var response = await authService.LoginAsync(loginRequest);
         return response.ToHttpResponse();
     }
+    
+    [HttpPost("refresh-token")]
+    public async Task<IResult> RefreshToken(RefreshTokenRequest refreshTokenRequest)
+    {
+        var response = await authService.RefreshTokensAsync(refreshTokenRequest);
+        return response.ToHttpResponse();
+    }
 }

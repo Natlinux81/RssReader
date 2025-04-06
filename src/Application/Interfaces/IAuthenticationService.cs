@@ -7,4 +7,5 @@ public interface IAuthenticationService
 {
     Task<Result> RegisterAsync(RegisterRequest request);
     Task<Result> LoginAsync(LoginRequest request);
+    Task<Result> RefreshTokensAsync(RefreshTokenRequest request);
 }
