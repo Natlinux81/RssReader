@@ -36,14 +36,15 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.HasData(
             new User 
             {
-                Id = 1,
-                Username = "admin , user",
+                Id = Guid.Parse("11111111-1111-1111-1111-111111111111"),
+                Username = "Admin",
                 PasswordHash = PasswordHasher.HashPassword("Admin@123"),
                 Email = "admin@localhost.de"
             },
             new User
             {
-                Id = 2, Username = "user",
+                Id = Guid.Parse("22222222-2222-2222-2222-222222222222"),
+                Username = "DefaultUser",
                 PasswordHash = PasswordHasher.HashPassword("User@123"),
                 Email = "user@localhost.de"
             });

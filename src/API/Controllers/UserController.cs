@@ -7,8 +7,8 @@ namespace API.Controllers;
 
 public class UserController (IUserService userService) : BaseApiController
 {
-    [Authorize]
-    [HttpGet]
+    [Authorize (Roles = "Admin")]
+    [HttpGet("admin-only")]
     public async Task<IResult> GetAllUsers()
     {
         var response = await userService.GetAllUsers();
