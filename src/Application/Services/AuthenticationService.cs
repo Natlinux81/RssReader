@@ -32,7 +32,7 @@ public class AuthenticationService (
         {
             Username = registerRequest.Username,
             Email = registerRequest.Email,
-            Password = PasswordHasher.HashPassword(registerRequest.Password)
+            PasswordHash = PasswordHasher.HashPassword(registerRequest.Password)
         };
         await iUserRepository.AddAsync(user);
         await unitOfWork.CommitAsync();
@@ -51,7 +51,7 @@ public class AuthenticationService (
         var (email, password) = loginRequest;
         var user = await iUserRepository.GetUserByEmailAsync(email);
         if (user is null) return Result.Failure(AuthError.UserNotFound);
-        if (user.Password != password)
+        if (!PasswordHasher.VerifyPassword(password, user.PasswordHash))
         {
             return Result.Failure(AuthError.InvalidPassword);   
         }

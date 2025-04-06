@@ -2,6 +2,7 @@ using Application.Common.Results;
 using Application.DTOs;
 using Application.Errors;
 using Application.Interfaces;
+using Application.Models;
 using Domain.Interface;
 
 namespace Application.Services;
@@ -14,16 +15,11 @@ public class UserService( IUnitOfWork unitOfWork,
         var users = await userRepository.GetAllAsync();
         if (users.Count == 0) return Result.Failure(AuthError.UserNotFound);
         
-        var userDtos = users.Select(u => new UserDto
+        var userDtos = users.Select(u => new RegisterRequest(u.Username, u.Email, u.PasswordHash)
         {
-            Id = u.Id,
-            UserRoles = u.UserRoles.Select(ur => new UserRoleDto
-            {
-                Role = ur.Role,
-            }).ToList(),
             Username = u.Username,
             Email = u.Email,
-            Password = u.Password
+            Password = u.PasswordHash
         }).ToList();
 
         return Result.Success(userDtos);

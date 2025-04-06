@@ -1,4 +1,5 @@
 using Domain.Entities;
+using Infrastructure.Utilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -17,7 +18,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .HasMaxLength(50)
             .HasColumnType("varchar(50)");
 
-        builder.Property(x => x.Password)
+        builder.Property(x => x.PasswordHash)
             .IsRequired()
             .HasMaxLength(250)
             .HasColumnType("varchar(250)");
@@ -33,7 +34,18 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .HasForeignKey(x => x.UserId);
 
         builder.HasData(
-            new User { Id = 1, Username = "admin , user", Password = "Admin@123", Email = "admin@localhost.de" },
-            new User { Id = 2, Username = "user", Password = "User@123", Email = "user@localhost.de" });
+            new User 
+            {
+                Id = 1,
+                Username = "admin , user",
+                PasswordHash = PasswordHasher.HashPassword("Admin@123"),
+                Email = "admin@localhost.de"
+            },
+            new User
+            {
+                Id = 2, Username = "user",
+                PasswordHash = PasswordHasher.HashPassword("User@123"),
+                Email = "user@localhost.de"
+            });
     }
 }
