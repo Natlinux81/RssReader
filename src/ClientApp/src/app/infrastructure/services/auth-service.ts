@@ -5,13 +5,14 @@ import {RegisterRequest} from "../../presentation/models/register-request";
 import {inject, Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService implements IAuthService  {
-  httpClient = inject(HttpClient)
-
+  private httpClient = inject(HttpClient)
+  private router = inject(Router)
   private baseUrl = environment.baseUrl
 
   register(registerRequest: RegisterRequest): Observable<any> {
@@ -19,6 +20,19 @@ export class AuthService implements IAuthService  {
   }
   login(loginRequest: LoginRequest): Observable<any> {
     return this.httpClient.post<any>(`${this.baseUrl}auth/login`, loginRequest);
+  }
 
+  signOut(){
+    localStorage.clear();
+    this.router.navigate(['login'])
+  }
+  storeToken(tokenValue : string){
+    return localStorage.setItem('token', tokenValue)
+  }
+  getToken(){
+    return localStorage.getItem('token')
+  }
+  isLoggedIn(): boolean{
+    return !!localStorage.getItem('token')
   }
 }

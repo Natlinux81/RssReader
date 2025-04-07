@@ -9,6 +9,7 @@ import {ToastService} from "../../../infrastructure/services/toast.service";
 import {DomSanitizer} from "@angular/platform-browser";
 import {SanitizerService} from "../../../infrastructure/services/sanitizer.service";
 import {RouterLink} from "@angular/router";
+import {AuthService} from "../../../infrastructure/services/auth-service";
 
 @Component({
   selector: 'app-header',
@@ -26,6 +27,7 @@ export class HeaderComponent {
   rssService = inject(RssService);
   sanitizer = inject(DomSanitizer);
   sanitizerService = inject(SanitizerService);
+  private authenticateService = inject(AuthService)
 
 
   feedItems: RssFeedItemRequest[] = [];
@@ -35,6 +37,10 @@ export class HeaderComponent {
 
   toggleDarkMode() {
     this.darkModeService.updateDarkMode();
+  }
+
+  logOut(){
+    this.authenticateService.signOut();
   }
 
   addFeed(): void {

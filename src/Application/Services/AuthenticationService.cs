@@ -32,7 +32,8 @@ public class AuthenticationService (
         {
             Username = registerRequest.Username,
             Email = registerRequest.Email,
-            PasswordHash = PasswordHasher.HashPassword(registerRequest.Password)
+            PasswordHash = PasswordHasher.HashPassword(registerRequest.Password),
+            UserRoles = [new UserRole { RoleId = 2 }]
         };
         await iUserRepository.AddAsync(user);
         await unitOfWork.CommitAsync();

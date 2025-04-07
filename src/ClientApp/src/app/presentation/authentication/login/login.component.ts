@@ -50,12 +50,14 @@ export class LoginComponent {
       // Send the obj to database
       this.authenticateService.login(this.loginForm.value).subscribe({
         next: (result) => {
+          this.loginForm.reset();
+          this.authenticateService.storeToken(result.accessToken);
           this.toastService.show(result.value, {
             classname: 'bg-success text-light',
             delay: 2000
           });
-          this.loginForm.reset();
-          // this.authenticateService.storeToken(result.accessToken);
+
+
           // this.authenticateService.storeRefreshToken(result.refreshToken)
           // const tokenPayload = this.authenticateService.decodedToken();
           // this.userStore.setUsernameForStore(tokenPayload.name);
