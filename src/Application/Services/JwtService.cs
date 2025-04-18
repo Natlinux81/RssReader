@@ -32,23 +32,15 @@ public class JwtService(
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(claims),
-            Expires = DateTime.UtcNow.AddMinutes(5), // set token expiration time
+            Expires = DateTime.UtcNow.AddMinutes(5), // set a token expiration time
             SigningCredentials = credentials,
             Issuer = configuration["Jwt:Issuer"],
-            Audience = configuration["Jwt:Audience"],
+            Audience = configuration["Jwt:Audience"]
         };
 
         var tokenHandler = new JwtSecurityTokenHandler();
         var securityToken = tokenHandler.CreateToken(tokenDescriptor);
         return tokenHandler.WriteToken(securityToken);
-    }
-    
-    public string GenerateRefreshToken()
-    {
-        var randomNumber = new byte[32];
-        using var rng = RandomNumberGenerator.Create();
-        rng.GetBytes(randomNumber);
-        return Convert.ToBase64String(randomNumber);
     }
 
     public async Task<string> GenerateAndSaveRefreshTokenAsync(User user)
@@ -63,13 +55,11 @@ public class JwtService(
 
     public async Task<User?> ValidateRefreshTokenAsync(Guid userId, string refreshToken)
     {
-       var user = await userRepository.GetUserByIdAsync(userId);
-       if (user is null || user.RefreshToken != refreshToken 
-                        || user.RefreshTokenExpiryTime <= DateTime.UtcNow)
-       {
-           return null;
-       }
-       return user;
+        var user = await userRepository.GetUserByIdAsync(userId);
+        if (user is null || user.RefreshToken != refreshToken
+                         || user.RefreshTokenExpiryTime <= DateTime.UtcNow)
+            return null;
+        return user;
     }
 
     public async Task<TokenResponse> CreateTokenResponse(User user)
@@ -78,5 +68,13 @@ public class JwtService(
         var refreshToken = await GenerateAndSaveRefreshTokenAsync(user);
         var result = new TokenResponse(accessToken, refreshToken);
         return result;
+    }
+
+    public string GenerateRefreshToken()
+    {
+        var randomNumber = new byte[32];
+        using var rng = RandomNumberGenerator.Create();
+        rng.GetBytes(randomNumber);
+        return Convert.ToBase64String(randomNumber);
     }
 }

@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ForgetPasswordPopupComponent } from './forget-password-popup.component';
+import {ForgetPasswordPopupComponent} from './forget-password-popup.component';
 
 describe('ForgetPasswordPopupComponent', () => {
   let component: ForgetPasswordPopupComponent;
@@ -10,7 +10,7 @@ describe('ForgetPasswordPopupComponent', () => {
     await TestBed.configureTestingModule({
       imports: [ForgetPasswordPopupComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(ForgetPasswordPopupComponent);
     component = fixture.componentInstance;

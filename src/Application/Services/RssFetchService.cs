@@ -65,15 +65,15 @@ public class RssFetchService(
 
     public async Task<Result> DeleteRssFeed(int id)
     {
-        // check if Feed exist
+        // check if Feed exists
         var rssFeed = await iRssFeedRepository.GetByIdAsync(id);
 
-        if (rssFeed == null) return Result.Failure(RssFeedError.RssFeedsNotFound); // if Feed not exist
+        if (rssFeed == null) return Result.Failure(RssFeedError.RssFeedsNotFound); // if Feed doesn't exist
 
         // Feed delete
         iRssFeedRepository.Delete(rssFeed);
 
-        // save changes to database
+        // save changes to a database
         await unitOfWork.CommitAsync();
 
         return Result.Success("RSS-Feed deleted successfully");

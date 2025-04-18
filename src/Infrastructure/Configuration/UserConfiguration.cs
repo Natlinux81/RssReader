@@ -31,29 +31,11 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.HasMany(x => x.UserRoles)
             .WithOne(x => x.User)
             .HasForeignKey(x => x.UserId);
-        
+
         builder.HasOne(x => x.RssFeed)
             .WithMany()
             .HasForeignKey(x => x.RssFeedId)
             .IsRequired(false)
             .OnDelete(DeleteBehavior.Restrict);
-
-        builder.HasData(
-            new User 
-            {
-                // Id = Guid.Parse("11111111-1111-1111-1111-111111111111"),
-                Id = 1,
-                Username = "Admin",
-                Password = "Admin@123",
-                Email = "admin@localhost.de"
-            },
-            new User
-            {
-                // Id = Guid.Parse("22222222-2222-2222-2222-222222222222"),
-                Id = 2,
-                Username = "DefaultUser",
-                Password = "User@123",
-                Email = "user@localhost.de"
-            });
     }
 }

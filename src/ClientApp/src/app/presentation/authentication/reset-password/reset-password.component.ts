@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-reset-password',
@@ -7,7 +7,6 @@ import { Component } from '@angular/core';
   styleUrl: './reset-password.component.scss'
 })
 export class ResetPasswordComponent {
-
 
 
 }

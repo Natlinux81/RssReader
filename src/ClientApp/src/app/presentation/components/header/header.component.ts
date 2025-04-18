@@ -27,19 +27,17 @@ export class HeaderComponent {
   rssService = inject(RssService);
   sanitizer = inject(DomSanitizer);
   sanitizerService = inject(SanitizerService);
-  private authenticateService = inject(AuthService)
-
-
   feedItems: RssFeedItemRequest[] = [];
   inputRssFeed: string = "";
   channelTitle: string = '';
+  private authenticateService = inject(AuthService)
   private formInput = viewChild<NgForm>('formInput');
 
   toggleDarkMode() {
     this.darkModeService.updateDarkMode();
   }
 
-  logOut(){
+  logOut() {
     this.authenticateService.signOut();
   }
 
@@ -60,14 +58,14 @@ export class HeaderComponent {
           delay: 3000
         });
 
-    },
-  error: (err) => {
-      console.error('Rss-Feed already exists', err.error.error.message);
-      this.toastService.show(err.error.error.message, {
-        classname: 'bg-danger text-light',
-        delay: 3000
-      });
-    }
+      },
+      error: (err) => {
+        console.error('Rss-Feed already exists', err.error.error.message);
+        this.toastService.show(err.error.error.message, {
+          classname: 'bg-danger text-light',
+          delay: 3000
+        });
+      }
     });
     this.formInput()!.resetForm();
   }

@@ -8,7 +8,7 @@ public class UserRoleConfiguration : IEntityTypeConfiguration<UserRole>
 {
     public void Configure(EntityTypeBuilder<UserRole> builder)
     {
-        builder.ToTable("UserRoles", schema: "auth");
+        builder.ToTable("UserRoles", "auth");
         builder.HasKey(x => new { x.UserId, x.RoleId });
         builder.HasOne(x => x.User)
             .WithMany(x => x.UserRoles)
@@ -18,5 +18,4 @@ public class UserRoleConfiguration : IEntityTypeConfiguration<UserRole>
             .WithMany(x => x.UserRoles)
             .HasForeignKey(x => x.RoleId);
     }
-    
 }

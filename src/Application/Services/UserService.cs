@@ -31,7 +31,7 @@ public class UserService(
                     user.UserRoles.Select(x => x.Role.Name).ToList()
                 ))
                 .ToList();
-            
+
             var pageResult = new PagedResult<UserDto>
             {
                 Items = pagedItems,
@@ -59,20 +59,17 @@ public class UserService(
                 var errors = validationResult.Errors.Select(a => a.ErrorMessage);
                 return Result.Failure<string>(UserError.CreateInvalidUserUpdateRequestError(errors));
             }
-            
-            // check if user exists
+
+            // check if a user exists
             var user = await userRepository.GetByIdAsync(userUpdateRequest.Id);
-            if (user == null)
-            {
-                return Result.Failure<string>(UserError.UserNotFound); 
-            }
+            if (user == null) return Result.Failure<string>(UserError.UserNotFound);
 
             // update user
             user.Username = userUpdateRequest.Username;
             user.Email = userUpdateRequest.Email;
             userRepository.Update(user);
             await unitOfWork.CommitAsync();
-            return Result.Success("User updated successfully");     
+            return Result.Success("User updated successfully");
         }
         catch (Exception e)
         {
@@ -86,10 +83,7 @@ public class UserService(
         try
         {
             var user = await userRepository.GetByIdAsync(id);
-            if (user == null)
-            {
-                return Result.Failure<string>(UserError.UserNotFound);
-            }
+            if (user == null) return Result.Failure<string>(UserError.UserNotFound);
 
             userRepository.Delete(user);
             await unitOfWork.CommitAsync();
@@ -107,10 +101,7 @@ public class UserService(
         try
         {
             var user = await userRepository.GetByIdAsync(id);
-            if (user is null)
-            {
-                return Result.Failure<UserDto>(UserError.UserNotFound);
-            }
+            if (user is null) return Result.Failure<UserDto>(UserError.UserNotFound);
             var userDetails = new UserDto(
                 user.Id,
                 user.Email,
@@ -131,13 +122,11 @@ public class UserService(
         try
         {
             var isUserHasRole = userRoleRepository.HasRoleAsync(roleRequest.UserId, roleRequest.RoleId);
-            if (isUserHasRole.Result)
-            {
-                return Result.Failure<string>(UserError.UserAlreadyHasRole);
-            }
+            if (isUserHasRole.Result) return Result.Failure<string>(UserError.UserAlreadyHasRole);
             var result = await userRoleRepository.AddRoleAsync(roleRequest.UserId, roleRequest.RoleId);
-            return result ? Result.Success("Role assigned successfully") : Result.Failure<string>(UserError.FailedToAssignRole);
-
+            return result
+                ? Result.Success("Role assigned successfully")
+                : Result.Failure<string>(UserError.FailedToAssignRole);
         }
         catch (Exception e)
         {
@@ -151,10 +140,7 @@ public class UserService(
         try
         {
             var isUserHasRole = userRoleRepository.HasRoleAsync(roleRequest.UserId, roleRequest.RoleId);
-            if (!isUserHasRole.Result)
-            {
-                return Result.Failure<string>(UserError.UserHasNoRole);
-            }
+            if (!isUserHasRole.Result) return Result.Failure<string>(UserError.UserHasNoRole);
 
             var result = await userRoleRepository.RemoveRoleAsync(roleRequest.UserId, roleRequest.RoleId);
             return result

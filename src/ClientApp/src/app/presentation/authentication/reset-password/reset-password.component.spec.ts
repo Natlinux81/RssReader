@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ResetPasswordComponent } from './reset-password.component';
+import {ResetPasswordComponent} from './reset-password.component';
 
 describe('ResetPasswordComponent', () => {
   let component: ResetPasswordComponent;
@@ -10,7 +10,7 @@ describe('ResetPasswordComponent', () => {
     await TestBed.configureTestingModule({
       imports: [ResetPasswordComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(ResetPasswordComponent);
     component = fixture.componentInstance;

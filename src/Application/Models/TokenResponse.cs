@@ -1,5 +1,5 @@
 namespace Application.Models;
 
 public record TokenResponse(
-    string?  AccessToken,
-    string?  RefreshToken); 
+    string? AccessToken,
+    string? RefreshToken);

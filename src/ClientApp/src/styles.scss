@@ -34,16 +34,17 @@ app-footer {
   height: 4rem;
   margin-top: auto;
 }
-.form-control{
+
+.form-control {
   background-color: white;
   color: black;
 }
 
-.form-control:focus{
+.form-control:focus {
   background-color: white;
   color: black;
 }
 
-.form-control::placeholder{
+.form-control::placeholder {
   color: gray;
 }

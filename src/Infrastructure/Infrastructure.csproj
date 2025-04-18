@@ -5,27 +5,27 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <UserSecretsId>9c947c10-2373-4590-92a9-e5fe6b759c69</UserSecretsId>
+        <LangVersion>latestmajor</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="HtmlAgilityPack" Version="1.12.0"/>
-        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.3" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.3">
-          <PrivateAssets>all</PrivateAssets>
-          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        <PackageReference Include="HtmlAgilityPack" Version="1.12.1" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.4">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="9.0.3" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.3">
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="9.0.4" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.4">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
-        <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.3" />
-        <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="9.0.3" />
-        <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="9.0.3" />
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.3" />
-        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
+        <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.4" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="9.0.4" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="9.0.4" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.4" />
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4"/>
         <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="9.0.0-preview.2.efcore.9.0.0"/>
-        <PackageReference Include="System.ServiceModel.Syndication" Version="9.0.3" />
+        <PackageReference Include="System.ServiceModel.Syndication" Version="9.0.4" />
     </ItemGroup>
 
     <ItemGroup>
@@ -41,9 +41,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Reference Include="Microsoft.Extensions.Identity.Core">
-        <HintPath>..\..\..\..\.nuget\packages\microsoft.extensions.identity.core\2.3.0\lib\netstandard2.0\Microsoft.Extensions.Identity.Core.dll</HintPath>
-      </Reference>
+        <Reference Include="Microsoft.Extensions.Identity.Core">
+            <HintPath>..\..\..\..\.nuget\packages\microsoft.extensions.identity.core\2.3.0\lib\netstandard2.0\Microsoft.Extensions.Identity.Core.dll</HintPath>
+        </Reference>
     </ItemGroup>
 
 </Project>

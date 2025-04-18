@@ -1,7 +1,7 @@
 using API.Extension;
-using Microsoft.AspNetCore.Authorization;
 using Application.Interfaces;
 using Application.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers;
@@ -38,13 +38,15 @@ public class UserController(IUserService userService) : BaseApiController
         var user = await userService.GetUserByIdAsync(id);
         return user.ToHttpResponse();
     }
+
     [HttpPost("assign-role")]
     public async Task<IResult> AssignRole([FromBody] AssingRoleRequest roleRequest)
-    
+
     {
         var result = await userService.AssingRoleAsync(roleRequest);
         return result.ToHttpResponse();
     }
+
     [HttpDelete("revoke-role")]
     public async Task<IResult> RevokeRole([FromBody] AssingRoleRequest roleRequest)
     {

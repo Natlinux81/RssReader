@@ -24,35 +24,38 @@ export class RegisterComponent {
   registerForm: FormGroup;
 
   authenticateService = inject(AuthService)
-  private router = inject(Router)
   toastService = inject(ToastService);
-constructor(private formBuilder: FormBuilder) {
-  this.registerForm = this.formBuilder.group({
-    username: ['' , [Validators.required, Validators.minLength(3)]],
-    email: ['' , [Validators.required, Validators.pattern(this.emailPattern)]],
-    password: ['' , Validators.required],
-    terms: [false, Validators.requiredTrue]
-  });
-}
-  hideShowPassword(){
+  private router = inject(Router)
+
+  constructor(private formBuilder: FormBuilder) {
+    this.registerForm = this.formBuilder.group({
+      username: ['', [Validators.required, Validators.minLength(3)]],
+      email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
+      password: ['', Validators.required],
+      terms: [false, Validators.requiredTrue]
+    });
+  }
+
+  hideShowPassword() {
     this.isText = !this.isText;
     this.isText ? this.eyeIcon = "bi-eye" : this.eyeIcon = "bi-eye-slash";
     this.isText ? this.type = "text" : this.type = "password";
   }
+
   onSignUp() {
     if (this.registerForm.valid) {
       console.log(this.registerForm.value);
       // Send the obj to database
       this.authenticateService.register(this.registerForm.value).subscribe({
-        next:(result) => {
+        next: (result) => {
           this.toastService.show(result.value, {
             classname: 'bg-success text-light',
             delay: 2000
           });
-            this.registerForm.reset();
-           this.router.navigate(['/login'])
+          this.registerForm.reset();
+          this.router.navigate(['/login'])
         },
-        error:(err) =>{
+        error: (err) => {
           console.error(err?.error.error.message);
           this.toastService.show(err.error.error.message, {
             classname: 'bg-danger text-light',
@@ -61,7 +64,7 @@ constructor(private formBuilder: FormBuilder) {
         }
       })
 
-    } else{
+    } else {
 
       // throw error
       ValidateForm.validateAllFormFields(this.registerForm)

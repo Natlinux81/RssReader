@@ -6,7 +6,7 @@ import {AuthenticationGuard} from "./infrastructure/guards/authentication.guard"
 
 export const routes: Routes = [
   {path: '', redirectTo: 'register', pathMatch: 'full'},
-  {path: 'rss-feed-overview', component: RssFeedOverviewComponent, canActivate:[AuthenticationGuard]},
+  {path: 'rss-feed-overview', component: RssFeedOverviewComponent, canActivate: [AuthenticationGuard]},
   {path: 'register', component: RegisterComponent},
   {path: 'login', component: LoginComponent}
 ];

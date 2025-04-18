@@ -25,15 +25,15 @@ export class RssService implements IRssService {
   addRssFeed(rssFeedRequest: RssFeedRequest, feedUrl: string): Observable<any> {
     const url = `${this.baseUrl + 'rssFeed'}?feedUrl=${encodeURIComponent(feedUrl)}`;
     return this.httpClient.post<any>(url, rssFeedRequest).pipe(
-        tap(() => this.feedAddedSubject.next(true))
+      tap(() => this.feedAddedSubject.next(true))
     );
   }
 
   loadRssFeeds(): void {
     this.getAllRssFeeds().subscribe({
       next: (result) => {
-          this.rssFeedsSubject.next(result.value.reverse());
-          console.log('RSS Feeds loaded into BehaviorSubject:', result.value);
+        this.rssFeedsSubject.next(result.value.reverse());
+        console.log('RSS Feeds loaded into BehaviorSubject:', result.value);
       },
       error: (err) => {
         console.error('Error loading RSS feeds:', err.error.error.message);
@@ -44,6 +44,7 @@ export class RssService implements IRssService {
       }
     });
   }
+
   getAllRssFeeds(): Observable<any> {
     return this.httpClient.get<any>(this.baseUrl + 'rssFeed');
   }

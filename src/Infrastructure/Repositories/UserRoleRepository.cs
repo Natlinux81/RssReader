@@ -49,9 +49,9 @@ public class UserRoleRepository(RssReaderDbContext rssReaderDbContext) : IUserRo
     {
         try
         {
-           var isUserHasRole = await rssReaderDbContext.UserRoles.
-               AnyAsync(u => u.UserId == userId && u.RoleId == roleId);
-           return isUserHasRole;
+            var isUserHasRole =
+                await rssReaderDbContext.UserRoles.AnyAsync(u => u.UserId == userId && u.RoleId == roleId);
+            return isUserHasRole;
         }
         catch (Exception e)
         {

@@ -25,12 +25,13 @@ export class LoginComponent {
   eyeIcon: string = "bi-eye-slash"
 
   authenticateService = inject(AuthService)
-  private router = inject(Router)
   toastService = inject(ToastService);
+  private router = inject(Router)
+
   constructor(private formBuilder: FormBuilder) {
     this.loginForm = this.formBuilder.group({
-      email: ['' , [Validators.required, Validators.pattern(this.emailPattern)]],
-      password: ['' , Validators.required],
+      email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
+      password: ['', Validators.required],
     });
   }
 

@@ -10,7 +10,7 @@ import {Router} from "@angular/router";
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService implements IAuthService  {
+export class AuthService implements IAuthService {
   private httpClient = inject(HttpClient)
   private router = inject(Router)
   private baseUrl = environment.baseUrl
@@ -18,21 +18,25 @@ export class AuthService implements IAuthService  {
   register(registerRequest: RegisterRequest): Observable<any> {
     return this.httpClient.post<any>(`${this.baseUrl}auth/register`, registerRequest);
   }
+
   login(loginRequest: LoginRequest): Observable<any> {
     return this.httpClient.post<any>(`${this.baseUrl}auth/login`, loginRequest);
   }
 
-  signOut(){
+  signOut() {
     localStorage.clear();
     this.router.navigate(['login'])
   }
-  storeToken(tokenValue : string){
+
+  storeToken(tokenValue: string) {
     return localStorage.setItem('token', tokenValue)
   }
-  getToken(){
+
+  getToken() {
     return localStorage.getItem('token')
   }
-  isLoggedIn(): boolean{
+
+  isLoggedIn(): boolean {
     return !!localStorage.getItem('token')
   }
 }

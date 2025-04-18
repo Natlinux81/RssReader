@@ -1,13 +1,17 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary border-bottom sidebar-toggle">
   <div class="container-fluid">
-    <div class="sidebar-toggle p-2 me-1 text-secondary" type="button" data-bs-target="#offcanvasExample">
-      @if(darkModeService.darkModeSignal() === 'dark'){
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
-          <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
+    <div class="sidebar-toggle p-2 me-1 text-secondary" data-bs-target="#offcanvasExample" type="button">
+      @if (darkModeService.darkModeSignal() === 'dark') {
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-list"
+             viewBox="0 0 16 16">
+          <path fill-rule="evenodd"
+                d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
         </svg>
       } @else {
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
-          <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-list"
+             viewBox="0 0 16 16">
+          <path fill-rule="evenodd"
+                d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
         </svg>
       }
     </div>
@@ -39,11 +43,10 @@
         </div>
 
         <div *ngIf="rssFeedInput.invalid && (rssFeedInput.touched || rssFeedInput.dirty)" class="mt-1">
-<!--          <small *ngIf="rssFeedInput.errors?.['required']" class="m-2 text-danger">* URL is required</small>-->
+          <!--          <small *ngIf="rssFeedInput.errors?.['required']" class="m-2 text-danger">* URL is required</small>-->
           <small *ngIf="rssFeedInput.errors?.['pattern']" class="m-2 text-danger">* URL not valid</small>
         </div>
       </form>
-
 
 
       <div class="ms-auto">
@@ -73,19 +76,21 @@
 
   <ul class="navbar-nav ms-auto">
     <li class="nav-item">
-      <a class="nav-link text-nowrap" [routerLink]="['/register']">Sing up</a>
+      <a [routerLink]="['/register']" class="nav-link text-nowrap">Sing up</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" [routerLink]="['/login']">Login</a>
+      <a [routerLink]="['/login']" class="nav-link">Login</a>
     </li>
     <li class="nav-item dropdown">
-      <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+      <button aria-expanded="false" class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown">
         Dropdown
       </button>
       <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end">
         <li><a class="dropdown-item" href="#">Action</a></li>
         <li><a class="dropdown-item" href="#">Another action</a></li>
-        <li><button class="dropdown-item" (click)="logOut()">Log out</button> </li>
+        <li>
+          <button (click)="logOut()" class="dropdown-item">Log out</button>
+        </li>
       </ul>
     </li>
   </ul>

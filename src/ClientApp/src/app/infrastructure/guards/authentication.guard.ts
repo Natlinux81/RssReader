@@ -7,9 +7,10 @@ import {ToastService} from "../services/toast.service";
   providedIn: 'root'
 })
 export class AuthenticationGuard implements CanActivate {
+  toastService = inject(ToastService);
   private authenticateService = inject(AuthService)
   private router = inject(Router)
-  toastService = inject(ToastService);
+
   canActivate(): boolean {
     if (this.authenticateService.isLoggedIn()) {
       return true;

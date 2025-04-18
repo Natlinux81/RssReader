@@ -1,3 +1,3 @@
 namespace Application.Models;
 
-public record AssingRoleRequest( int UserId, int RoleId );
+public record AssingRoleRequest(int UserId, int RoleId);

@@ -8,7 +8,7 @@ export class ToastService {
   toasts: Toast[] = [];
 
   show(message: string, options: Partial<Toast> = {}) {
-    this.toasts.push({ message, ...options });
+    this.toasts.push({message, ...options});
   }
 
   remove(toast: Toast) {

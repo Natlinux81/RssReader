@@ -23,7 +23,7 @@ public static class DbContextOptionsFactory
             var optionBuilder = new DbContextOptionsBuilder<RssReaderDbContext>();
             if (connectionString != null)
                 optionBuilder.UseNpgsql(connectionString);
-            
+
             return new RssReaderDbContext(optionBuilder.Options);
         }
     }

@@ -44,7 +44,7 @@ export class RssFeedOverviewComponent implements OnInit {
           classname: 'bg-danger text-light',
           delay: 3000
         });
-    }
+      }
     );
   }
 

@@ -13,7 +13,7 @@ public static class AuthError
     public static Error UserNotFound => new(ErrorTypeConstant.NotFound, "User not found");
 
     public static Error InvalidPassword => new(ErrorTypeConstant.ValidationError, "Invalid Password");
-    
+
     public static Error InvalidRefreshToken => new(ErrorTypeConstant.Unauthorized, "Invalid RefreshToken");
 
     public static Error CreateInvalidLoginRequestError(IEnumerable<string> errors)

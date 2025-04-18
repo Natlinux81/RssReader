@@ -1,10 +1,8 @@
 using API;
 using Application.Extensions;
-using Domain.Entities;
 using Infrastructure.Context;
 using Infrastructure.Extensions;
 using Infrastructure.Utilities;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -22,14 +20,13 @@ builder.Services.AddWebServices(builder.Configuration);
 if (builder.Environment.IsDevelopment())
 {
     // PostgreSql Database for development
-    builder.Services.AddDbContext<RssReaderDbContext>(
-        options =>
-        {
-            var postgreSqlSettings = builder.Configuration.GetRequiredSection("PostgreSqlSettings").Get<PostgreSqlSettings>();
-            var connectionString = postgreSqlSettings?.ConnectionString;
-            options.UseNpgsql(connectionString);
-        });
-
+    builder.Services.AddDbContext<RssReaderDbContext>(options =>
+    {
+        var postgreSqlSettings =
+            builder.Configuration.GetRequiredSection("PostgreSqlSettings").Get<PostgreSqlSettings>();
+        var connectionString = postgreSqlSettings?.ConnectionString;
+        options.UseNpgsql(connectionString);
+    });
 }
 else
 {
@@ -82,7 +79,6 @@ using (var scope = app.Services.CreateScope())
         var context = scope.ServiceProvider.GetRequiredService<RssReaderDbContext>();
         context.Database.EnsureCreated();
     }
-
 }
 
 app.Run();
@@ -95,12 +91,9 @@ public class LowerCaseDocumentFilter : IDocumentFilter
         var paths = swaggerDoc.Paths.ToDictionary(
             path => path.Key.ToLowerInvariant(),
             path => swaggerDoc.Paths[path.Key]);
-        
+
         // add the paths
         swaggerDoc.Paths = new OpenApiPaths();
-        foreach (var pathItem in paths)
-        {
-            swaggerDoc.Paths.Add(pathItem.Key, pathItem.Value);
-        }
+        foreach (var pathItem in paths) swaggerDoc.Paths.Add(pathItem.Key, pathItem.Value);
     }
 }
