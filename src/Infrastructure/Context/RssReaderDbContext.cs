@@ -15,15 +15,6 @@ public class RssReaderDbContext(DbContextOptions<RssReaderDbContext> options) : 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        // modelBuilder.Entity<RssFeed>().HasKey(k => k.Id);
-        // modelBuilder.Entity<RssFeed>().ToTable("RssFeeds")
-        //     .HasMany(feedItem => feedItem.FeedItems);
-        // modelBuilder.Entity<RssFeedItem>().HasKey(k => k.Id);
-        // modelBuilder.Entity<RssFeedItem>().ToTable("RssFeedItems")
-        //     .HasOne(feed => feed.RssFeed)
-        //     .WithMany(feed => feed.FeedItems)
-        //     .HasForeignKey(feedItem => feedItem.RssFeedId);
-
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(RssReaderDbContext).Assembly);
 
         MockData.GetMockData(modelBuilder);

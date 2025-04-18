@@ -5,7 +5,7 @@ import {LoginComponent} from "./presentation/authentication/login/login.componen
 import {AuthenticationGuard} from "./infrastructure/guards/authentication.guard";
 
 export const routes: Routes = [
-  {path: '', redirectTo: 'rss-feed-overview', pathMatch: 'full'},
+  {path: '', redirectTo: 'register', pathMatch: 'full'},
   {path: 'rss-feed-overview', component: RssFeedOverviewComponent, canActivate:[AuthenticationGuard]},
   {path: 'register', component: RegisterComponent},
   {path: 'login', component: LoginComponent}

@@ -8,7 +8,7 @@ public class FeedItemConfiguration : IEntityTypeConfiguration<RssFeedItem>
 {
     public void Configure(EntityTypeBuilder<RssFeedItem> builder)
     {
-        builder.ToTable("RssFeedItems");
+        builder.ToTable("RssFeedItems", "feeds");
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Title);
         builder.Property(x => x.Link);

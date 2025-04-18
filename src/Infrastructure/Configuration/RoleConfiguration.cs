@@ -8,7 +8,7 @@ public class RoleConfiguration : IEntityTypeConfiguration<Role>
 {
     public void Configure(EntityTypeBuilder<Role> builder)
     {
-        builder.ToTable("Roles");
+        builder.ToTable("Roles", "auth");
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Name)
             .IsRequired()
@@ -19,8 +19,9 @@ public class RoleConfiguration : IEntityTypeConfiguration<Role>
             .HasForeignKey(x => x.RoleId);
 
         builder.HasData(
-            new Role { Id = 1, Name = "Admin" },
-            new Role { Id = 2, Name = "User" }
+            new Role { Id = 1, Name = "SuperAdmin" },
+            new Role { Id = 2, Name = "Admin" },
+            new Role { Id = 3, Name = "User" }
         );
     }
 }

@@ -1,5 +1,4 @@
 using Domain.Entities;
-using Infrastructure.Utilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -9,7 +8,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
 {
     public void Configure(EntityTypeBuilder<User> builder)
     {
-        builder.ToTable("Users");
+        builder.ToTable("Users", "auth");
 
         builder.HasKey(k => k.Id);
 
@@ -18,7 +17,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .HasMaxLength(50)
             .HasColumnType("varchar(50)");
 
-        builder.Property(x => x.PasswordHash)
+        builder.Property(x => x.Password)
             .IsRequired()
             .HasMaxLength(250)
             .HasColumnType("varchar(250)");
@@ -32,20 +31,28 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.HasMany(x => x.UserRoles)
             .WithOne(x => x.User)
             .HasForeignKey(x => x.UserId);
+        
+        builder.HasOne(x => x.RssFeed)
+            .WithMany()
+            .HasForeignKey(x => x.RssFeedId)
+            .IsRequired(false)
+            .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasData(
             new User 
             {
-                Id = Guid.Parse("11111111-1111-1111-1111-111111111111"),
+                // Id = Guid.Parse("11111111-1111-1111-1111-111111111111"),
+                Id = 1,
                 Username = "Admin",
-                PasswordHash = PasswordHasher.HashPassword("Admin@123"),
+                Password = "Admin@123",
                 Email = "admin@localhost.de"
             },
             new User
             {
-                Id = Guid.Parse("22222222-2222-2222-2222-222222222222"),
+                // Id = Guid.Parse("22222222-2222-2222-2222-222222222222"),
+                Id = 2,
                 Username = "DefaultUser",
-                PasswordHash = PasswordHasher.HashPassword("User@123"),
+                Password = "User@123",
                 Email = "user@localhost.de"
             });
     }

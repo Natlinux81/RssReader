@@ -1,12 +1,11 @@
-using System.Text;
 using API;
 using Application.Extensions;
-using Infrastructure;
+using Domain.Entities;
 using Infrastructure.Context;
+using Infrastructure.Extensions;
 using Infrastructure.Utilities;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
@@ -22,14 +21,15 @@ builder.Services.AddWebServices(builder.Configuration);
 
 if (builder.Environment.IsDevelopment())
 {
-    // MariaDb Database for development
+    // PostgreSql Database for development
     builder.Services.AddDbContext<RssReaderDbContext>(
         options =>
         {
-            var mariaDbSettings = builder.Configuration.GetRequiredSection("MariaDbSettings").Get<MariaDbSettings>();
-            var connectionString = mariaDbSettings?.ConnectionString;
-            options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+            var postgreSqlSettings = builder.Configuration.GetRequiredSection("PostgreSqlSettings").Get<PostgreSqlSettings>();
+            var connectionString = postgreSqlSettings?.ConnectionString;
+            options.UseNpgsql(connectionString);
         });
+
 }
 else
 {
@@ -72,8 +72,17 @@ app.UseStaticFiles();
 
 using (var scope = app.Services.CreateScope())
 {
-    var context = scope.ServiceProvider.GetRequiredService<RssReaderDbContext>();
-    context.Database.EnsureCreated();
+    if (builder.Environment.IsDevelopment())
+    {
+        var db = scope.ServiceProvider.GetRequiredService<RssReaderDbContext>();
+        db.Database.Migrate();
+    }
+    else
+    {
+        var context = scope.ServiceProvider.GetRequiredService<RssReaderDbContext>();
+        context.Database.EnsureCreated();
+    }
+
 }
 
 app.Run();

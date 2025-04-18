@@ -8,7 +8,7 @@ public class RssFeedConfiguration : IEntityTypeConfiguration<RssFeed>
 {
     public void Configure(EntityTypeBuilder<RssFeed> builder)
     {
-        builder.ToTable("RssFeeds");
+        builder.ToTable("RssFeeds", "feeds");
         builder.HasKey(k => k.Id);
         builder.Property(x => x.Url);
         builder.Property(x => x.ChannelTitle);

@@ -5,7 +5,7 @@ using Application.Models;
 using Application.Validators;
 using Domain.Entities;
 using Domain.Interface;
-using Infrastructure.Utilities;
+using Microsoft.AspNetCore.Identity;
 
 namespace Application.Services;
 
@@ -32,9 +32,14 @@ public class AuthenticationService (
         {
             Username = registerRequest.Username,
             Email = registerRequest.Email,
-            PasswordHash = PasswordHasher.HashPassword(registerRequest.Password),
-            UserRoles = [new UserRole { RoleId = 2 }]
+            Password = registerRequest.Password,
+            UserRoles = [new UserRole { RoleId = 3 }]
         };
+        
+        var passwordHasher = new PasswordHasher<User>();
+        var hashedPassword = passwordHasher.HashPassword(user, registerRequest.Password);
+        user.Password = hashedPassword;
+        
         await iUserRepository.AddAsync(user);
         await unitOfWork.CommitAsync();
         return Result.Success("User registered successfully.");
@@ -52,10 +57,11 @@ public class AuthenticationService (
         var (email, password) = loginRequest;
         var user = await iUserRepository.GetUserByEmailAsync(email);
         if (user is null) return Result.Failure(AuthError.UserNotFound);
-        if (!PasswordHasher.VerifyPassword(password, user.PasswordHash))
-        {
-            return Result.Failure(AuthError.InvalidPassword);   
-        }
+        
+        var passwordHasher = new PasswordHasher<User>();
+        var verificationResult = passwordHasher.VerifyHashedPassword(user, user.Password, password);
+        if (verificationResult == PasswordVerificationResult.Failed)
+            return Result.Failure(AuthError.InvalidPassword);
         
         var result = await jwtService.CreateTokenResponse(user);
 

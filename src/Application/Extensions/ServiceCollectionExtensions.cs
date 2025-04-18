@@ -13,7 +13,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IAuthenticationService, AuthenticationService>();
         services.AddScoped<IJwtService, JwtService>();
         services.AddScoped<IRssFetchService, RssFetchService>();
-        services.AddHostedService<RssFeedUpdateService>();
+        //services.AddHostedService<RssFeedUpdateService>();
         services.AddScoped<IUserService, UserService>();
 
         return services;

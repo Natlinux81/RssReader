@@ -17,12 +17,13 @@ public static class DbContextOptionsFactory
                 .AddJsonFile("appsettings.json")
                 .AddUserSecrets<RssReaderDbContextFactory>()
                 .Build();
-            // Read MariaDbSettings from configuration
-            var mariaDbSettings = configuration.GetRequiredSection("MariaDbSettings").Get<MariaDbSettings>();
+            // Read PostgreSQLSettings from configuration
+            var mariaDbSettings = configuration.GetRequiredSection("PostgreSQLSettings").Get<PostgreSqlSettings>();
             var connectionString = mariaDbSettings?.ConnectionString;
             var optionBuilder = new DbContextOptionsBuilder<RssReaderDbContext>();
             if (connectionString != null)
-                optionBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+                optionBuilder.UseNpgsql(connectionString);
+            
             return new RssReaderDbContext(optionBuilder.Options);
         }
     }
