@@ -13,6 +13,7 @@ import {ToastService} from "../../../infrastructure/services/toast.service";
   selector: 'app-rss-feed-overview',
   imports: [NgFor, FormsModule, FeedItemModalComponent, TimeElapsedPipe, NgOptimizedImage],
   templateUrl: './rss-feed-overview.component.html',
+  standalone: true,
   styleUrl: './rss-feed-overview.component.scss'
 })
 export class RssFeedOverviewComponent implements OnInit {

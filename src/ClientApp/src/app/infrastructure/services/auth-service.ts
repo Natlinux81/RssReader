@@ -30,6 +30,7 @@ export class AuthService implements IAuthService {
 
   storeToken(tokenValue: string) {
     return localStorage.setItem('token', tokenValue)
+
   }
 
   getToken() {

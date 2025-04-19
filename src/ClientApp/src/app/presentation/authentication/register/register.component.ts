@@ -14,6 +14,7 @@ import {ToastService} from "../../../infrastructure/services/toast.service";
     NgIf
   ],
   templateUrl: './register.component.html',
+  standalone: true,
   styleUrl: './register.component.scss'
 })
 export class RegisterComponent {
@@ -45,7 +46,7 @@ export class RegisterComponent {
   onSignUp() {
     if (this.registerForm.valid) {
       console.log(this.registerForm.value);
-      // Send the obj to database
+      // Send the obj to a database
       this.authenticateService.register(this.registerForm.value).subscribe({
         next: (result) => {
           this.toastService.show(result.value, {
@@ -53,7 +54,19 @@ export class RegisterComponent {
             delay: 2000
           });
           this.registerForm.reset();
-          this.router.navigate(['/login'])
+          this.router.navigate(['/login']).then(success => {
+            if (success) {
+              this.toastService.show('Registration successful', {
+                classname: 'bg-success text-light',
+                delay: 2000
+              });
+            } else {
+              this.toastService.show('Registration failed, please try again later', {
+                classname: 'bg-success text-light',
+                delay: 2000
+              });
+            }
+          } )
         },
         error: (err) => {
           console.error(err?.error.error.message);

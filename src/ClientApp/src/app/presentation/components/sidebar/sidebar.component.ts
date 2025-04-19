@@ -8,6 +8,7 @@ import {ShortenStringPipe} from "../../../infrastructure/utilities/shorten-link.
   selector: 'app-sidebar',
   imports: [NgFor, ShortenStringPipe],
   templateUrl: './sidebar.component.html',
+  standalone: true,
   styleUrl: './sidebar.component.scss'
 })
 export class SidebarComponent implements OnInit {

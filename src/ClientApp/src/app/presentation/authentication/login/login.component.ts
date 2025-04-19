@@ -15,6 +15,7 @@ import {ToastService} from "../../../infrastructure/services/toast.service";
     NgOptimizedImage
   ],
   templateUrl: './login.component.html',
+  standalone: true,
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
@@ -48,22 +49,29 @@ export class LoginComponent {
   onLogin() {
     if (this.loginForm.valid) {
       console.log(this.loginForm.value)
-      // Send the obj to database
+      // Send the obj to a database
       this.authenticateService.login(this.loginForm.value).subscribe({
         next: (result) => {
           this.loginForm.reset();
-          this.authenticateService.storeToken(result.accessToken);
-          this.toastService.show(result.value, {
-            classname: 'bg-success text-light',
-            delay: 2000
-          });
-
+          this.authenticateService.storeToken(result.value.accessToken);
 
           // this.authenticateService.storeRefreshToken(result.refreshToken)
           // const tokenPayload = this.authenticateService.decodedToken();
           // this.userStore.setUsernameForStore(tokenPayload.name);
           // this.userStore.setRoleForStore(tokenPayload.role);
-          this.router.navigate(['rss-feed-overview'])
+          this.router.navigate(['admin-dashboard']).then(success => {
+            if (success) {
+              this.toastService.show('Login successful', {
+                classname: 'bg-success text-light',
+                delay: 2000
+              });
+            } else {
+              this.toastService.show('Login failed, please try again later', {
+                classname: 'bg-danger text-light',
+                delay: 2000
+              });
+            }
+          })
 
         },
         error: (err) => {

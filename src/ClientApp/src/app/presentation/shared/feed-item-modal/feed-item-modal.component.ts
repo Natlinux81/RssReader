@@ -9,6 +9,7 @@ import {TimeElapsedPipe} from '../../../infrastructure/utilities/time-elapsed.pi
   selector: 'app-feed-item-modal',
   imports: [NgIf, ShortenStringPipe, NgClass, TimeElapsedPipe, NgOptimizedImage],
   templateUrl: './feed-item-modal.component.html',
+  standalone: true,
   styleUrl: './feed-item-modal.component.scss'
 })
 export class FeedItemModalComponent {

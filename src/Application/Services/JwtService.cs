@@ -32,7 +32,7 @@ public class JwtService(
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(claims),
-            Expires = DateTime.UtcNow.AddMinutes(5), // set a token expiration time
+            Expires = DateTime.UtcNow.AddDays(1), // set a token expiration time
             SigningCredentials = credentials,
             Issuer = configuration["Jwt:Issuer"],
             Audience = configuration["Jwt:Audience"]

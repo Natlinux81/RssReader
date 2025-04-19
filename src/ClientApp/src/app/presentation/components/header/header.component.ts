@@ -19,6 +19,7 @@ import {AuthService} from "../../../infrastructure/services/auth-service";
     RouterLink
   ],
   templateUrl: './header.component.html',
+  standalone: true,
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
